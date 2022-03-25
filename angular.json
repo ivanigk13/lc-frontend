@@ -3,5 +3,305 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "lawverse-admin": {
+      "projectType": "application",
+       "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "root": "projects/lawverse-admin",
+      "sourceRoot": "projects/lawverse-admin/src",
+      "prefix": "app",
+      
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/lawverse-admin",
+            "index": "projects/lawverse-admin/src/index.html",
+            "main": "projects/lawverse-admin/src/main.ts",
+            "polyfills": "projects/lawverse-admin/src/polyfills.ts",
+            "tsConfig": "projects/lawverse-admin/tsconfig.app.json",
+            "assets": [
+              "projects/lawverse-admin/src/favicon.ico",
+              "projects/lawverse-admin/src/assets"
+            ],
+            "styles": [
+              "projects/lawverse-admin/src/styles.scss",
+              "projects/lawverse-admin/src/assets/scss/argon.scss"
+            ],
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/clipboard/dist/clipboard.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/lawverse-admin/src/environments/environment.ts",
+                  "with": "projects/lawverse-admin/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "lawverse-admin:build:production"
+            },
+            "development": {
+              "browserTarget": "lawverse-admin:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "lawverse-admin:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lawverse-admin/src/test.ts",
+            "polyfills": "projects/lawverse-admin/src/polyfills.ts",
+            "tsConfig": "projects/lawverse-admin/tsconfig.spec.json",
+            "karmaConfig": "projects/lawverse-admin/karma.conf.js",
+            "assets": [
+              "projects/lawverse-admin/src/favicon.ico",
+              "projects/lawverse-admin/src/assets"
+            ],
+            "styles": [
+              "projects/lawverse-admin/src/styles.css"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "lawverse-login": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/lawverse-login",
+      "sourceRoot": "projects/lawverse-login/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/lawverse-login",
+            "index": "projects/lawverse-login/src/index.html",
+            "main": "projects/lawverse-login/src/main.ts",
+            "polyfills": "projects/lawverse-login/src/polyfills.ts",
+            "tsConfig": "projects/lawverse-login/tsconfig.app.json",
+            "assets": [
+              "projects/lawverse-login/src/favicon.ico",
+              "projects/lawverse-login/src/assets"
+            ],
+            "styles": [
+              "projects/lawverse-login/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/lawverse-login/src/environments/environment.ts",
+                  "with": "projects/lawverse-login/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "lawverse-login:build:production"
+            },
+            "development": {
+              "browserTarget": "lawverse-login:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "lawverse-login:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lawverse-login/src/test.ts",
+            "polyfills": "projects/lawverse-login/src/polyfills.ts",
+            "tsConfig": "projects/lawverse-login/tsconfig.spec.json",
+            "karmaConfig": "projects/lawverse-login/karma.conf.js",
+            "assets": [
+              "projects/lawverse-login/src/favicon.ico",
+              "projects/lawverse-login/src/assets"
+            ],
+            "styles": [
+              "projects/lawverse-login/src/styles.css"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "lawverse-member": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/lawverse-member",
+      "sourceRoot": "projects/lawverse-member/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/lawverse-member",
+            "index": "projects/lawverse-member/src/index.html",
+            "main": "projects/lawverse-member/src/main.ts",
+            "polyfills": "projects/lawverse-member/src/polyfills.ts",
+            "tsConfig": "projects/lawverse-member/tsconfig.app.json",
+            "assets": [
+              "projects/lawverse-member/src/favicon.ico",
+              "projects/lawverse-member/src/assets"
+            ],
+            "styles": [
+              "projects/lawverse-member/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/lawverse-member/src/environments/environment.ts",
+                  "with": "projects/lawverse-member/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "lawverse-member:build:production"
+            },
+            "development": {
+              "browserTarget": "lawverse-member:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "lawverse-member:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lawverse-member/src/test.ts",
+            "polyfills": "projects/lawverse-member/src/polyfills.ts",
+            "tsConfig": "projects/lawverse-member/tsconfig.spec.json",
+            "karmaConfig": "projects/lawverse-member/karma.conf.js",
+            "assets": [
+              "projects/lawverse-member/src/favicon.ico",
+              "projects/lawverse-member/src/assets"
+            ],
+            "styles": [
+              "projects/lawverse-member/src/styles.css"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "lawverse-admin"
 }
