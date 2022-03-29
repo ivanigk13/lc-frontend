@@ -7,7 +7,7 @@
       "projectType": "application",
        "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "style": "scss"
         }
       },
       "root": "projects/lawverse-admin",
@@ -26,14 +26,15 @@
             "assets": [
               "projects/lawverse-admin/src/favicon.ico",
               "projects/lawverse-admin/src/assets"
+
             ],
             "styles": [
-              "projects/lawverse-admin/src/styles.scss",
-              "projects/lawverse-admin/src/assets/scss/argon.scss"
+              "projects/lawverse-admin/src/styles.scss"
+              
             ],
             "scripts": [
-              "node_modules/chart.js/dist/Chart.min.js",
-              "node_modules/clipboard/dist/clipboard.min.js"
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/components/prism-typescript.js"
             ]
           },
           "configurations": {
@@ -99,7 +100,7 @@
               "projects/lawverse-admin/src/assets"
             ],
             "styles": [
-              "projects/lawverse-admin/src/styles.css"
+              "projects/lawverse-admin/src/styles.scss"
             ],
             "scripts": []
           }
@@ -109,8 +110,8 @@
     "lawverse-login": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:application": {
-          "strict": true
+        "@schematics/angular:component": {
+          
         }
       },
       "root": "projects/lawverse-login",
@@ -130,9 +131,13 @@
               "projects/lawverse-login/src/assets"
             ],
             "styles": [
-              "projects/lawverse-login/src/styles.css"
+              "projects/lawverse-login/src/styles.scss",
+              "projects/lawverse-login/src/assets/scss/argon.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/clipboard/dist/clipboard.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -197,7 +202,7 @@
               "projects/lawverse-login/src/assets"
             ],
             "styles": [
-              "projects/lawverse-login/src/styles.css"
+              "projects/lawverse-login/src/styles.scss"
             ],
             "scripts": []
           }
@@ -208,7 +213,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
-          "strict": true
+          
         }
       },
       "root": "projects/lawverse-member",
@@ -228,9 +233,13 @@
               "projects/lawverse-member/src/assets"
             ],
             "styles": [
-              "projects/lawverse-member/src/styles.css"
+              "projects/lawverse-member/src/styles.scss",
+              "projects/lawverse-member/src/assets/scss/argon.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/clipboard/dist/clipboard.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -295,7 +304,7 @@
               "projects/lawverse-member/src/assets"
             ],
             "styles": [
-              "projects/lawverse-member/src/styles.css"
+              "projects/lawverse-member/src/styles.scss"
             ],
             "scripts": []
           }
@@ -303,5 +312,5 @@
       }
     }
   },
-  "defaultProject": "lawverse-admin"
+  "defaultProject": "lawverse-member"
 }
