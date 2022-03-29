@@ -1,8 +1,13 @@
-<!-- Page content -->
-<section class="d-flex justify-content-center align-items-center" style="min-height: 100vh;
-">
+<section class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
   <div class="container ">
     <div class="row justify-content-center bg-white shadow br-20 border-0">
+
+      <div class="col-md-6 col-sm-12 login-img relative br-right-20">
+        <div class="login-img login-img-overlay d-flex justify-content-center align-items-center">
+          <h1 class="text-white text-center">Welcome To <br /> Lawencon Universe</h1>
+        </div>
+      </div>
+
       <div class="col-md-6 col-sm-12">
         <div class="card border-0">
           <div class="card-header bg-transparent pb-5 border-0">
@@ -18,13 +23,14 @@
             <div class="text-center text-muted mb-4">
               <small>Or sign in with credentials</small>
             </div>
-            <form role="form">
+            <form role="form" #formLogin="ngForm" (ngSubmit)="onLogin(formLogin.form.valid)">
               <div class="form-group mb-3">
                 <div class="input-group input-group-alternative">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                   </div>
-                  <input class="form-control" placeholder="Email" type="email">
+                  <input class="form-control" placeholder="Email" type="email" name="email" id="email" 
+                    [required]="true" [(ngModel)]="loginDtoReq.email">
                 </div>
               </div>
               <div class="form-group">
@@ -32,7 +38,8 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                   </div>
-                  <input class="form-control" placeholder="Password" type="password">
+                  <input class="form-control" placeholder="Password" type="password" name="password" 
+                    id="password" [minlength]="8" [required]="true" [(ngModel)]="loginDtoReq.password">
                 </div>
               </div>
               <div class="custom-control-alternative custom-checkbox">
@@ -46,18 +53,12 @@
                </div>
               </div>
               <div class="text-center">
-                <button type="button" class="btn btn-primary my-4">Sign in</button>
+                <button type="submit" class="btn btn-primary my-4" [disabled]="formLogin.form.invalid">Sign in</button>
               </div>
             </form>
           </div>
         </div>
-        
       </div>
-      <div class="col-md-6 col-sm-12 login-img relative br-right-20">
-          <div class="login-img login-img-overlay d-flex justify-content-center align-items-center">
-            <h1 class="text-white text-center">Welcome To <br /> Linov Universe</h1>
-          </div>
-      </div>
-
+      
     </div>
   </div>
