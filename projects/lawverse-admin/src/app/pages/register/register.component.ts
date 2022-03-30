@@ -29,7 +29,7 @@ import { UserService } from 'src/app/service/user.service';
     }
   `]
 })
-export class RegisterComponent implements OnInit, OnDestroy {
+export class RegisterComponent implements OnInit,OnDestroy {
 
   valCheck: string[] = ['remember']
 
@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(public configService: ConfigService, private title:Title, private loginService:LoginService,
               private router:Router, private userService:UserService) {
     this.title.setTitle('Register Page')
-  }
+  } 
 
   ngOnInit(): void {
     this.config = this.configService.config;
@@ -75,10 +75,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
     else return true
   }
 
+  // ngOnDestroy(): void {
+ 
+  //     this.subscription.unsubscribe()
+  
+  //   this.registerSubs.unsubscribe()
+  // }
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    if (this.subscription){
+    this.subscription.unsubscribe()
     }
-    this.registerSubs.unsubscribe()
+
+    if(this.registerSubs){
+      this.registerSubs.unsubscribe()
+    }
   }
 }
