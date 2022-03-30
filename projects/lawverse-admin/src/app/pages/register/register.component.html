@@ -10,25 +10,27 @@
             <div class="text-center mb-6">
                 <div class="text-900 text-3xl font-medium mb-3">Sign Up</div>
             </div>
-            <div class="w-full md:w-10 mx-auto">
-                <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
-                <input id="email1" type="text" placeholder="Email address" pInputText class="w-full mb-3"
-                    style="padding:1rem;">
+            <form class="w-full md:w-10 mx-auto" #registerForm="ngForm" (ngSubmit)="onRegister(registerForm.form.valid)">
+                <label for="email" class="block text-900 text-xl font-medium mb-2">Email</label>
+                <input id="email" name="email" type="email" placeholder="Email address" pInputText class="w-full mb-3"
+                    style="padding:1rem;" [required]="true" [(ngModel)]="insertUserDtoReq.email">
 
-                <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
-                <p-password id="password1" [(ngModel)]="password" placeholder="Password" [toggleMask]="true"
-                    styleClass="w-full mb-3"></p-password>
+                <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>                
+                <input id="password" name="password" type="password" placeholder="Password" 
+                    pInputText class="w-full mb-3" style="padding:1rem;" [minlength]="8" [required]="true" 
+                    [(ngModel)]="insertUserDtoReq.password" (ngModelChange)="isPassSame()">
 
                 <label for="cpassword" class="block text-900 font-medium text-xl mb-2">Confirm Password</label>
                 <input id="cpassowrd" name="cpassword" type="password" placeholder="Password" pInputText
-                    class="w-full mb-3" style="padding:1rem;" [required]="true" >
+                    class="w-full mb-3" style="padding:1rem;" [required]="true" [minLength]="8"
+                    [(ngModel)]="cpassword" (ngModelChange)="isPassSame()">
 
                 <div class="mb-5 text-center">
                     <a class="font-medium no-underline ml-2 text-center cursor-pointer"
-                        style="color: var(--primary-color)">Already have an account?</a>
+                        style="color: var(--primary-color)" routerLink="/login">Already have an account?</a>
                 </div>
-                <button pButton pRipple label="Sign Up" class="w-full p-3 text-xl"></button>
-            </div>
+                <button type="submit" pButton pRipple label="Sign Up" class="w-full p-3 text-xl" [disabled]="isButtonValid(registerForm.form.invalid, isSame)"></button>
+            </form>
         </div>
     </div>
 </div>
