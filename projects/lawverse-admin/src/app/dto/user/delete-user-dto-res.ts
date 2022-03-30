@@ -1,4 +1,4 @@
 export class DeleteUserDtoRes { 
-	 msg?: string 
+	 msg!: string 
 } 
 
