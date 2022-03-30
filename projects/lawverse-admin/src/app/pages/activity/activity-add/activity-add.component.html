@@ -1,5 +1,5 @@
   <app-navbar></app-navbar>
-  <div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+  <div class="surface-0 flex align-items-center justify-content-center min-h-screen overflow-hidden">
       <div class="grid mw-50">
           <div class="col-12">
               <div class="card shadow-3">
@@ -10,9 +10,6 @@
                       <div class="col-3 text-right">
                           <button pButton label="Submit"></button>
                       </div>
-
-
-
                   </div>
                   <div class="p-fluid p-formgrid grid">
                       <div class="field col-12">
@@ -47,13 +44,13 @@
                       </div>
                       <div class="field md:col-6 sm:col-12">
                           <h5>Activity Picture</h5>
-                          <p-fileUpload name="myfile[]" url="./upload.php" accept="image/*" [auto]="true">
-                          </p-fileUpload>
+                          <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*"
+                              maxFileSize="1000000" chooseLabel="Browse"></p-fileUpload>
                       </div>
                       <div class="field md:col-6 sm:col-12">
                           <h5>Payment Picture</h5>
-                          <p-fileUpload name="myfile[]" url="./upload.php" accept="image/*" [auto]="true">
-                          </p-fileUpload>
+                          <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*"
+                              maxFileSize="1000000"  chooseLabel="Browse"></p-fileUpload>
                       </div>
                       <div class="p-fluid p-formgrid grid">
                           <div class="field col ">
