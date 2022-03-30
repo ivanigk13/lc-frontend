@@ -110,6 +110,10 @@ import { TransactionStatusListComponent } from './pages/transaction-status/trans
                 path: 'account-detail',
                 loadChildren: () => import('./pages/account-detail/account-detail.module').then(m => m.AccountDetailModule)
             },
+            {
+                path: 'activity',
+                loadChildren: () => import('./pages/activity/activity.module').then(m => m.ActivityModule)
+            },
             { path: 'pages/landing', component: LandingComponent },
             { path: 'pages/login', component: LoginComponent },
             { path: 'pages/error', component: ErrorComponent },
