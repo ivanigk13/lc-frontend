@@ -114,6 +114,10 @@ import { TransactionStatusListComponent } from './pages/transaction-status/trans
                 path: 'activity',
                 loadChildren: () => import('./pages/activity/activity.module').then(m => m.ActivityModule)
             },
+            {
+                path: 'thread',
+                loadChildren: () => import('./pages/thread/thread.module').then(m => m.ThreadModule)
+            },
             { path: 'pages/landing', component: LandingComponent },
             { path: 'pages/login', component: LoginComponent },
             { path: 'pages/error', component: ErrorComponent },

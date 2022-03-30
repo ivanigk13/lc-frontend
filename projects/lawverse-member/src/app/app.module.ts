@@ -13,6 +13,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { ThreadListComponent } from './pages/thread/thread-list/thread-list.component';
+import { ActivityComponent } from './pages/activity/activity/activity.component';
+import { NavbarComponent } from './component/navbar/navbar.component';
 
 
 
@@ -31,6 +33,8 @@ import { ThreadListComponent } from './pages/thread/thread-list/thread-list.comp
     AdminLayoutComponent,
     AuthLayoutComponent,
     ThreadListComponent,
+    ActivityComponent,
+    NavbarComponent,
     
     
    
