@@ -2,6 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ConfigService } from '../../service/app.config.service';
 import { AppConfig } from '../../api/appconfig';
 import { Subscription } from 'rxjs';
+import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { LoginService } from '../../service/login.service';
+import { LoginDtoReq } from '../../dto/user/login-dto-req';
+import { RoleList } from '../../constant/role-list';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -34,13 +40,32 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  constructor(public configService: ConfigService) { }
+  loginSubs? : Subscription
+  roleCode : string
+  loginDtoReq : LoginDtoReq = new LoginDtoReq()
+
+  constructor(public configService: ConfigService, private title:Title, private loginService:LoginService, 
+              private router:Router) {
+    this.title.setTitle("Login Page")
+  }
 
   ngOnInit(): void {
     this.config = this.configService.config;
     this.subscription = this.configService.configUpdate$.subscribe(config => {
       this.config = config;
     });
+  }
+
+  onLogin(valid : boolean) {
+    if(valid){
+      this.loginSubs = this.loginService.login(this.loginDtoReq).subscribe(result=>{
+        this.loginService.saveData(result)
+        this.roleCode = result.roleCode
+        console.log(this.roleCode)
+        // if(this.roleCode == RoleList.ADMIN) this.router.navigateByUrl('/dashboard')
+        // else this.router.navigateByUrl('/icons')
+      })
+    }
   }
 
   ngOnDestroy(): void {
