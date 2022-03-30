@@ -274,7 +274,8 @@ import { AccessComponent } from './components/access/access.component';
         LoginComponent,
         ErrorComponent,
         NotfoundComponent,
-        AccessComponent
+        AccessComponent,       
+        
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

@@ -14,3 +14,62 @@
     table-layout: auto;
     width: 50px;
 }
+
+.min-height-50{
+    min-height: 50vh;
+}
+
+.login-img {
+    background-image: url(https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=884&q=80);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.forgot-password-img {
+    background-image: url(../src/assets/img/forgot-password/forgot-password.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.br-left-20 {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.br-right-20 {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.br-20 {
+    border-radius: 20px;
+}
+
+.login-img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(61, 162, 243, 0.5);
+}
+
+.relative {
+    position: relative;
+}
+
+.min-height-100 {
+    min-height: 100vh;
+}
+
+.text-white {
+    color: white;
+}
+
+.mw-50 {
+    max-width: 50%;
+}

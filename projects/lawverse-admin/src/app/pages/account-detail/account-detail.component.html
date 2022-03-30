@@ -1,0 +1,79 @@
+<!-- <div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="grid justify-content-center p-2 lg:p-0 shadow-3 br-20" style="min-width:30%">
+        <div class="col-12 py-8 px-2">
+            <div class="text-center mb-6">
+                <div class="text-900 text-3xl font-medium mb-3">Account Detail</div>
+            </div>
+            <div class="w-full md:w-10 mx-auto">
+                <label for="name" class="block text-900 text-xl font-medium mb-2">Full Name</label>
+                <input id="name" type="text" placeholder="Email address" pInputText class="w-full mb-3"
+                    style="padding:1rem;">
+
+                <label for="phone" class="block text-900 text-xl font-medium mb-2">Phone Number</label>
+                <input id="phone" type="text" placeholder="Phone Number" pInputText class="w-full mb-3"
+                    style="padding:1rem;">
+
+                <label for="company" class="block text-900 text-xl font-medium mb-2">Company</label>
+                <input id="company" type="text" placeholder="Email address" pInputText class="w-full mb-3"
+                    style="padding:1rem;">
+
+                <label for="industry" class="block text-900 font-medium text-xl mb-2">Industry</label>
+                <p-dropdown styleClass="w-full mb-3 p-2" [options]="industries" class="flex" [(ngModel)]="selectedDrop"
+                    placeholder="Select Industry" [showClear]="true"></p-dropdown>
+
+                <label for="position" class="block text-900 font-medium text-xl mb-2">Position</label>
+                <p-dropdown styleClass="w-full mb-3 p-2" [options]="positions" [(ngModel)]="selectedDrop"
+                    class="w-full mb-6" placeholder="Select Position" [showClear]="true"></p-dropdown>
+
+                <button pButton pRipple label="Sign Up" class="w-full p-3 text-xl"></button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="grid justify-content-center p-2 lg:p-0 " style="min-width:80%">        
+        <div class="col-12 xl:col-6 shadow-3 my-4"
+            style="border-radius:56px; padding:0.3rem;">
+            <div class="h-full w-full m-0 py-7 px-4"
+                style="border-radius:53px;">
+                <div class="text-center mb-5">                    
+                     <div class="text-900 text-3xl font-medium mb-3">Account Detail</div>
+                </div>
+
+                <div class="w-full md:w-10 mx-auto">
+                    <label for="name" class="block text-900 text-xl font-medium mb-2">Full Name</label>
+                    <input id="name" type="text" placeholder="Email address" pInputText class="w-full mb-3"
+                        style="padding:1rem;">
+
+                    <label for="phone" class="block text-900 text-xl font-medium mb-2">Phone Number</label>
+                    <input id="phone" type="text" placeholder="Phone Number" pInputText class="w-full mb-3"
+                        style="padding:1rem;">
+
+                    <label for="company" class="block text-900 text-xl font-medium mb-2">Company</label>
+                    <input id="company" type="text" placeholder="Email address" pInputText class="w-full mb-3"
+                        style="padding:1rem;">
+
+                    <label for="industry" class="block text-900 font-medium text-xl mb-2">Industry</label>
+                    <p-dropdown styleClass="w-full mb-3 p-2" [options]="industries" class="flex"
+                        [(ngModel)]="selectedDrop" placeholder="Select Industry" [showClear]="true"></p-dropdown>
+
+                    <label for="position" class="block text-900 font-medium text-xl mb-2">Position</label>
+                    <p-dropdown styleClass="w-full mb-6 p-2" [options]="positions" [(ngModel)]="selectedDrop"
+                        placeholder="Select Position" [showClear]="true"></p-dropdown>
+                    <div class="grid">
+                        <div class="col-6">
+                            <button pButton pRipple label="Cancel" class="p-button-secondary w-full p-3 text-xl"></button>
+                        </div>
+                        <div class="col-6">
+                            <button pButton pRipple label="Sign Up" class="w-full p-3 text-xl"></button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

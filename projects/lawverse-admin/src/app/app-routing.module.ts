@@ -90,8 +90,25 @@ import { TransactionStatusListComponent } from './pages/transaction-status/trans
                     {
                         path:'transaction-status',
                         loadChildren: () => import('./pages/transaction-status/transaction-status.module').then(m => m.TransactionStatusModule)
-                    }
+                    },
+                  
                 ],
+            },
+            {
+                path: 'login',
+                loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
+            },
+            {
+                path: 'register',
+                loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule)
+            },
+            {
+                path: 'forgot-password',
+                loadChildren: () => import('./pages/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule)
+            },
+            {
+                path: 'account-detail',
+                loadChildren: () => import('./pages/account-detail/account-detail.module').then(m => m.AccountDetailModule)
             },
             { path: 'pages/landing', component: LandingComponent },
             { path: 'pages/login', component: LoginComponent },
