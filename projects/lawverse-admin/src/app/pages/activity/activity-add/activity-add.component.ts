@@ -13,7 +13,18 @@ export class ActivityAddComponent implements OnInit {
   }
 
   tieredItems = [
-    {label : 'Customer'}
+    { label: 'Customer' }
+  ]
+
+  activityTypes = [
+    { label: 'Course' },
+    { label: 'event' }
+  ]
+
+  categories = [
+    { label: 'Hr Consultan' },
+    { label: 'IT Consultan' },
+    { label: 'Bootcamp Consultan' },
   ]
 
 }
