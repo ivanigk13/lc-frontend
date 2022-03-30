@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { LocationStrategy, HashLocationStrategy, CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -140,6 +140,8 @@ import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
+import { HttpHandlerAsset } from './http/http-handler';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -280,7 +282,13 @@ import { AccessComponent } from './components/access/access.component';
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService, MenuService, ConfigService
+        PhotoService, ProductService, MenuService, ConfigService,
+        {
+            provide : HTTP_INTERCEPTORS,
+            useClass : HttpHandlerAsset,
+            multi : true
+        },
+        MessageService
     ],
     bootstrap: [AppComponent]
 })
