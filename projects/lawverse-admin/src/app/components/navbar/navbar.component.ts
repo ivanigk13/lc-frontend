@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
   }
 
   onClick(event) : void {
-      
+      this.router.navigateByUrl(event.items.routerLink)
   }
 
   items =[

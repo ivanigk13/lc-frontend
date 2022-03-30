@@ -11,6 +11,7 @@ import { InputTextareaModule } from "primeng/inputtextarea";
 import { Menubar, MenubarModule } from "primeng/menubar";
 import { PasswordModule } from "primeng/password";
 import { TableModule } from "primeng/table";
+import { ComponentModule } from "src/app/components/component.module";
 import { ActivityAddComponent } from "./activity-add/activity-add.component";
 import { ActivityRouter } from "./activity.router";
 
@@ -20,6 +21,7 @@ import { ActivityRouter } from "./activity.router";
         ActivityAddComponent
     ],
     imports: [
+        ComponentModule,
         FormsModule,
         CommonModule,
         InputTextareaModule,
