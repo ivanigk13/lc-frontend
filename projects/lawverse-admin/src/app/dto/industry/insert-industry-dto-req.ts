@@ -1,5 +1,5 @@
 export class InsertIndustryDtoReq { 
-	 industryCode?: string 
-	 industryName?: string 
+	 industryCode!: string 
+	 industryName!: string 
 } 
 

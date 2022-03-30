@@ -1,4 +1,4 @@
 export class DeleteIndustryDtoRes { 
-	 msg?: string 
+	 msg!: string 
 } 
 

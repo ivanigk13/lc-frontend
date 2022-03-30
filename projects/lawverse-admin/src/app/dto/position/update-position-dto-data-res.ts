@@ -1,4 +1,4 @@
 export class UpdatePositionDtoDataRes { 
-	 version?: number 
+	 version!: number 
 } 
 

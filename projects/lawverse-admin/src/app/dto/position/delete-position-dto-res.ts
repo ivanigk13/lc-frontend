@@ -1,4 +1,4 @@
 export class DeletePositionDtoRes { 
-	 msg?: string 
+	 msg!: string 
 } 
 

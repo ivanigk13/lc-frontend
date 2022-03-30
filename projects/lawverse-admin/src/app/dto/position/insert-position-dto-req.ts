@@ -1,5 +1,5 @@
 export class InsertPositionDtoReq { 
-	 positionCode?: string 
-	 positionName?: string 
+	 positionCode!: string 
+	 positionName!: string 
 } 
 
