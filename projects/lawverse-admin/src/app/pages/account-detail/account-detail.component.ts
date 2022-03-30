@@ -2,6 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ConfigService } from '../../service/app.config.service';
 import { AppConfig } from '../../api/appconfig';
 import { Subscription } from 'rxjs';
+import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { IndustryService } from '../../service/industry.service';
+import { GetIndustryDtoDataRes } from '../../dto/industry/get-industry-dto-data-res'
+import { GetPositionDtoDataRes } from 'src/app/dto/position/get-position-dto-data-res';
+import { PositionService } from 'src/app/service/position.service';
+import { ProfileService } from 'src/app/service/profile.service';
+import { InsertProfileDtoReq } from 'src/app/dto/profile/insert-profile-dto-req';
+
 @Component({
   selector: 'app-login',
   templateUrl: './account-detail.component.html',
@@ -30,40 +39,51 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
 
   password: string;
 
-  selectedDrop : any
-
   config: AppConfig;
 
   subscription: Subscription;
 
-  constructor(public configService: ConfigService) { }
+  industrySubs? : Subscription
+  positionSubs? : Subscription
+  insertSubs? : Subscription
+
+  industries : GetIndustryDtoDataRes[] = []
+  positions : GetPositionDtoDataRes[] = []
+  insertProfileDtoReq : InsertProfileDtoReq = new InsertProfileDtoReq()
+
+  constructor(public configService: ConfigService, private title:Title, private router:Router,
+              private industryService:IndustryService, private positionService:PositionService,
+              private profileService:ProfileService) {
+    title.setTitle('Account Detail')
+  }
 
   ngOnInit(): void {
     this.config = this.configService.config;
     this.subscription = this.configService.configUpdate$.subscribe(config => {
       this.config = config;
     });
+
+    this.industrySubs = this.industryService.getAll().subscribe(result=>{
+      if(result) this.industries = result.data
+    })
+
+    this.positionSubs = this.positionService.getAll().subscribe(result=>{
+      if(result) this.positions = result.data
+    })
   }
 
-  industries = [
-    { label: 'Outsorcing IT', value: { id: 1, name: 'Outsorcing IT', code: 'NY' } },
-    { label: 'IT Security', value: { id: 2, name: 'Rome', code: 'RM' } },
-    { label: 'Food', value: { id: 3, name: 'London', code: 'LDN' } },
-    { label: 'Transportation', value: { id: 4, name: 'Istanbul', code: 'IST' } },
-    { label: 'Hotel', value: { id: 5, name: 'Paris', code: 'PRS' } }
-  ]
-
-  positions = [
-    { label: 'UI / UX', value: { id: 1, name: 'Outsorcing IT', code: 'NY' } },
-    { label: 'Chef', value: { id: 2, name: 'Rome', code: 'RM' } },
-    { label: 'Driver', value: { id: 3, name: 'London', code: 'LDN' } },
-    { label: 'Bell Boy', value: { id: 4, name: 'Istanbul', code: 'IST' } },
-    { label: 'Hacker', value: { id: 5, name: 'Paris', code: 'PRS' } }
-  ]
+  insert(valid:boolean) : void {
+    if(valid){
+      this.insertSubs = this.profileService.insert(this.insertProfileDtoReq).subscribe()
+    }
+  }
 
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    this.industrySubs?.unsubscribe()
+    this.positionSubs?.unsubscribe()
+    this.insertSubs?.unsubscribe()
   }
 }

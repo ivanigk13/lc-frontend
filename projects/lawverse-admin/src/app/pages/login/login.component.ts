@@ -61,6 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.loginSubs = this.loginService.login(this.loginDtoReq).subscribe(result=>{
         this.loginService.saveData(result)
         this.roleCode = result.roleCode
+        this.router.navigateByUrl('/account-detail')
         // if(this.roleCode == RoleList.ADMIN) this.router.navigateByUrl('/dashboard')
         // else this.router.navigateByUrl('/icons')
       })
@@ -70,6 +71,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if(this.loginSubs){
+      this.loginSubs.unsubscribe()
     }
   }
 }

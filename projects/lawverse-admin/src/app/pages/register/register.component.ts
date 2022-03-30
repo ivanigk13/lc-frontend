@@ -32,7 +32,6 @@ import { UserService } from 'src/app/service/user.service';
 export class RegisterComponent implements OnInit,OnDestroy {
 
   valCheck: string[] = ['remember']
-
   
   config: AppConfig
   
@@ -43,8 +42,8 @@ export class RegisterComponent implements OnInit,OnDestroy {
   isSame: boolean = false
   insertUserDtoReq : InsertUserDtoReq = new InsertUserDtoReq()
 
-  constructor(public configService: ConfigService, private title:Title, private loginService:LoginService,
-              private router:Router, private userService:UserService) {
+  constructor(public configService: ConfigService, private title:Title, private router:Router,
+              private userService:UserService) {
     this.title.setTitle('Register Page')
   } 
 
@@ -57,11 +56,11 @@ export class RegisterComponent implements OnInit,OnDestroy {
 
   onRegister(valid:boolean) {
     if(valid){
-      this.registerSubs = this.userService.insert(this.insertUserDtoReq).subscribe()
+      this.registerSubs = this.userService.insert(this.insertUserDtoReq).subscribe(result=>{
+        if(result) this.router.navigateByUrl('/account-detail')
+      })
     }
   }
-
-
 
   isPassSame() : void {
     if(this.cpassword == this.insertUserDtoReq.password)
@@ -71,16 +70,10 @@ export class RegisterComponent implements OnInit,OnDestroy {
   }
 
   isButtonValid(valid:boolean, passSame:boolean) : boolean {
-    if(!valid && this.isSame) return false
+    if(!valid && passSame) return false
     else return true
   }
 
-  // ngOnDestroy(): void {
- 
-  //     this.subscription.unsubscribe()
-  
-  //   this.registerSubs.unsubscribe()
-  // }
   ngOnDestroy(): void {
     if (this.subscription){
     this.subscription.unsubscribe()
