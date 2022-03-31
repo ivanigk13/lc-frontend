@@ -17,28 +17,28 @@ export class ProfileService {
     constructor(private http:HttpClient){}
 
     getAll() : Observable<GetAllProfileDtoRes> {
-        return this.http.get<GetAllProfileDtoRes>('http://localhost:8080/industries')
+        return this.http.get<GetAllProfileDtoRes>('http://localhost:8080/profiles')
     }
 
     getById(id : number) : Observable<GetByIdProfileDtoRes> {
-        return this.http.get<GetByIdProfileDtoRes>(`http://localhost:8080/industries/${id}`)
+        return this.http.get<GetByIdProfileDtoRes>(`http://localhost:8080/profiles/${id}`)
     }
 
     insert(insertProfileDtoReq : InsertProfileDtoReq, file? : File) : Observable<InsertProfileDtoRes> {
         const formData: FormData = new FormData()
         formData.append('data', JSON.stringify(insertProfileDtoReq))
         if(file) formData.append('file',file)
-        return this.http.post<InsertProfileDtoRes>('http://localhost:8080/industries',formData)
+        return this.http.post<InsertProfileDtoRes>('http://localhost:8080/profiles',formData)
     }
 
     update(updateProfileDtoReq : UpdateProfileDtoReq, file? : File) : Observable<UpdateProfileDtoRes> {
         const formData: FormData = new FormData()
         formData.append('data', JSON.stringify(updateProfileDtoReq))
         if(file) formData.append('file',file)
-        return this.http.put<UpdateProfileDtoRes>(`http://localhost:8080/industries`,formData)
+        return this.http.put<UpdateProfileDtoRes>(`http://localhost:8080/profiles`,formData)
     }
 
     delete(id : number) : Observable<DeleteProfileDtoRes> {
-        return this.http.delete<DeleteProfileDtoRes>(`http://localhost:8080/industries/${id}`)
+        return this.http.delete<DeleteProfileDtoRes>(`http://localhost:8080/profiles/${id}`)
     }
 }
