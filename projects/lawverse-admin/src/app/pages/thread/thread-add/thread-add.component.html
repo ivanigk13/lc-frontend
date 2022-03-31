@@ -1,9 +1,8 @@
-  <app-navbar></app-navbar>
-  <div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+  <app-navbar></app-navbar>  
+  <div class="surface-0 flex align-items-center justify-content-center min-h-screen overflow-hidden">
       <div class="grid mw-50 my-2">
           <form class="col-12">
               <div class="card shadow-3">
-
                   <div class="grid justify-content-between">
                       <div class="col-3">
                           <h5>Thread Form</h5>
@@ -44,7 +43,8 @@
                               </div>
                               <div class="col-6">
                                   <button pButton (click)="onReduce()" class="p-button-danger" type="button"
-                                      icon="pi pi-minus" iconPos="left" label="Remove Polling"></button>
+                                      icon="pi pi-minus" iconPos="left" [disabled]="reduceDisable" label="Remove
+                                      Polling"></button>
                               </div>
                           </div>
 

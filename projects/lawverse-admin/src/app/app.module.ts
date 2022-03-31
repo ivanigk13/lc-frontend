@@ -142,6 +142,7 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
 import { HttpHandlerAsset } from './http/http-handler';
 import { MessageService } from 'primeng/api';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 
 @NgModule({
@@ -276,7 +277,8 @@ import { MessageService } from 'primeng/api';
         LoginComponent,
         ErrorComponent,
         NotfoundComponent,
-        AccessComponent,       
+        AccessComponent,
+        ProfileComponent,       
         
     ],
     providers: [

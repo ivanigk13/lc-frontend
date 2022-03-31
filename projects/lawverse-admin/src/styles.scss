@@ -28,6 +28,54 @@
     color:#999999;
 }
 
+.navbar-profile-dropdown{
+    position: absolute;
+    left: auto !important;
+    right: -1rem;
+    padding: 1rem;
+}
+
+.badge-event{
+    background-color: rgb(211, 211, 211);
+    color: #353535 !important;
+}
+
+.card-img-top{
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.badge-activity-red{
+    color: rgb(209, 51, 70) !important;
+    background-color:rgb(247, 222, 225);
+}
+
+.text-activity{
+    color:#212529;
+}
+
+.max-content{
+    max-width: max-content;
+}
+
+.thread-profile-text{
+    font-weight: 600;
+}
+
+.text-activity:hover{
+    color:#212529;
+}
+
+.badge-activity-yellow{
+    color: #ebbd19;
+    background-color: #fff1b8;
+}
+
+.badge-activity-blue{
+    color: #143ADA;
+    background-color: #d7ddf3;
+}
+
 .navbar-text{
     font-size: 18px;
 }

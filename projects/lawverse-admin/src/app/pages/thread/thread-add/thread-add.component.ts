@@ -9,6 +9,7 @@ export class ThreadAddComponent implements OnInit {
 
   selectedDrop: any
   pollingDetailCounter : number = 2
+  reduceDisable : boolean = true
 
   constructor() { }
 
@@ -17,10 +18,17 @@ export class ThreadAddComponent implements OnInit {
 
   onAdd(): void {
     this.pollingDetailCounter += 1
+    this.reduceDisable = false
   }
 
   onReduce(): void {
-    this.pollingDetailCounter -= 1
+    if(this.pollingDetailCounter == 3)  {
+      this.pollingDetailCounter -= 1
+      this.reduceDisable = true
+    } else {
+      this.pollingDetailCounter -= 1      
+    }
+
   }
 
   createRange(num) {

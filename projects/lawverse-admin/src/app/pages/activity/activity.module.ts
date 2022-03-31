@@ -15,12 +15,16 @@ import { ComponentModule } from "src/app/components/component.module";
 import { ActivityAddComponent } from "./activity-add/activity-add.component";
 import { ActivityRouter } from "./activity.router";
 import { ActivityComponent } from './activity/activity.component';
+import { EventComponent } from './event/event.component';
+import { CourseComponent } from './course/course.component';
 
 
 @NgModule({
     declarations: [
         ActivityAddComponent,
-        ActivityComponent
+        ActivityComponent,
+        EventComponent,
+        CourseComponent
     ],
     imports: [
         ComponentModule,

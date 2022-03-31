@@ -13,11 +13,12 @@ import { TableModule } from "primeng/table";
 import { ComponentModule } from "src/app/components/component.module";
 import { ThreadAddComponent } from './thread-add/thread-add.component';
 import { ThreadRouter } from "./thread.router";
+import { ThreadComponent } from './thread/thread.component';
 
 
 @NgModule({
     declarations: [         
-    ThreadAddComponent
+    ThreadAddComponent, ThreadComponent
   ],
     imports: [
         FormsModule,
