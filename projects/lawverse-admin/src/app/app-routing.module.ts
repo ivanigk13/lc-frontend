@@ -28,16 +28,6 @@ import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
-import { UserListComponent } from './pages/user/user-list/user-list.component';
-import { CategoryListComponent } from './pages/category/category-list/category-list.component';
-import { CategoryAddComponent } from './pages/category/category-add/category-add.component';
-import { IndustryListComponent } from './pages/industry/industry-list/industry-list.component';
-import { IndustryAddComponent } from './pages/industry/industry-add/industry-add.component';
-import { PositionListComponent } from './pages/position/position-list/position-list.component';
-import { PositionAddComponent } from './pages/position/position-add/position-add.component';
-import { RoleListComponent } from './pages/role/role-list/role-list.component';
-import { RoleAddComponent } from './pages/role/role-add/role-add.component';
-import { TransactionStatusListComponent } from './pages/transaction-status/transaction-status-list/transaction-status-list.component';
 @NgModule({
     imports: [
         RouterModule.forRoot([

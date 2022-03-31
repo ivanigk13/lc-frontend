@@ -14,11 +14,13 @@ import { TableModule } from "primeng/table";
 import { ComponentModule } from "src/app/components/component.module";
 import { ActivityAddComponent } from "./activity-add/activity-add.component";
 import { ActivityRouter } from "./activity.router";
+import { ActivityComponent } from './activity/activity.component';
 
 
 @NgModule({
     declarations: [
-        ActivityAddComponent
+        ActivityAddComponent,
+        ActivityComponent
     ],
     imports: [
         ComponentModule,

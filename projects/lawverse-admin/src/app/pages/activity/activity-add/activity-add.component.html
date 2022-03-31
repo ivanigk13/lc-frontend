@@ -7,11 +7,8 @@
                       <div class="col-3">
                           <h5>Activity Form</h5>
                       </div>
-                      <div class="col-3 text-right">
-                          <button pButton label="Submit"></button>
-                      </div>
                   </div>
-                  <div class="p-fluid p-formgrid grid">
+                  <div class="p-fluid p-formgrid grid justify-content-start">
                       <div class="field col-12">
                           <label htmlFor="firstname2">Activity Name</label>
                           <input pInputText id="firstname2" type="text" />
@@ -50,12 +47,10 @@
                       <div class="field md:col-6 sm:col-12">
                           <h5>Payment Picture</h5>
                           <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*"
-                              maxFileSize="1000000"  chooseLabel="Browse"></p-fileUpload>
+                              maxFileSize="1000000" chooseLabel="Browse"></p-fileUpload>
                       </div>
-                      <div class="p-fluid p-formgrid grid">
-                          <div class="field col ">
-
-                          </div>
+                      <div class="field col-3 text-center">                   
+                              <button pButton label="Submit" class="p-button-success"></button>
                       </div>
                   </div>
               </div>

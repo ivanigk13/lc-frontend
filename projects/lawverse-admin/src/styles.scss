@@ -19,6 +19,36 @@
     min-height: 50vh;
 }
 
+.c-details span {
+    font-weight: 300;
+    font-size: 13px
+}
+
+.text-muted{
+    color:#999999;
+}
+
+.navbar-text{
+    font-size: 18px;
+}
+
+.navbar-dropdown-text{
+    font-size: 16px;
+}
+
+.br-full{
+    border-radius: 100%;
+}
+
+.navbar-img{
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.br-8{
+    border-radius: 8px;;
+}
+
 .login-img {
     background-image: url(https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=884&q=80);
     background-size: cover;
