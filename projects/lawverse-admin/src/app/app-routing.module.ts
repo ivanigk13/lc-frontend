@@ -42,7 +42,7 @@ import { TransactionStatusListComponent } from './pages/transaction-status/trans
     imports: [
         RouterModule.forRoot([
             {
-                path: '', component: AppMainComponent,
+                path: 'dashboard', component: AppMainComponent,
                 children: [
                     { path: '', component: DashboardComponent },                                                                       
                     { path: 'uikit/formlayout', component: FormLayoutComponent },
@@ -123,7 +123,9 @@ import { TransactionStatusListComponent } from './pages/transaction-status/trans
             { path: 'pages/error', component: ErrorComponent },
             { path: 'pages/notfound', component: NotfoundComponent },
             { path: 'pages/access', component: AccessComponent },
+            { path: '', redirectTo: '/login', pathMatch: 'full' },
             { path: '**', redirectTo: 'pages/notfound' },
+            
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' })
     ],
     exports: [RouterModule]
