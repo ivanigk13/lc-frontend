@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ActivityService } from 'src/app/service/activity.service';
 
 @Component({
   selector: 'app-activity',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActivityComponent implements OnInit {
 
-  constructor() { }
+  constructor(private title:Title, private activityService:ActivityService) {
+    title.setTitle('Activity List')
+  }
 
   ngOnInit(): void {
   }
