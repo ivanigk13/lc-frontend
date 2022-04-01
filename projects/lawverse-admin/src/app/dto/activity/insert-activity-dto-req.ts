@@ -1,6 +1,7 @@
 export class InsertActivityDtoReq { 
 	 activityTypeId!: string 
-	 fileId!: string 
+	 fileId!: string
+	 paymentFileId!: string
 	 activityName!: string 
 	 categoryId!: string 
 	 transactionStatusId!: string 
