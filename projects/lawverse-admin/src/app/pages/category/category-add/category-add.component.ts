@@ -1,26 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { InsertCategoryDtoReq } from 'src/app/dto/category/insert-category-dto-req';
+import { CategoryService } from 'src/app/service/category.service';
 
 @Component({
   selector: 'app-category-add',
   templateUrl: './category-add.component.html',
   styleUrls: ['./category-add.component.scss']
 })
-export class CategoryAddComponent implements OnInit {
+export class CategoryAddComponent implements OnInit, OnDestroy {
 
-  category : InsertCategoryDtoReq = new InsertCategoryDtoReq()
-  constructor(private router: Router) { }
+  category: InsertCategoryDtoReq = new InsertCategoryDtoReq()
+
+  categorySubs?: Subscription
+  constructor(private router: Router, private categoryService: CategoryService) { }
 
   ngOnInit(): void {
   }
 
-  back(): void {
-    this.router.navigateByUrl('/category/list')
+  onSubmit(valid: boolean): void {
+    if (valid) {
+      this.categorySubs = this.categoryService.insert(this.category).subscribe(result => {
+        this.router.navigateByUrl('/dashboard/category/list')
+      })
+    }
   }
 
-}
+  back(): void {
+    this.router.navigateByUrl('/dashboard/category/list')
+  }
 
-class InsertCategoryDtoReq {
-  categoryName!: string
-  categoryCode!: string
+  ngOnDestroy(): void {
+    this.categorySubs?.unsubscribe()
+  }
 }

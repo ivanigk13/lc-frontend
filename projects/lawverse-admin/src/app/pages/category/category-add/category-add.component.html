@@ -1,6 +1,6 @@
 <div class="grid justify-content-center">
     <div class="col-12">
-        <form #FormCategory="ngForm">
+        <form #formCategory="ngForm" (ngSubmit)="onSubmit(formCategory.form.valid)">
             <div class="card">
                 <div class="flex justify-content-between">
                     <div>
@@ -9,14 +9,15 @@
                     <div>
                         <button pButton pRipple icon="pi pi-times" (click)="back()" label="Cancel"
                             class="p-button-secondary mr-2 mb-2"></button>
-                        <button pButton pRipple icon="pi pi-save" [disabled]="FormCategory.form.invalid" label="Save"
-                            class="mr-2 mb-2"></button>
+                        <button pButton pRipple icon="pi pi-save" type="submit" [disabled]="formCategory.form.invalid"
+                            label="Save" class="mr-2 mb-2"></button>
                     </div>
                 </div>
                 <div class="p-fluid p-formgrid grid">
                     <div class="field col-12 md:col-6">
                         <label htmlFor="firstname2">Category Name</label>
-                        <input pInputText name="name" id="name" type="text" [(ngModel)]="category.categoryName" required="true"/>
+                        <input pInputText name="name" id="name" type="text" [(ngModel)]="category.categoryName"
+                            required="true" />
                     </div>
                     <div class="field col-12 md:col-6">
                         <label htmlFor="lastname2">Category Code</label>
