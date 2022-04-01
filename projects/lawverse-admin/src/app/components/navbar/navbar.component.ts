@@ -17,6 +17,11 @@ export class NavbarComponent implements OnInit {
       this.router.navigateByUrl(event.items.routerLink)
   }
 
+  onLogout() {
+    localStorage.clear()
+    this.router.navigateByUrl('/login')
+  }
+
   items =[
     { label: 'Activity', routerLink: '/activity/add' },
     { label: 'Login', routerLink: '/login' },    
