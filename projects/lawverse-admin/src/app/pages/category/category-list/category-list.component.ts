@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { GetCategoryDtoDataRes } from 'src/app/dto/category/get-category-dto-data-res';
+import { CategoryService } from 'src/app/service/category.service';
 
 @Component({
   selector: 'app-category-list',
@@ -8,20 +11,24 @@ import { Router } from '@angular/router';
 })
 export class CategoryListComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  categories: GetCategoryDtoDataRes[] = []
+
+  categorySubs?: Subscription
+
+  constructor(private router: Router, private categoryService: CategoryService) { }
 
   ngOnInit(): void {
+    this.getAll()
   }
 
-  categories = [
-    { name: 'HR Consultan', code: 'HRC' },
-    { name: 'HR It Consultan', code: 'HRIC' },
-    { name: 'HR Privacy Consultan', code: 'HRPC' },
-    { name: 'HR', code: 'HR' },
-  ]
+  getAll() {
+    this.categorySubs = this.categoryService.getAll().subscribe(result => {
+      this.categories = result.data
+    })
+  }
 
-  onClick() : void {
-    this.router.navigateByUrl('/category/new')
+  onClick(): void {
+    this.router.navigateByUrl('/dashboard/category/new')
   }
 
 }

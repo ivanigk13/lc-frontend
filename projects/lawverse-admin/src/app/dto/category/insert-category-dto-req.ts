@@ -1,5 +1,5 @@
-export class InsertCategoryDtoReq { 
-	 categoryCode?: string 
-	 categoryName?: string 
-} 
+export class InsertCategoryDtoReq {
+	categoryCode!: string
+	categoryName!: string
+}
 

@@ -1,4 +1,4 @@
-export class DeleteCategoryDtoRes { 
-	 msg?: string 
-} 
+export class DeleteCategoryDtoRes {
+	msg!: string
+}
 

@@ -2,8 +2,8 @@
     <div class="col-12">
         <div class="card">
             <h5>Category List</h5>
-            <p-table #dt1 [value]="categories" dataKey="id" [rows]="10" [rowHover]="true" styleClass="p-datatable-gridlines"
-                [paginator]="true" responsiveLayout="scroll">
+            <p-table #dt1 [value]="categories" dataKey="id" [rows]="10" [rowHover]="true"
+                styleClass="p-datatable-gridlines" [paginator]="true" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-end flex-column sm:flex-row">
                         <button pButton label="Delete" icon="pi pi-trash"
@@ -14,9 +14,6 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th class="table-checkbox">
-                            <input type="checkbox">
-                        </th>
                         <th>
                             <div class="flex justify-content-between align-items-center">
                                 Category Code
@@ -30,21 +27,18 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-data>
-                    <tr>
-                        <td>
-                            <input type="checkbox">
+                    <tr *ngFor="let category of categories">
+                        <td style="min-width: 12rem;">
+                            {{category.categoryCode}}
                         </td>
                         <td style="min-width: 12rem;">
-                            {{data.name}}
-                        </td>
-                        <td style="min-width: 12rem;">
-                            {{data.code}}
+                            {{category.categoryName}}
                         </td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                     <tr>
-                        <td colspan="7">No customers found.</td>
+                        <td colspan="7">No category found.</td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="loadingbody">

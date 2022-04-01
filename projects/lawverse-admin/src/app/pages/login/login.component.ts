@@ -40,12 +40,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  loginSubs? : Subscription
-  roleCode : string
-  loginDtoReq : LoginDtoReq = new LoginDtoReq()
+  loginSubs?: Subscription
+  roleCode: string
+  loginDtoReq: LoginDtoReq = new LoginDtoReq()
 
-  constructor(public configService: ConfigService, private title:Title, private loginService:LoginService, 
-              private router:Router) {
+  constructor(public configService: ConfigService, private title: Title, private loginService: LoginService,
+    private router: Router) {
     this.title.setTitle("Login Page")
   }
 
@@ -56,12 +56,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  onLogin(valid : boolean) {
-    if(valid){
-      this.loginSubs = this.loginService.login(this.loginDtoReq).subscribe(result=>{
+  onLogin(valid: boolean) {
+    if (valid) {
+      this.loginSubs = this.loginService.login(this.loginDtoReq).subscribe(result => {
         this.loginService.saveData(result)
         this.roleCode = result.roleCode
-        this.router.navigateByUrl('/account-detail')
+        this.router.navigateByUrl('/dashboard')
         // if(this.roleCode == RoleList.ADMIN) this.router.navigateByUrl('/dashboard')
         // else this.router.navigateByUrl('/icons')
       })
@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    if(this.loginSubs){
+    if (this.loginSubs) {
       this.loginSubs.unsubscribe()
     }
   }
