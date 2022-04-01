@@ -24,23 +24,19 @@ export class ActivityService {
         return this.http.get<GetByIdActivityDtoRes>(`http://localhost:8080/activities/${id}`)
     }
 
-    insert(insertActivityDtoReq : InsertActivityDtoReq, file : File[]) : Observable<InsertActivityDtoRes> {
+    insert(insertActivityDtoReq : InsertActivityDtoReq, files : File[]) : Observable<InsertActivityDtoRes> {
         const formData: FormData = new FormData()
         formData.append('data', JSON.stringify(insertActivityDtoReq))
-        if(file) {
-            formData.append('file',file[0])
-            formData.append('file',file[1])
-        }
+        if(files[0]) formData.append('file',files[0])
+        if(files[1]) formData.append('file',files[1])
         return this.http.post<InsertActivityDtoRes>('http://localhost:8080/activities',formData)
     }
 
-    update(updateActivityDtoReq : UpdateActivityDtoReq, file : File[]) : Observable<UpdateActivityDtoRes> {
+    update(updateActivityDtoReq : UpdateActivityDtoReq, files : File[]) : Observable<UpdateActivityDtoRes> {
         const formData: FormData = new FormData()
         formData.append('data', JSON.stringify(updateActivityDtoReq))
-        if(file) {
-            formData.append('file',file[0])
-            formData.append('file',file[1])
-        }
+        if(files[0]) formData.append('file',files[0])
+        if(files[1]) formData.append('file',files[1])
         return this.http.put<UpdateActivityDtoRes>(`http://localhost:8080/activities`,formData)
     }
 
