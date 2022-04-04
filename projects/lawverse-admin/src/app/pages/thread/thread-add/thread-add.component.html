@@ -1,7 +1,7 @@
   <app-navbar></app-navbar>  
   <div class="surface-0 flex align-items-center justify-content-center min-h-screen overflow-hidden">
       <div class="grid mw-50 my-2">
-          <form class="col-12">
+          <form class="col-12" #threadForm="ngForm" (ngSubmit)="insert(threadForm.form.valid)">
               <div class="card shadow-3">
                   <div class="grid justify-content-between">
                       <div class="col-3">
@@ -11,31 +11,35 @@
                   <div class="p-fluid p-formgrid grid justify-content-start">
                       <div class="field md:col-6 sm:col-12">
                           <label htmlFor="state">Thread Type</label>
-                          <p-dropdown [options]="threadTypes" name="threadType" optionLabel="name" optionValue="id"
-                              [(ngModel)]="selectedDrop" placeholder="Select Thread Type" [showClear]="true">
+                          <p-dropdown [options]="threadTypes" id="threadType" name="threadType" 
+                            optionLabel="threadTypeName" optionValue="id" [(ngModel)]="insertThread.threadTypeId"
+                            placeholder="Select Thread Type" [showClear]="true" [required]="true"
+                            (ngModelChange)="changeType()">
                           </p-dropdown>
                       </div>
                       <div class="field col-12">
                           <label htmlFor="title">Title</label>
-                          <input pInputText id="title" type="text" />
+                          <input pInputText id="title" type="text" name="title" [required]="true"
+                            [(ngModel)]="insertThread.title">
                       </div>
                       <div class="field col-12">
-                          <label htmlFor="description">Description</label>
-                          <textarea pInputTextarea id="description" placeholder="Your Message" autoResize rows="3"
-                              cols="30"></textarea>
+                        <label htmlFor="content">Content</label>
+                        <textarea pInputTextarea id="content" name="content" placeholder="Your Content" 
+                            autoResize rows="3" [(ngModel)]="insertThread.content" cols="30" [required]="true">
+                        </textarea>
                       </div>
 
-                      <div *ngIf="selectedDrop == 2" class="field sm:col-12">
+                      <div *ngIf="selectedDrop == pollingCode" class="field sm:col-12">
                           <label htmlFor="pollingTitle">Polling Title</label>
                           <input pInputText id="pollingTitle" type="text" />
                       </div>
-                      <div *ngIf="selectedDrop==2" class="col-12">
+                      <div *ngIf="selectedDrop == pollingCode" class="col-12">
                           <div *ngFor="let i of createRange(pollingDetailCounter); let no = index" class="field">
                               <label htmlFor="polingName">Poling Name {{no+1}}</label>
-                              <input pInputText id="polingName" type="text" />
+                              <input pInputText id="polingName" type="text" [required]="true"/>
                           </div>
                       </div>
-                      <div *ngIf="selectedDrop == 2" class="sm:col-12 mx-auto">
+                      <div *ngIf="selectedDrop == pollingCode" class="sm:col-12 mx-auto">
                           <div class="p-formgrid grid">
                               <div class="col-6">
                                   <button pButton (click)="onAdd()" type="button" icon="pi pi-plus" iconPos="left"
@@ -51,14 +55,14 @@
 
                       </div>
 
-                      <div *ngIf="selectedDrop == 1 || selectedDrop == 3" class="field col-12">
+                      <div *ngIf="selectedDrop != pollingCode" class="field col-12">
                           <h5>Picture</h5>
                           <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*"
                               maxFileSize="1000000" chooseLabel="Browse"></p-fileUpload>
                       </div>
 
                       <div class="field col-3 text-center">
-                          <button pButton label="Submit" class="p-button-success"></button>
+                          <button type="submit" pButton label="Submit" class="p-button-success" [disabled]="threadForm.form.invalid"></button>
                       </div>
 
                   </div>
