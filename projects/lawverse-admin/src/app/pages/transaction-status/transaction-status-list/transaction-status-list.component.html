@@ -2,17 +2,14 @@
     <div class="col-12">
         <div class="card">
             <h5>Transaction Status List</h5>
-            <p-table #dt1 [value]="statuses" dataKey="id" [rows]="10" [rowHover]="true" styleClass="p-datatable-gridlines"
-                [paginator]="true" responsiveLayout="scroll">
+            <p-table #dt1 [value]="transactionStatus" dataKey="id" [rows]="10" [rowHover]="true"
+                styleClass="p-datatable-gridlines" [paginator]="true" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
-                    <div class="flex justify-content-end flex-column sm:flex-row">                       
+                    <div class="flex justify-content-end flex-column sm:flex-row">
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th class="table-checkbox">
-                            <input type="checkbox">
-                        </th>
                         <th>
                             <div class="flex justify-content-between align-items-center">
                                 Transaction Status Code
@@ -27,25 +24,22 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-data>
                     <tr>
-                        <td>
-                            <input type="checkbox">
+                        <td style="min-width: 12rem;">
+                            {{data.statusCode}}
                         </td>
                         <td style="min-width: 12rem;">
-                            {{data.name}}
-                        </td>
-                        <td style="min-width: 12rem;">
-                            {{data.code}}
+                            {{data.statusName}}
                         </td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                     <tr>
-                        <td colspan="7">No customers found.</td>
+                        <td colspan="7">No transaction status found.</td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="loadingbody">
                     <tr>
-                        <td colspan="7">Loading customers data. Please wait.</td>
+                        <td colspan="7">Loading transaction status data. Please wait.</td>
                     </tr>
                 </ng-template>
             </p-table>
