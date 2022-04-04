@@ -10,37 +10,45 @@ import { UpdateActivityDtoReq } from "../dto/activity/update-activity-dto-req";
 import { UpdateActivityDtoRes } from "../dto/activity/update-activity-dto-res";
 
 @Injectable({
-    providedIn : 'root'
+    providedIn: 'root'
 })
 
 export class ActivityService {
-    constructor(private http:HttpClient){}
+    constructor(private http: HttpClient) { }
 
-    getAll() : Observable<GetAllActivityDtoRes> {
+    getAll(): Observable<GetAllActivityDtoRes> {
         return this.http.get<GetAllActivityDtoRes>('http://localhost:8080/activities')
     }
 
-    getById(id : number) : Observable<GetByIdActivityDtoRes> {
+    getAllEvent(): Observable<GetAllActivityDtoRes> {
+        return this.http.get<GetAllActivityDtoRes>('http://localhost:8080/activities/approved-event')
+    }
+
+    getAllCourse(): Observable<GetAllActivityDtoRes> {
+        return this.http.get<GetAllActivityDtoRes>('http://localhost:8080/activities/approved-course')
+    }
+
+    getById(id: number): Observable<GetByIdActivityDtoRes> {
         return this.http.get<GetByIdActivityDtoRes>(`http://localhost:8080/activities/${id}`)
     }
 
-    insert(insertActivityDtoReq : InsertActivityDtoReq, files : File[]) : Observable<InsertActivityDtoRes> {
+    insert(insertActivityDtoReq: InsertActivityDtoReq, files: File[]): Observable<InsertActivityDtoRes> {
         const formData: FormData = new FormData()
         formData.append('data', JSON.stringify(insertActivityDtoReq))
-        if(files[0]) formData.append('file',files[0])
-        if(files[1]) formData.append('file',files[1])
-        return this.http.post<InsertActivityDtoRes>('http://localhost:8080/activities',formData)
+        if (files[0]) formData.append('file', files[0])
+        if (files[1]) formData.append('file', files[1])
+        return this.http.post<InsertActivityDtoRes>('http://localhost:8080/activities', formData)
     }
 
-    update(updateActivityDtoReq : UpdateActivityDtoReq, files : File[]) : Observable<UpdateActivityDtoRes> {
+    update(updateActivityDtoReq: UpdateActivityDtoReq, files: File[]): Observable<UpdateActivityDtoRes> {
         const formData: FormData = new FormData()
         formData.append('data', JSON.stringify(updateActivityDtoReq))
-        if(files[0]) formData.append('file',files[0])
-        if(files[1]) formData.append('file',files[1])
-        return this.http.put<UpdateActivityDtoRes>(`http://localhost:8080/activities`,formData)
+        if (files[0]) formData.append('file', files[0])
+        if (files[1]) formData.append('file', files[1])
+        return this.http.put<UpdateActivityDtoRes>(`http://localhost:8080/activities`, formData)
     }
 
-    delete(id : number) : Observable<DeleteActivityDtoRes> {
+    delete(id: number): Observable<DeleteActivityDtoRes> {
         return this.http.delete<DeleteActivityDtoRes>(`http://localhost:8080/activities/${id}`)
     }
 }
