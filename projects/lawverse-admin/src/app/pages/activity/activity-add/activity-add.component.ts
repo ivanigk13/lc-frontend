@@ -20,6 +20,8 @@ export class ActivityAddComponent implements OnInit,OnDestroy {
   categories:GetCategoryDtoDataRes[] = []
   insertActivityDtoReq : InsertActivityDtoReq = new InsertActivityDtoReq()
 
+  activityTypes = []
+
   constructor(private title:Title, private activityService:ActivityService, private router:Router,
               private categoryService:CategoryService) {
     title.setTitle('Insert Activity')
