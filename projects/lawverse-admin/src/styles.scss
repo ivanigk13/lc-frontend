@@ -47,19 +47,10 @@ body{
     padding: 1rem;
 }
 
-.badge-event {
-    position: absolute;
-    top: 20px;
-    left: 10px;
+.badge-event {    
     font-size: 18px;
-    background-color: rgb(253, 253, 253, 0.8);
+    background-color: rgba(233, 233, 233, 0.8);
     color: #353535 !important;
-}
-
-.badge-thread {   
-    font-size: 18px;
-    background-color: rgba(56, 56, 56, 0.8);
-    color: #fff !important;
 }
 
 .card-img-top {
@@ -241,6 +232,14 @@ body{
     opacity: 1;
     color: #0062e6;
     background-color: #ffffff;
+}
+
+.profile-img{
+    width: 100%;
+}
+
+.activity-img{
+    aspect-ratio: 16 / 9;
 }
 
 .order-list-img{
