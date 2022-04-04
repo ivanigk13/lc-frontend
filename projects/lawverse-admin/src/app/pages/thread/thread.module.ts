@@ -1,40 +1,24 @@
-import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { ButtonModule } from "primeng/button";
-import { CalendarModule } from "primeng/calendar";
-import { CheckboxModule } from "primeng/checkbox";
-import { DropdownModule } from "primeng/dropdown";
-import { FileUploadModule } from "primeng/fileupload";
-import { InputTextModule } from "primeng/inputtext";
-import { InputTextareaModule } from "primeng/inputtextarea";
-import { PasswordModule } from "primeng/password";
-import { TableModule } from "primeng/table";
-import { ComponentModule } from "src/app/components/component.module";
+import { BaseModule } from "src/app/base/base.module";
 import { ThreadAddComponent } from './thread-add/thread-add.component';
 import { ThreadRouter } from "./thread.router";
-import { ThreadComponent } from './thread/thread.component';
+import { ThreadListComponent } from './thread-list/thread-list.component';
+import { NavbarComponent } from "src/app/components/navbar/navbar.component";
+import { ComponentModule } from "src/app/components/component.module";
+import { ThreadSingleComponent } from './thread-single/thread-single.component';
 
 
 @NgModule({
-    declarations: [         
-    ThreadAddComponent, ThreadComponent
+  declarations: [
+    ThreadAddComponent,
+    ThreadListComponent,
+    ThreadSingleComponent
   ],
-    imports: [
-        FormsModule,
-        CommonModule,
-        TableModule,
-        InputTextareaModule,
-        ComponentModule,
-        DropdownModule,
-        ButtonModule,
-        FileUploadModule,
-        InputTextModule,
-        CheckboxModule,
-        ThreadRouter,
-        PasswordModule,
-    
-    ]
+  imports: [
+    ThreadRouter,
+    BaseModule,
+    ComponentModule
+  ]
 
 })
 

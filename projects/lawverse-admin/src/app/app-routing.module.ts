@@ -101,12 +101,24 @@ import { AccessComponent } from './components/access/access.component';
                 loadChildren: () => import('./pages/account-detail/account-detail.module').then(m => m.AccountDetailModule)
             },
             {
+                path: 'article',
+                loadChildren: () => import('./pages/article/article.module').then(m => m.ArticleModule)
+            },
+            {
                 path: 'activity',
                 loadChildren: () => import('./pages/activity/activity.module').then(m => m.ActivityModule)
             },
             {
                 path: 'thread',
                 loadChildren: () => import('./pages/thread/thread.module').then(m => m.ThreadModule)
+            },
+            {
+                path: 'order',
+                loadChildren: () => import('./pages/order/order.module').then( m => m.OrderModule)
+            },
+            {
+                path: 'home',
+                loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
             },
             { path: 'pages/landing', component: LandingComponent },
             { path: 'pages/login', component: LoginComponent },

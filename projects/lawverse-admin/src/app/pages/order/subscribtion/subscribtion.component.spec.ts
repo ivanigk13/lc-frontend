@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ThreadComponent } from './thread.component';
+import { SubscribtionComponent } from './subscribtion.component';
 
-describe('ThreadComponent', () => {
-  let component: ThreadComponent;
-  let fixture: ComponentFixture<ThreadComponent>;
+describe('SubscribtionComponent', () => {
+  let component: SubscribtionComponent;
+  let fixture: ComponentFixture<SubscribtionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ThreadComponent ]
+      declarations: [ SubscribtionComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ThreadComponent);
+    fixture = TestBed.createComponent(SubscribtionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

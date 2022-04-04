@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.loginSubs = this.loginService.login(this.loginDtoReq).subscribe(result => {
         this.loginService.saveData(result)
         this.roleCode = result.roleCode
-        this.router.navigateByUrl('/dashboard')
+        this.router.navigateByUrl('/article')
         // if(this.roleCode == RoleList.ADMIN) this.router.navigateByUrl('/dashboard')
         // else this.router.navigateByUrl('/icons')
       })

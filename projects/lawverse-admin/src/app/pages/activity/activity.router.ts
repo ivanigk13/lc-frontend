@@ -13,7 +13,7 @@ const routes: Routes = [
         component: ActivityComponent
     },
     {
-        path: 'add',
+        path: 'new',
         component: ActivityAddComponent
     },
     {

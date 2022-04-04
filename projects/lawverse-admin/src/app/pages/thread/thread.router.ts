@@ -1,16 +1,16 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { ThreadAddComponent } from "./thread-add/thread-add.component";
-import { ThreadComponent } from "./thread/thread.component";
+import { ThreadListComponent } from "./thread-list/thread-list.component";
 
 
 const routes: Routes = [
     {
         path: '',
-        component: ThreadComponent
+        component: ThreadListComponent
     },
     {
-        path: 'add',
+        path: 'new',
         component: ThreadAddComponent
     }
 ]

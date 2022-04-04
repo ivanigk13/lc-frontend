@@ -1,7 +1,7 @@
   <app-navbar></app-navbar>
   <div class="surface-0 flex align-items-center justify-content-center min-h-screen overflow-hidden">
-      <div class="grid mw-50">
-          <div class="col-12">
+      <form #FormActivity="ngForm" (ngSubmit)="FormActivity.form.valid"  class="grid mw-50">
+          <div class="col-12">                  
               <div class="card shadow-3">
                   <div class="grid justify-content-between">
                       <div class="col-3">
@@ -11,49 +11,49 @@
                   <div class="p-fluid p-formgrid grid justify-content-start">
                       <div class="field col-12">
                           <label htmlFor="firstname2">Activity Name</label>
-                          <input pInputText id="firstname2" type="text" />
+                          <input pInputText id="firstname2" type="text" required/>
                       </div>
                       <div class="field md:col-6 sm:col-12">
                           <label htmlFor="state">Activity Type</label>
-                          <p-dropdown [options]="activityTypes" optionLabel="label">
+                          <p-dropdown [options]="activityTypes" placeholder="Select Activity Type"
+                              optionLabel="activityTypeName" optionValue="id" required>
                           </p-dropdown>
                       </div>
                       <div class="field md:col-6 sm:col-12">
                           <label htmlFor="state">Category</label>
-                          <p-dropdown [options]="categories" optionLabel="label">
+                          <p-dropdown [options]="categories" placeholder="Select Category" optionLabel="categoryName"
+                              optionValue="id" required>
                           </p-dropdown>
                       </div>
                       <div class="field md:col-6 sm:col-12">
                           <h5>Date Start</h5>
-                          <p-calendar [showIcon]="true" [showButtonBar]="true"></p-calendar>
+                          <p-calendar [showIcon]="true" [showButtonBar]="true" required></p-calendar>
                       </div>
                       <div class="field md:col-6 sm:col-12">
                           <h5>Date End</h5>
-                          <p-calendar [showIcon]="true" [showButtonBar]="true"></p-calendar>
+                          <p-calendar [showIcon]="true" [showButtonBar]="true" required></p-calendar>
                       </div>
                       <div class="field md:col-6 sm:col-12">
                           <h5>Time Start</h5>
-                          <p-calendar [showIcon]="true" [timeOnly]="true" [showButtonBar]=" true"></p-calendar>
+                          <p-calendar [showIcon]="true" [timeOnly]="true" [showButtonBar]=" true" required></p-calendar>
                       </div>
                       <div class="field md:col-6 sm:col-12">
                           <h5>Time End</h5>
-                          <p-calendar [showIcon]="true" [timeOnly]="true" [showButtonBar]=" true"></p-calendar>
+                          <p-calendar [showIcon]="true" [timeOnly]="true" [showButtonBar]=" true" required></p-calendar>
                       </div>
                       <div class="field md:col-6 sm:col-12">
                           <h5>Activity Picture</h5>
-                          <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*"
-                              maxFileSize="1000000" chooseLabel="Browse"></p-fileUpload>
+                          <input class="form-control" type="file" (change)="picture($event)">
                       </div>
                       <div class="field md:col-6 sm:col-12">
                           <h5>Payment Picture</h5>
-                          <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*"
-                              maxFileSize="1000000" chooseLabel="Browse"></p-fileUpload>
+                          <input class="form-control" type="file" (change)="payment($event)">
                       </div>
                       <div class="field col-3 text-center">                   
-                              <button pButton label="Submit" class="p-button-success"></button>
+                              <button pButton [disabled]="FormActivity.form.invalid" type="submit" label="Submit" class="p-button-success"></button>
                       </div>
                   </div>
               </div>
           </div>
-      </div>
+        </form>
   </div>
