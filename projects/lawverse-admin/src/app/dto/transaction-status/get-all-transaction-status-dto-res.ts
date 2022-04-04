@@ -1,5 +1,7 @@
-export class GetAllTransactionStatusDtoRes { 
-	 msg?: string 
-	 data?: GetTransactionStatusDtoDataRes[] 
-} 
+import { GetTransactionStatusDtoDataRes } from "./get-transaction-status-dto-data-res"
+
+export class GetAllTransactionStatusDtoRes {
+	msg?: string
+	data?: GetTransactionStatusDtoDataRes[]
+}
 
