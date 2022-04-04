@@ -10,7 +10,7 @@ import { ActivityService } from 'src/app/service/activity.service';
 })
 export class ActivityComponent implements OnInit, OnDestroy {
 
-  activities : GetActivityDtoDataRes [] = []
+  activities: GetActivityDtoDataRes[] = []
   getAllSubs!: Subscription
 
   constructor(private activityService: ActivityService) { }
@@ -19,8 +19,11 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.getAll()
   }
 
-  getAll() : void {
-    this.getAllSubs = this.activityService.getAll().subscribe(result => this.activities = result.data)
+  getAll(): void {
+    this.getAllSubs = this.activityService.getAll().subscribe(result => {
+      this.activities = result.data
+      console.log(result)
+    })
   }
 
   ngOnDestroy(): void {
