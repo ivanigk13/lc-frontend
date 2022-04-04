@@ -93,6 +93,10 @@ import { AccessComponent } from './components/access/access.component';
                 loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule)
             },
             {
+                path: 'profile',
+                loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule)
+            },
+            {
                 path: 'forgot-password',
                 loadChildren: () => import('./pages/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule)
             },
