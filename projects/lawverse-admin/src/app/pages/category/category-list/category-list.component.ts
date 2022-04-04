@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GetCategoryDtoDataRes } from 'src/app/dto/category/get-category-dto-data-res';
@@ -9,7 +9,7 @@ import { CategoryService } from 'src/app/service/category.service';
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.scss']
 })
-export class CategoryListComponent implements OnInit {
+export class CategoryListComponent implements OnInit, OnDestroy {
 
   categories: GetCategoryDtoDataRes[] = []
 
@@ -18,10 +18,10 @@ export class CategoryListComponent implements OnInit {
   constructor(private router: Router, private categoryService: CategoryService) { }
 
   ngOnInit(): void {
-    this.getAll()
+    this.getData()
   }
 
-  getAll() {
+  getData() {
     this.categorySubs = this.categoryService.getAll().subscribe(result => {
       this.categories = result.data
     })
@@ -29,6 +29,10 @@ export class CategoryListComponent implements OnInit {
 
   onClick(): void {
     this.router.navigateByUrl('/dashboard/category/new')
+  }
+
+  ngOnDestroy(): void {
+    this.categorySubs.unsubscribe()
   }
 
 }

@@ -7,14 +7,11 @@
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-end flex-column sm:flex-row">
                         <button pButton label="Delete" icon="pi pi-trash"
-                            class="p-element p-ripple p-button-danger mr-2 mb-2 p-button p-component mb-2"></button>                        
+                            class="p-element p-ripple p-button-danger mr-2 mb-2 p-button p-component mb-2"></button>
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th class="table-checkbox">
-                            <input type="checkbox">
-                        </th>
                         <th>
                             <div class="flex justify-content-between align-items-center">
                                 Email
@@ -29,25 +26,22 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-data>
                     <tr>
-                        <td>
-                            <input type="checkbox">
-                        </td>
                         <td style="min-width: 12rem;">
                             {{data.email}}
                         </td>
                         <td style="min-width: 12rem;">
-                            {{data.role}}
+                            {{data.roleName}}
                         </td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                     <tr>
-                        <td colspan="7">No customers found.</td>
+                        <td colspan="7">No users found.</td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="loadingbody">
                     <tr>
-                        <td colspan="7">Loading customers data. Please wait.</td>
+                        <td colspan="7">Loading users data. Please wait.</td>
                     </tr>
                 </ng-template>
             </p-table>
