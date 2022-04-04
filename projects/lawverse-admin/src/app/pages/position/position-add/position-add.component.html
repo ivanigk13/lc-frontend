@@ -1,1 +1,32 @@
-<p>position-add works!</p>
+<div class="grid justify-content-center">
+    <div class="col-12">
+        <form #formPosition="ngForm" (ngSubmit)="onSubmit(formPosition.form.valid)">
+            <div class="card">
+                <div class="flex justify-content-between">
+                    <div>
+                        <h5>Add Position</h5>
+                    </div>
+                    <div>
+                        <button pButton pRipple icon="pi pi-times" (click)="back()" label="Cancel"
+                            class="p-button-secondary mr-2 mb-2"></button>
+                        <button pButton pRipple icon="pi pi-save" type="submit" [disabled]="formPosition.form.invalid"
+                            label="Save" class="mr-2 mb-2"></button>
+                    </div>
+                </div>
+                <div class="p-fluid p-formgrid grid">
+                    <div class="field col-12 md:col-6">
+                        <label for="code">Position Code</label>
+                        <input pInputText name="code" id="code" type="text" [(ngModel)]="position.positionCode"
+                            required="true" />
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="name">Position Name</label>
+                        <input pInputText name="name" id="name" type="text" [(ngModel)]="position.positionName"
+                            required="true" />
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

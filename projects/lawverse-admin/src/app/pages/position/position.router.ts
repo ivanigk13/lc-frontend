@@ -7,11 +7,11 @@ import { PositionListComponent } from "./position-list/position-list.component";
 const routes: Routes = [
     {
         path: 'list',
-        component: PositionAddComponent
+        component: PositionListComponent
     },
     {
         path: 'new',
-        component: PositionListComponent
+        component: PositionAddComponent
     }
 ]
 
