@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { GetActivityDtoDataRes } from 'src/app/dto/activity/get-activity-dto-data-res';
+import { ActivityService } from 'src/app/service/activity.service';
 
 @Component({
   selector: 'app-course',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CourseComponent implements OnInit {
 
-  constructor() { }
+  courses: GetActivityDtoDataRes[] = []
+
+  courseSubs?: Subscription
+
+  constructor(private activityService: ActivityService) { }
 
   ngOnInit(): void {
+    this.courseSubs = this.activityService.getAllCourse().subscribe(result => this.courses = result.data)
+  }
+
+  ngOnDestroy(): void {
+    this.courseSubs?.unsubscribe()
   }
 
 }
