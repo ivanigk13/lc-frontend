@@ -23,8 +23,11 @@ export class ThreadService {
         return this.http.get<GetByIdThreadDtoRes>(`http://localhost:8080/threads/${id}`)
     }
 
-    insert(insertThreadDtoReq: InsertThreadDtoReq): Observable<InsertThreadDtoRes> {
-        return this.http.post<InsertThreadDtoRes>('http://localhost:8080/threads', insertThreadDtoReq)
+    insert(insertThreadDtoReq: InsertThreadDtoReq, file?: File): Observable<InsertThreadDtoRes> {
+        const formData: FormData = new FormData()
+        formData.append('data', JSON.stringify(insertThreadDtoReq))
+        if (file) formData.append('file', file)
+        return this.http.post<InsertThreadDtoRes>('http://localhost:8080/threads', formData)
     }
 
     update(updateThreadDtoReq: UpdateThreadDtoReq): Observable<UpdateThreadDtoRes> {
