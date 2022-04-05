@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
+  editProfile : boolean = true
+
   constructor() { }
 
   ngOnInit(): void {
   }
+
+  edit() : void {
+    this.editProfile = !this.editProfile
+  }
+
+  countries = []
 
 }

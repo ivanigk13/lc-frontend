@@ -2,15 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ThreadTypeList } from 'src/app/constant/thread-type-list';
-import { InsertPollingDetailDtoReq } from 'src/app/dto/polling-detail/insert-polling-detail-dto-req';
-import { InsertPollingHeaderDtoReq } from 'src/app/dto/polling-header/insert-polling-header-dto-req';
-import { GetThreadTypeDtoDataRes } from 'src/app/dto/thread-type/get-thread-type-dto-data-res';
-import { InsertThreadDtoReq } from 'src/app/dto/thread/insert-thread-dto-req';
-import { PollingDetailService } from 'src/app/service/polling-detail.service';
-import { PollingHeaderService } from 'src/app/service/polling-header.service';
-import { ThreadTypeService } from 'src/app/service/thread-type.service';
-import { ThreadService } from 'src/app/service/thread.service';
+import { ThreadTypeList } from '../../../constant/thread-type-list';
+import { InsertPollingDetailDtoReq } from '../../../dto/polling-detail/insert-polling-detail-dto-req';
+import { InsertPollingHeaderDtoReq } from '../../../dto/polling-header/insert-polling-header-dto-req';
+import { GetThreadTypeDtoDataRes } from '../../../dto/thread-type/get-thread-type-dto-data-res';
+import { InsertThreadDtoReq } from '../../../dto/thread/insert-thread-dto-req';
+import { PollingHeaderService } from '../../../service/polling-header.service';
+import { ThreadTypeService } from '../../../service/thread-type.service';
+import { ThreadService } from '../../../service/thread.service';
 
 @Component({
   selector: 'app-thread-add',
