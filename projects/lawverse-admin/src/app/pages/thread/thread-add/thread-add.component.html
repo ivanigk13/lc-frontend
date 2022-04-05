@@ -31,12 +31,12 @@
 
                       <div *ngIf="selectedDrop == pollingCode" class="field sm:col-12">
                           <label htmlFor="pollingTitle">Polling Title</label>
-                          <input pInputText id="pollingTitle" type="text" />
+                          <input pInputText id="pollingTitle" name="pollingTitle" type="text" [required]="true"/>
                       </div>
                       <div *ngIf="selectedDrop == pollingCode" class="col-12">
                           <div *ngFor="let i of createRange(pollingDetailCounter); let no = index" class="field">
-                              <label htmlFor="polingName">Poling Name {{no+1}}</label>
-                              <input pInputText id="polingName" type="text" [required]="true"/>
+                              <label htmlFor="polingName">Polling Name {{no+1}}</label>
+                              <input pInputText id="polingName" name="polingName" type="text" [required]="true">
                           </div>
                       </div>
                       <div *ngIf="selectedDrop == pollingCode" class="sm:col-12 mx-auto">

@@ -23,6 +23,7 @@ export class ThreadAddComponent implements OnInit,OnDestroy {
   pollingDetailCounter : number = 2
   pollingCode:string = ThreadTypeList.POLLING
   reduceDisable : boolean = true
+  pollingName : string[] = []
 
   threadTypes : GetThreadTypeDtoDataRes[] = []
   threadTypeSubs? : Subscription
@@ -32,7 +33,7 @@ export class ThreadAddComponent implements OnInit,OnDestroy {
   insertSubs? : Subscription
 
   insertPollingHeader : InsertPollingHeaderDtoReq = new InsertPollingHeaderDtoReq()
-  insertPollingDetail : InsertPollingDetailDtoReq[] = []
+  insertPollingDetail : InsertPollingDetailDtoReq = new InsertPollingDetailDtoReq()
 
 
   constructor(private title:Title, private threadTypeService:ThreadTypeService, private threadService:ThreadService,
@@ -88,6 +89,10 @@ export class ThreadAddComponent implements OnInit,OnDestroy {
     this.threadTypeByIdSubs = this.threadTypeService.getById(this.insertThread.threadTypeId).subscribe(result=>{
       this.selectedDrop = result.data.threadTypeCode
     })
+  }
+
+  pushPollingName(){
+    
   }
 
   ngOnDestroy(): void {
