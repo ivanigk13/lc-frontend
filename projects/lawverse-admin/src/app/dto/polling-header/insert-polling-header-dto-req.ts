@@ -1,4 +1,6 @@
-export class InsertPollingHeaderDtoReq { 
-	 threadId!: string 
-} 
 
+export class InsertPollingHeaderDtoReq {
+	threadId?: string
+	title?: string
+	data?: String[]
+}
