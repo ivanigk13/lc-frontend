@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { GetActivityDtoDataRes } from 'src/app/dto/activity/get-activity-dto-data-res';
-import { ActivityService } from 'src/app/service/activity.service';
+import { GetActivityDtoDataRes } from '../../../dto/activity/get-activity-dto-data-res';
+import { ActivityService } from '../../../service/activity.service';
 
 @Component({
   selector: 'app-course',
