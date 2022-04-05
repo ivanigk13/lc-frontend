@@ -17,88 +17,79 @@ import { ThreadService } from 'src/app/service/thread.service';
   templateUrl: './thread-add.component.html',
   styleUrls: ['./thread-add.component.scss']
 })
-export class ThreadAddComponent implements OnInit,OnDestroy {
+export class ThreadAddComponent implements OnInit, OnDestroy {
+
+  file?: File
 
   selectedDrop: any
-  pollingDetailCounter : number = 2
-  pollingCode:string = ThreadTypeList.POLLING
-  reduceDisable : boolean = true
-  pollingName : string[] = []
+  pollingDetailCounter: number = 2
+  pollingCode: string = ThreadTypeList.POLLING
+  reduceDisable: boolean = true
 
-  threadTypes : GetThreadTypeDtoDataRes[] = []
-  threadTypeSubs? : Subscription
-  threadTypeByIdSubs? : Subscription
+  threadTypes: GetThreadTypeDtoDataRes[] = []
+  threadTypeSubs?: Subscription
+  threadTypeByIdSubs?: Subscription
 
-  insertThread : InsertThreadDtoReq = new InsertThreadDtoReq()
-  insertSubs? : Subscription
+  insertThread: InsertThreadDtoReq = new InsertThreadDtoReq()
+  insertSubs?: Subscription
+  insertPollingHeaderSubs?: Subscription
 
-  insertPollingHeader : InsertPollingHeaderDtoReq = new InsertPollingHeaderDtoReq()
-  insertPollingDetail : InsertPollingDetailDtoReq = new InsertPollingDetailDtoReq()
+  insertPollingHeader: InsertPollingHeaderDtoReq = new InsertPollingHeaderDtoReq()
+  pollingNames: String[] = []
+  pollingName!: string
 
-
-  constructor(private title:Title, private threadTypeService:ThreadTypeService, private threadService:ThreadService,
-              private pollingHeaderService:PollingHeaderService, private pollingDetailService:PollingDetailService,
-              private router:Router) {
-    title.setTitle('Insert Thread')
+  constructor(private title: Title, private threadTypeService: ThreadTypeService, private threadService: ThreadService,
+    private pollingHeaderService: PollingHeaderService, private router: Router) {
+    this.title.setTitle('Insert Thread')
   }
 
   ngOnInit(): void {
-    this.threadTypeSubs = this.threadTypeService.getAll().subscribe(result=>{
+    this.threadTypeSubs = this.threadTypeService.getAll().subscribe(result => {
       this.threadTypes = result.data
     })
   }
 
   onAdd(): void {
-    this.pollingDetailCounter += 1
-    this.reduceDisable = false
+    this.pollingNames.push(this.pollingName)
   }
 
-  onReduce(): void {
-    if(this.pollingDetailCounter == 3)  {
-      this.pollingDetailCounter -= 1
-      this.reduceDisable = true
-    } else {
-      this.pollingDetailCounter -= 1      
-    }
-  }
-
-  createRange(num : number) {
+  createRange(num: number) {
     return new Array(num)
   }
 
-  insert(valid:boolean) {
-    if(valid){
-      this.insertSubs = this.threadService.insert(this.insertThread).subscribe(result=>{
-        if(result){
-          if(this.selectedDrop == this.pollingCode){
-            this.insertPollingHeader.threadId = result.data.id
-            this.pollingHeaderService.insert(this.insertPollingHeader).subscribe(result=>{
-              // this.insertPollingDetail.pollingHeaderId = result.data.id
-              // this.insertPollingDetail.pollingCounter = 0
-              // this.pollingDetailService.insert(this.insertPollingDetail).subscribe(result=>{
-              //   if(result) this.router.navigateByUrl('/thread')
-              // })
-            })
-          }
+  insert(valid: boolean) {
+    if (valid) {
+      this.insertSubs = this.threadService.insert(this.insertThread, this.file).subscribe(result => {
+        if (this.selectedDrop == this.pollingCode) {
+          this.insertPollingHeader.threadId = result.data.id
+          this.insertPollingHeader.data = this.pollingNames
+          this.insertPollingHeaderSubs = this.pollingHeaderService.insert(this.insertPollingHeader).subscribe(result => {
+            this.router.navigateByUrl('/thread')
+          })
         }
       })
     }
   }
 
+  changeFile(event: any) {
+    this.file = event.target.files[0]
+  }
+
   changeType() {
-    this.threadTypeByIdSubs = this.threadTypeService.getById(this.insertThread.threadTypeId).subscribe(result=>{
+    this.threadTypeByIdSubs = this.threadTypeService.getById(this.insertThread.threadTypeId).subscribe(result => {
       this.selectedDrop = result.data.threadTypeCode
     })
   }
 
-  pushPollingName(){
-    
+  onDelete(index: number): void {
+    this.pollingNames.splice(index, 1)
   }
 
   ngOnDestroy(): void {
     this.threadTypeSubs?.unsubscribe()
     this.threadTypeByIdSubs?.unsubscribe()
     this.insertSubs?.unsubscribe()
+    this.insertPollingHeaderSubs?.unsubscribe()
   }
 
 }

@@ -1,21 +1,20 @@
 <app-navbar></app-navbar>
-<div class="header min-height-60 relative mb-4">
+<div class="header min-height-60 relative mb-3">
     <div class="header-overlay d-flex justify-content-center align-items-center text-center">
         <h1 class="text-light">Welcome to Lawencon Universe <br> You can ask advice, exploring career path</h1>
     </div>
 </div>
 <div class="container">
     <div class="row">
+        <div class="col-md-12">
+            <h5 class="bg-dark px-3 py-2 text-white br-8 max-content"><i class="fa-regular fa-calendar"></i>
+                Thread
+            </h5>
+        </div>
         <div class="col-md-8">
             <div class="row">
-                     <div class="col-md-12 mb-3">
-                         <h5 class="bg-success px-3 py-2 text-white br-8 max-content"><i
-                                 class="fa-regular fa-comment-dots"></i>
-                             Thread
-                         </h5>
-                     </div>
-                <div class="col-md-12 mb-3">
-                    <button class="btn btn-primary w-100 text-center p-3" routerLink="/thread/new">Write a thread</button>
+                <div class="col-12">
+                    <button class="btn btn-primary w-100 text-center" routerLink="/thread/new">Write a thread</button>
                 </div>
                 <div class="col-12">
                     <div class="card p-0">
@@ -32,18 +31,18 @@
                             <div class="card-title">
                                 <h4>10 Manusia Terkuat dibumi, nomor 2 bikin geleng kepala</h4>
                             </div>
-                            <p class="card-text text-secondary">{{thread.substr(0,255)}}...<a
-                                    routerLink="/thread/single" class="text-end">Read More</a></p>
+                            <p class="card-text text-secondary">Lorem Ipsum is simply dummy text of the printing and
+                                typesetting
+                                industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                when an unknown printer took a galley of type and scrambled it to make a type specimen
+                                book. It has survived not only five centuries, but also the leap into electronic
+                                typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+                                release of Letraset sheets containing Lorem Ipsum passages, and more recently with
+                                desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                         </div>
                         <div class="card-footer text-muted px-5">
-                            <div class="row">
-                                <div class="col-md-6">
-                                     <a href=""><i class="fa-regular fa-heart thread-icon"></i></a>
-                                     <a href="" class="ml-3"><i class="fa-regular fa-comment thread-icon"></i></a>
-                                </div>
-                            </div>
-                           
-                            
+                            <a href=""><i class="fa-regular fa-heart"></i></a>
+                            <a href="" class="ml-3"><i class="fa-regular fa-comment"></i></a>
                         </div>
                     </div>
                 </div>
@@ -51,12 +50,7 @@
         </div>
         <div class="col-md-4">
             <div class="row justify-content-center">
-                <div class="col-md-10 mb-3">
-                    <h5 class="bg-info px-3 py-2 text-white br-8 max-content"><i class="fa-regular fa-calendar"></i>
-                        Course & Event
-                    </h5>
-                </div>
-                <div class="col-md-10">
+                <div class="col-10">
                     <a class="text-activity" href="#">
                         <div class="card p-0">
                             <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
@@ -77,7 +71,7 @@
                                     <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
                                     <div class="col-5 text-muted">19.30 - 20.30</div>
                                     <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
-                                    <div class="col-5 text-muted">February 21</div>
+                                    <div class="col-5 text-muted">Jumat, 1 February 21 - Kamis, 7 Februari 21</div>
                                     <div class="col-1 text-muted"><i class="fa-solid fa-ticket"></i></div>
                                     <div class="col-5 text-muted">Rp 200000</div>
                                     <div class="col-8 mx-auto">
