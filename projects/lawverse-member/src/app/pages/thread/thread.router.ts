@@ -1,29 +1,32 @@
-import { CommonModule } from "@angular/common";
-import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 import { ThreadAddComponent } from "./thread-add/thread-add.component";
 import { ThreadListComponent } from "./thread-list/thread-list.component";
+import { ThreadSingleComponent } from "./thread-single/thread-single.component";
+
 
 const routes: Routes = [
-    { path: 'list', component: ThreadListComponent },
-    { path: 'new', component: ThreadAddComponent },
-
-];
+    {
+        path: '',
+        component: ThreadListComponent
+    },
+    {
+        path: 'new',
+        component: ThreadAddComponent
+    },
+    {
+        path: 'single',
+        component: ThreadSingleComponent
+    }
+]
 
 @NgModule({
     imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        FormsModule,
-        HttpClientModule,
-        
+        RouterModule.forChild(routes)
     ],
-    declarations: [
-        ThreadAddComponent,
-        ThreadListComponent,
+    exports: [
+        RouterModule
     ]
 })
 
-export class AdminLayoutModule { }
+export class ThreadRouter { }

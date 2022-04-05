@@ -1,0 +1,81 @@
+<app-navbar></app-navbar>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+               <div class="row">
+                   <div class="col-12">
+                       <h2><span class="badge bg-primary"><i class="fa-solid fa-newspaper"></i> Article</span></h2>
+                   </div>
+               </div>
+            <div class="row">
+                <div *ngFor="let article of articles" class="col-12">
+                    <div class="card p-0">
+                        <div class="card-body p-5">
+                            <div class="row justify-content-between align-items-center mb-3">
+                                <div class="col-4">
+                                    <img src="http://localhost:8080/files/{{article.fileId}}"
+                                        class="w-100" alt="">
+                                </div>
+                                <div class="col-8">
+                                    <div class="card-title">
+                                        <h4>{{article.title}}</h4>
+                                    </div>
+                                    <p class="card-text text-secondary article-text">{{article.content}}</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="row justify-content-center">
+                <div class="row justify-content-center">
+                    <div class="col-10">
+                        <h2><span class="badge bg-primary"><i class="fa-regular fa-calendar"></i> Lates
+                                Activity</span>
+                        </h2>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <a class="text-activity" href="#">
+                        <div class="card p-0">
+                            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+                                class="card-img-top" alt="...">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <p class="m-0">Red Erp</p>
+                                    <p class="badge-event px-3 py-2 text-white br-8"><i
+                                            class="fa-regular fa-calendar"></i>
+                                        Event
+                                    </p>
+                                </div>
+                                <div class="card-title">
+                                    <h4>Recruitment Interview Expert Training</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-1 text-muted"><i class="fa-solid fa-location-dot"></i></div>
+                                    <div class="col-5 text-muted">Online</div>
+                                    <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
+                                    <div class="col-5 text-muted">19.30 - 20.30</div>
+                                    <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
+                                    <div class="col-5 text-muted">Jumat, 1 February 21 - Kamis, 7 Februari 21</div>
+                                    <div class="col-1 text-muted"><i class="fa-solid fa-ticket"></i></div>
+                                    <div class="col-5 text-muted">Rp 200000</div>
+                                    <div class="col-8 mx-auto">
+                                        <p class="badge-activity-yellow px-3 py-2 br-8 text-center"><i
+                                                class="fa-regular fa-calendar"></i>
+                                            Career & Succession
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

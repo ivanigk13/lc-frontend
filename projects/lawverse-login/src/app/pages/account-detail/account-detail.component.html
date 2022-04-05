@@ -1,51 +1,50 @@
-<!-- Page content -->
-<section class="d-flex justify-content-center align-items-center min-height-100">
-  <div class="container">
-    <!-- Table -->
-    <div class="row justify-content-center">
-      <div class="col-lg-6 col-md-8">
-        <div class="card bg-secondary shadow border-0">
-          <div class="card-body px-lg-5 py-lg-5 border-0">
-            <div class="text-center text-muted mb-4">
-              <h2>Account Detail</h2>
-            </div>
-            <form role="form">
-              <div class="input-group input-group-alternative mb-3">
-                <div class="input-group-prepend"><span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+<div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="grid justify-content-center p-2 lg:p-0 " style="min-width:80%">        
+        <div class="col-12 xl:col-6 shadow-3 my-4"
+            style="border-radius:56px; padding:0.3rem;">
+            <form class="h-full w-full m-0 py-7 px-4" style="border-radius:53px;" #profileForm="ngForm"
+                (ngSubmit)="insert(profileForm.form.valid)">
+                <div class="text-center mb-5">                    
+                     <div class="text-900 text-3xl font-medium mb-3">Account Detail</div>
                 </div>
-                <input placeholder="Phone Number" type="text" class="form-control">
-              </div>
-               <div class="input-group input-group-alternative mb-3">
-                 <div class="input-group-prepend"><span class="input-group-text"><i
-                       class="fa-solid fa-building"></i></span>
-                 </div>
-                 <input placeholder="Company" type="text" class="form-control">
-               </div>
-              <div class="form-group mb-3">
-                <div class="input-group input-group-alternative">
-                  <select class="form-control" name="" id="">
-                    <option value="">Select Industry</option>
-                    <option value="1">Industry 1</option>
-                    <option value="1">Industry 2</option>
-                  </select>
+
+                <div class="w-full md:w-10 mx-auto">
+                    <label for="name" class="block text-900 text-xl font-medium mb-2">Full Name<span style="color: red;">*</span></label>
+                    <input id="name" type="text" placeholder="Full name" pInputText class="w-full mb-3"
+                        style="padding:1rem;" name="name" [(ngModel)]="insertProfileDtoReq.fullName" 
+                        [required]="true">
+
+                    <label for="phone" class="block text-900 text-xl font-medium mb-2">Phone Number<span style="color: red;">*</span></label>
+                    <input id="phone" type="text" placeholder="Phone Number" pInputText class="w-full mb-3"
+                        style="padding:1rem;" name="phone" [(ngModel)]="insertProfileDtoReq.phoneNumber"
+                        [maxlength]="13" [required]="true">
+
+                    <label for="company" class="block text-900 text-xl font-medium mb-2">Company<span style="color: red;">*</span></label>
+                    <input id="company" type="text" placeholder="Company" pInputText class="w-full mb-3"
+                        style="padding:1rem;" name="company" [(ngModel)]="insertProfileDtoReq.companyName" 
+                        [required]="true">
+
+                    <label for="industry" class="block text-900 font-medium text-xl mb-2">Industry<span style="color: red;">*</span></label>
+                    <p-dropdown styleClass="w-full mb-3 p-2" [options]="industries" class="flex" optionLabel="industryName"
+                        optionValue="id" id="industry" name="industry" placeholder="Select Industry"
+                        [(ngModel)]="insertProfileDtoReq.industryId"  [showClear]="true" [required]="true"></p-dropdown>
+
+                    <label for="position" class="block text-900 font-medium text-xl mb-2">Position<span style="color: red;">*</span></label>
+                    <p-dropdown styleClass="w-full mb-6 p-2" [options]="positions" optionLabel="positionName"
+                        id="position" name="position" [(ngModel)]="insertProfileDtoReq.positionId" 
+                        optionValue="id" placeholder="Select Position" [showClear]="true" [required]="true"></p-dropdown>
+                    
+                        <div class="grid">
+                        <div class="col-6">
+                            <button pButton pRipple label="Cancel" class="p-button-secondary w-full p-3 text-xl"></button>
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" pButton pRipple label="Submit" class="w-full p-3 text-xl" [disabled]="profileForm.form.invalid"></button>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <div class="input-group input-group-alternative">
-                   <select class="form-control" name="" id="">
-                     <option value="">Select Position</option>
-                     <option value="1">Position 1</option>
-                     <option value="1">Position 2</option>
-                   </select>
-                </div>
-              </div>
-              <div class="text-center">
-                <button type="button" class="btn btn-primary my-4">Sign Up</button>
-              </div>
             </form>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-</section>
+</div>
+

@@ -1,0 +1,14 @@
+
+    <app-topbar></app-topbar>
+    <div class="layout-sidebar">
+        <app-menu></app-menu>
+    </div>
+    <div class="layout-main-container">
+        <div class="layout-main">
+            <router-outlet></router-outlet>
+        </div>
+        <app-footer></app-footer>
+    </div>
+        <app-config></app-config>
+        <div *ngIf="menuActiveMobile" class="layout-mask p-component-overlay"></div>
+

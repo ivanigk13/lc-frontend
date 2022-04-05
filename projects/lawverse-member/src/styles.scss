@@ -1,63 +1,320 @@
 /* You can add global styles to this file, and also import other style files */
-.login-img-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(61, 162, 243, 0.3);
+
+@import "../../../node_modules/primeng/resources/primeng.min.css";
+@import "../../../node_modules/primeflex/primeflex.scss";
+@import "../../../node_modules/primeicons/primeicons.css";
+@import "../../../node_modules/prismjs/themes/prism-coy.css";
+@import "assets/demo/flags/flags.css";
+@import "assets/demo/documentation.scss";
+@import "assets/sass/layout/_variables";
+@import "assets/sass/layout/_layout";
+@import "assets/sass/overrides/_overrides";
+
+.table-checkbox {
+    table-layout: auto;
+    width: 50px;
 }
 
-.login-img{
+.min-height-50 {
+    min-height: 50vh;
+}
+
+.min-height-60 {
+    min-height: 60vh;
+}
+
+.min-height-100 {
+    min-height: 100vh;
+}
+
+body{
+    background-color: #e3efff;
+}
+
+.c-details span {
+    font-weight: 300;
+    font-size: 13px;
+}
+
+.text-muted {
+    color: #999999;
+}
+
+.navbar-profile-dropdown {
+    position: absolute;
+    left: auto !important;
+    right: -1rem;
+    padding: 1rem;
+}
+
+.badge-event {    
+    font-size: 18px;
+    background-color: rgba(233, 233, 233, 0.8);
+    color: #353535 !important;
+}
+
+.card-img-top {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.badge-activity-red {
+    color: rgb(209, 51, 70) !important;
+    background-color: rgb(247, 222, 225);
+}
+
+.article-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-activity {
+    color: #212529;
+}
+
+.max-content {
+    max-width: max-content;
+}
+
+.thread-profile-text {
+    font-weight: 600;
+}
+
+.text-activity:hover {
+    color: #212529;
+}
+
+.badge-activity-yellow {
+    color: #ebbd19;
+    background-color: #fff1b8;
+}
+
+.badge-activity-blue {
+    color: #143ada;
+    background-color: #d7ddf3;
+}
+
+.navbar-text {
+    font-size: 18px;
+}
+
+.navbar-dropdown-text {
+    font-size: 16px;
+}
+
+.br-full {
+    border-radius: 100%;
+}
+
+.navbar-img {
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.br-8 {
+    border-radius: 8px;
+}
+
+.login-img {
     background-image: url(https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=884&q=80);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
 }
 
-.bg-white{
+.forgot-password-img {
+    background-image: url(../src/assets/img/forgot-password/forgot-password.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.bg-white {
     background-color: white;
 }
 
-.bg-white-fade{
-    background-color: rgba(234, 239, 243, 0.685);
-}
-
-.br-left-20{
+.br-left-20 {
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
 }
 
 .br-right-20 {
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
-.br-20{
+.br-20 {
     border-radius: 20px;
 }
 
 .login-img-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(61, 162, 243, 0.3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(61, 162, 243, 0.5);
 }
 
-.relative{
+.relative {
     position: relative;
 }
 
-.min-height-100{
-    min-height: 100vh;
-}
-
-.text-white{
+.text-white {
     color: white;
 }
 
-.mw-50{
+.mw-50 {
     max-width: 50%;
 }
+
+.pricing .card {
+    border: none;
+    border-radius: 1rem;
+    transition: all 0.2s;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+}
+
+.pricing hr {
+    margin: 1.5rem 0;
+}
+
+.pricing .card-title {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    letter-spacing: 0.1rem;
+    font-weight: bold;
+}
+
+.pricing .card-price {
+    font-size: 3rem;
+    margin: 0;
+}
+
+.pricing .card-price .period {
+    font-size: 0.8rem;
+}
+
+.pricing ul li {
+    margin-bottom: 1rem;
+}
+
+.text-muted {
+    opacity: 0.7;
+    color: #6c757d !important;
+}
+
+.pricing .btn {
+    font-size: 80%;
+    border-radius: 10px;
+    letter-spacing: 0.1rem;
+    font-weight: bold;
+    padding: 1rem;
+    opacity: 0.7;
+    transition: all 0.2s;
+}
+
+.pricing-header{
+    color: #569afe;
+}
+
+.pricing .card:hover {
+    color: #ffffff;
+    background: linear-gradient(to right, #0062e6, #33aeff);
+    margin-top: -0.25rem;
+    margin-bottom: 0.25rem;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+}
+
+.pricing .card:hover .text-muted {
+    color: #fff !important;
+}
+
+.pricing .card:hover .btn {
+    opacity: 1;
+    color: #0062e6;
+    background-color: #ffffff;
+}
+
+.profile-img{
+    width: 100%;
+}
+
+.activity-img{
+    aspect-ratio: 16 / 9;
+}
+
+.order-list-img{
+  object-fit: cover;
+  max-height: 250px;
+  max-width: 100%;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.header-overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(61, 162, 243, 0.3);
+}
+
+.nav-link{
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+}
+
+.nav-icon{
+    font-size: 24px;
+}
+
+.navbar-text{
+    font-size: 16px;
+}
+
+.text-status{
+    font-size: 18px;
+}
+
+.header{
+    background-image: url(./assets/img/home-page-bg-1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.b-example-divider {
+  height: 3rem;
+  background-color: rgba(0, 0, 0, .1);
+  border: solid rgba(0, 0, 0, .15);
+  border-width: 1px 0;
+  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: var(--bs-dark);
+  border-color: var(--bs-gray);
+}
+.form-control-dark:focus {
+  color: #fff;
+  background-color: var(--bs-dark);
+  border-color: #fff;
+  box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .25);
+}
+
+.bi {
+  vertical-align: -.125em;
+  fill: currentColor;
+}
+
+.text-small {
+  font-size: 85%;
+}
+
+.dropdown-toggle {
+  outline: 0;
+}
+

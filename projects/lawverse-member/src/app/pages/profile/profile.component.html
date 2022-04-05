@@ -1,0 +1,144 @@
+<app-navbar></app-navbar>
+<!-- Page content -->
+<div class="container-fluid">
+    <div class="row mt-3">
+        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+            <div class="card card-profile shadow">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 order-lg-2">
+                        <div class="card-profile-image">
+                            <a href="#">
+                                <img src="https://demos.creative-tim.com/argon-dashboard/assets-old/img/theme/team-4.jpg"
+                                    class="rounded-circle profile-img">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pt-0 pt-md-4">
+                    <div class="text-center">
+                        <h3>Hena Triana</h3>
+                        <div class="h5 font-weight-300">
+                            <i class="ni location_pin mr-2"></i>Indonesia, DKI Jakarta, Jakarta City, 657483
+                        </div>
+                        <div class="h5 font-weight-300">
+                            <i class="ni location_pin mr-2"></i>0874231847293</div>
+                        <div class="h5 mt-4">
+                            <i class="ni business_briefcase-24 mr-2"></i> IT Consultan
+                        </div>
+                        <div>
+                            <i class="ni education_hat mr-2"></i>PT Lawencon Internasional
+                        </div>
+                        <hr class="my-4">
+                        <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and
+                            records all of his own music.</p>
+                        <a href="#">Show more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8 order-xl-1">
+            <div class="card bg-light shadow">
+                <div class="card-header bg-light border-0">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">My account</h3>
+                        </div>                        
+                        <div class="col-4 text-right">
+                            <a class="btn btn-primary" (click)="edit()">Edit Profile</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="p-fluid p-formgrid grid justify-content-start">
+                            <div class="field col-12">
+                                <label htmlFor="name">Full Name</label>
+                                <input  pInputText id="name" name="name" [disabled]="editProfile" [required]="true"
+                                     type="text" />
+                            </div>
+                            <div class="field sm:col-12">                                
+                                <label htmlFor="email" class="form-label">Email</label>
+                                <input pInputText id="email" name="email" [disabled]="editProfile" [required]="true"
+                                    type="email" />
+                            </div>
+                            <div class="field sm:col-12">
+                                <label htmlFor="phone" class="form-label">Phone Number</label>
+                                <input pInputText id="phone" name="phone" [disabled]="editProfile" [required]="true"
+                                    type="text" placeholder="081237127323" />
+                            </div>
+                            <div class="field md:col-6 sm:col-12">                                
+                            <label htmlFor="country" class="form-label">Country</label>
+                            <p-dropdown [options]="countries" [disabled]="editProfile" [required]="true"
+                                optionLabel="label" id="activity_type" name="activity_type">
+                            </p-dropdown>
+                            </div>
+                            <div class="field md:col-6 sm:col-12">
+                                <label htmlFor="province" class="form-label">Province</label>
+                                 <p-dropdown [options]="countries" [disabled]="editProfile" [required]="true"
+                                     optionLabel="label"
+                                     id="province" name="province">
+                                 </p-dropdown>
+                            </div>
+                            <div class="field md:col-6 sm:col-12">
+                                <label htmlFor="city" class="form-label">City</label>
+                                <p-dropdown [options]="countries" [disabled]="editProfile" [required]="true"
+                                    optionLabel="label" id="city"
+                                    name="city">
+                                </p-dropdown>
+                            </div>                            
+                            <div class="field md:col-6 sm:col-12">                                
+                                   <label htmlFor="postal">Postal Code</label>
+                                   <input pInputText id="postal" [disabled]="editProfile" name="postal"
+                                       [required]="true" type="text" />
+                            </div>                            
+                        </div>                     
+                        <hr class="my-4">
+                        <!-- Job -->
+                        <h6 class="heading-small text-muted mb-4">Job</h6>
+                        <div class="p-fluid p-formgrid grid justify-content-start">
+                            <div class="field col-12">
+                                <label htmlFor="company">Company</label>
+                                <input pInputText id="company" [disabled]="editProfile" name="company" [required]="true"
+                                    type="text" />
+                            </div>                                                    
+                            <div class="field md:col-6 sm:col-12">
+                                <label htmlFor="industry" class="form-label">Industry</label>
+                                <p-dropdown [options]="countries" [disabled]="editProfile" [required]="true"
+                                    optionLabel="label"
+                                    id="industry" name="industry">
+                                </p-dropdown>
+                            </div>
+                            <div class="field md:col-6 sm:col-12">
+                                <label htmlFor="position" class="form-label">Position</label>
+                                <p-dropdown [options]="countries" [disabled]="editProfile" [required]="true"
+                                    optionLabel="label" id="position"
+                                    name="position">
+                                </p-dropdown>
+                            </div>                            
+                        </div>
+                        <hr class="my-4">
+                        <!-- Sosmed -->
+                        <h6 class="heading-small text-muted mb-4">Social Media</h6>
+                        <div class="p-fluid p-formgrid grid justify-content-start">
+                            <div class="field col-12">
+                                <label htmlFor="instagram">Instagram</label>
+                                <input pInputText id="instagram" [disabled]="editProfile" name="instagram"
+                                    [required]="true" type="text" />
+                            </div>
+                             <div class="field md:col-6 sm:col-12">
+                                 <label htmlFor="twitter">Twitter</label>
+                                 <input pInputText id="twitter" [disabled]="editProfile" name="twitter"
+                                     [required]="true" type="text" />
+                             </div>
+                             <div class="field md:col-6 sm:col-12">
+                                 <label htmlFor="facebook">Facebook</label>
+                                 <input pInputText id="facebook" [disabled]="editProfile" name="facebook"
+                                     [required]="true" type="text" />
+                             </div>                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
