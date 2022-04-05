@@ -4,9 +4,9 @@
     <div class="row mt-3">
         <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
             <div class="card card-profile shadow">
-                <div class="row justify-content-center">
-                    <div class="col-lg-6 order-lg-2">
-                        <div class="card-profile-image">
+                <div class="row justify-content-center mb-3">
+                    <div class="col-md-12 order-lg-2">
+                        <div class="card-profile-image text-center">
                             <a href="#">
                                 <img src="https://demos.creative-tim.com/argon-dashboard/assets-old/img/theme/team-4.jpg"
                                     class="rounded-circle profile-img">
@@ -29,9 +29,6 @@
                             <i class="ni education_hat mr-2"></i>PT Lawencon Internasional
                         </div>
                         <hr class="my-4">
-                        <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and
-                            records all of his own music.</p>
-                        <a href="#">Show more</a>
                     </div>
                 </div>
             </div>
@@ -42,9 +39,6 @@
                     <div class="row align-items-center">
                         <div class="col-8">
                             <h3 class="mb-0">My account</h3>
-                        </div>                        
-                        <div class="col-4 text-right">
-                            <a class="btn btn-primary" (click)="edit()">Edit Profile</a>
                         </div>
                     </div>
                 </div>
@@ -53,68 +47,60 @@
                         <div class="p-fluid p-formgrid grid justify-content-start">
                             <div class="field col-12">
                                 <label htmlFor="name">Full Name</label>
-                                <input  pInputText id="name" name="name" [disabled]="editProfile" [required]="true"
-                                     type="text" />
+                                <input pInputText id="name" name="name" [required]="true" type="text" />
                             </div>
-                            <div class="field sm:col-12">                                
+                            <div class="field sm:col-12">
                                 <label htmlFor="email" class="form-label">Email</label>
-                                <input pInputText id="email" name="email" [disabled]="editProfile" [required]="true"
-                                    type="email" />
+                                <input pInputText id="email" name="email" [required]="true" type="email" />
                             </div>
                             <div class="field sm:col-12">
                                 <label htmlFor="phone" class="form-label">Phone Number</label>
-                                <input pInputText id="phone" name="phone" [disabled]="editProfile" [required]="true"
-                                    type="text" placeholder="081237127323" />
+                                <input pInputText id="phone" name="phone" [required]="true" type="text"
+                                    placeholder="081237127323" />
                             </div>
-                            <div class="field md:col-6 sm:col-12">                                
-                            <label htmlFor="country" class="form-label">Country</label>
-                            <p-dropdown [options]="countries" [disabled]="editProfile" [required]="true"
-                                optionLabel="label" id="activity_type" name="activity_type">
-                            </p-dropdown>
+                            <div class="field md:col-6 sm:col-12">
+                                <label htmlFor="country" class="form-label">Country</label>
+                                <p-dropdown [options]="countries" [required]="true" optionLabel="label"
+                                    id="activity_type" name="activity_type">
+                                </p-dropdown>
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="province" class="form-label">Province</label>
-                                 <p-dropdown [options]="countries" [disabled]="editProfile" [required]="true"
-                                     optionLabel="label"
-                                     id="province" name="province">
-                                 </p-dropdown>
+                                <p-dropdown [options]="countries" [required]="true" optionLabel="label" id="province"
+                                    name="province">
+                                </p-dropdown>
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="city" class="form-label">City</label>
-                                <p-dropdown [options]="countries" [disabled]="editProfile" [required]="true"
-                                    optionLabel="label" id="city"
+                                <p-dropdown [options]="countries" [required]="true" optionLabel="label" id="city"
                                     name="city">
                                 </p-dropdown>
-                            </div>                            
-                            <div class="field md:col-6 sm:col-12">                                
-                                   <label htmlFor="postal">Postal Code</label>
-                                   <input pInputText id="postal" [disabled]="editProfile" name="postal"
-                                       [required]="true" type="text" />
-                            </div>                            
-                        </div>                     
+                            </div>
+                            <div class="field md:col-6 sm:col-12">
+                                <label htmlFor="postal">Postal Code</label>
+                                <input pInputText id="postal" name="postal" [required]="true" type="text" />
+                            </div>
+                        </div>
                         <hr class="my-4">
                         <!-- Job -->
                         <h6 class="heading-small text-muted mb-4">Job</h6>
                         <div class="p-fluid p-formgrid grid justify-content-start">
                             <div class="field col-12">
                                 <label htmlFor="company">Company</label>
-                                <input pInputText id="company" [disabled]="editProfile" name="company" [required]="true"
-                                    type="text" />
-                            </div>                                                    
+                                <input pInputText id="company" name="company" [required]="true" type="text" />
+                            </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="industry" class="form-label">Industry</label>
-                                <p-dropdown [options]="countries" [disabled]="editProfile" [required]="true"
-                                    optionLabel="label"
-                                    id="industry" name="industry">
+                                <p-dropdown [options]="countries" [required]="true" optionLabel="label" id="industry"
+                                    name="industry">
                                 </p-dropdown>
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="position" class="form-label">Position</label>
-                                <p-dropdown [options]="countries" [disabled]="editProfile" [required]="true"
-                                    optionLabel="label" id="position"
+                                <p-dropdown [options]="countries" [required]="true" optionLabel="label" id="position"
                                     name="position">
                                 </p-dropdown>
-                            </div>                            
+                            </div>
                         </div>
                         <hr class="my-4">
                         <!-- Sosmed -->
@@ -122,22 +108,54 @@
                         <div class="p-fluid p-formgrid grid justify-content-start">
                             <div class="field col-12">
                                 <label htmlFor="instagram">Instagram</label>
-                                <input pInputText id="instagram" [disabled]="editProfile" name="instagram"
-                                    [required]="true" type="text" />
+                                <input pInputText id="instagram" name="instagram" [required]="true" type="text" />
                             </div>
-                             <div class="field md:col-6 sm:col-12">
-                                 <label htmlFor="twitter">Twitter</label>
-                                 <input pInputText id="twitter" [disabled]="editProfile" name="twitter"
-                                     [required]="true" type="text" />
-                             </div>
-                             <div class="field md:col-6 sm:col-12">
-                                 <label htmlFor="facebook">Facebook</label>
-                                 <input pInputText id="facebook" [disabled]="editProfile" name="facebook"
-                                     [required]="true" type="text" />
-                             </div>                            
+                            <div class="field md:col-6 sm:col-12">
+                                <label htmlFor="twitter">Twitter</label>
+                                <input pInputText id="twitter" name="twitter" [required]="true" type="text" />
+                            </div>
+                            <div class="field md:col-6 sm:col-12">
+                                <label htmlFor="facebook">Facebook</label>
+                                <input pInputText id="facebook" name="facebook" [required]="true" type="text" />
+                            </div>
+                            <div class="field md:col-6 sm:col-12">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop">
+                                            Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
             </div>
         </div>
     </div>
