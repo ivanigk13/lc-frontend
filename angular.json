@@ -111,7 +111,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          
+          "style": "scss"
         }
       },
       "root": "projects/lawverse-login",
@@ -131,12 +131,11 @@
               "projects/lawverse-login/src/assets"
             ],
             "styles": [
-              "projects/lawverse-login/src/styles.scss",
-              "projects/lawverse-login/src/assets/scss/argon.scss"
+              "projects/lawverse-login/src/styles.scss"            
             ],
             "scripts": [
-              "node_modules/chart.js/dist/Chart.min.js",
-              "node_modules/clipboard/dist/clipboard.min.js"
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/components/prism-typescript.js"
             ]
           },
           "configurations": {
@@ -233,12 +232,11 @@
               "projects/lawverse-member/src/assets"
             ],
             "styles": [
-              "projects/lawverse-member/src/styles.scss",
-              "projects/lawverse-member/src/assets/scss/argon.scss"
+              "projects/lawverse-member/src/styles.scss"              
             ],
             "scripts": [
-              "node_modules/chart.js/dist/Chart.min.js",
-              "node_modules/clipboard/dist/clipboard.min.js"
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/components/prism-typescript.js"
             ]
           },
           "configurations": {
@@ -312,5 +310,5 @@
       }
     }
   },
-  "defaultProject": "lawverse-admin"
+  "defaultProject": "lawverse-login"
 }
