@@ -1,1 +1,30 @@
-<p>order-activity works!</p>
+<div class="surface-0 flex align-items-center justify-content-center min-h-screen overflow-hidden">
+    <div class="grid mw-50 my-2">
+        <form #FormArticle="ngForm" (ngSubmit)="onSubmit(FormArticle.form.valid)" class="col-12">
+            <div class="card shadow-3">
+                <div class="grid justify-content-center">
+                    <div class="col-12">
+                        <h5>Order Activity</h5>
+                    </div>
+                </div>
+                <div class="p-fluid p-formgrid grid justify-content-start">
+                    <div class="field col-12 text-center">
+                        <label htmlFor="content">Transfer To</label>
+                        <p><img src="../../../../assets/img/logo-bri.png" alt="bri-logo-img" height="20"> BRI
+                            6127368127368182</p>
+                    </div>
+
+                    <div class="field col-12">
+                        <h5>Payment Picture</h5>
+                        <input type="file" (change)="change($event)" class="form-control p-inputtext">
+                    </div>
+
+                    <div class="field col-3">
+                        <button pButton type="submit" label="Submit" class="p-button-success"></button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

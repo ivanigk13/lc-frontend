@@ -40,7 +40,7 @@ export class ActivityAddComponent implements OnInit,OnDestroy {
   insert(valid:boolean) {
     if(valid){
       this.insertSubs = this.activityService.insert(this.insertActivityDtoReq, this.files).subscribe(result=>{
-        if(result.data.id) this.router.navigateByUrl('/activity')
+        if(result.data.id) this.router.navigateByUrl('/member/activity')
       })
     }
   }
