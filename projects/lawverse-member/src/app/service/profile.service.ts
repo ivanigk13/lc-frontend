@@ -41,4 +41,8 @@ export class ProfileService {
     delete(id : number) : Observable<DeleteProfileDtoRes> {
         return this.http.delete<DeleteProfileDtoRes>(`http://localhost:8080/profiles/${id}`)
     }
+
+    getByUserId(id : number) : Observable<GetByIdProfileDtoRes> {
+        return this.http.get<GetByIdProfileDtoRes>(`http://localhost:8080/profiles/user/${id}`)
+    }
 }
