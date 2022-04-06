@@ -26,7 +26,7 @@ export class ArticleAddComponent implements OnInit {
     if(data){
       this.articleSubs = this.articleService.insert(this.article, this.file).subscribe( result => {
         if (result.data.id){
-          this.router.navigateByUrl('/article')
+          this.router.navigateByUrl('/member/article')
         }
       })
     }
