@@ -46,4 +46,8 @@ export class ArticleService {
     delete(id: number): Observable<DeleteArticleDtoRes> {
         return this.http.delete<DeleteArticleDtoRes>(`http://localhost:8080/articles/${id}`)
     }
+
+    getLastTwo(): Observable<GetAllArticleDtoRes> {
+        return this.http.get<GetAllArticleDtoRes>('http://localhost:8080/articles/last-two')
+    }
 }
