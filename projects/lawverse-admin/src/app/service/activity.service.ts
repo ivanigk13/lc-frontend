@@ -51,4 +51,12 @@ export class ActivityService {
     delete(id: number): Observable<DeleteActivityDtoRes> {
         return this.http.delete<DeleteActivityDtoRes>(`http://localhost:8080/activities/${id}`)
     }
+
+    getLastTwoEvent(): Observable<GetAllActivityDtoRes> {
+        return this.http.get<GetAllActivityDtoRes>('http://localhost:8080/activities/last-two-event')
+    }
+
+    getLastTwoCourse(): Observable<GetAllActivityDtoRes> {
+        return this.http.get<GetAllActivityDtoRes>('http://localhost:8080/activities/last-two-course')
+    }
 }
