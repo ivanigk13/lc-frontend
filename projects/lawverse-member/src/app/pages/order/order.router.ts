@@ -11,11 +11,7 @@ const routes: Routes = [
     {
         path: 'subscribtion',
         component: SubscribtionComponent
-    },
-    {
-        path: 'activity',
-        component : ActivityComponent
-    },
+    }  
     {
         path: 'status',
         component: OrderStatusComponent
