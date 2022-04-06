@@ -20,7 +20,7 @@ export class ProfileService {
         return this.http.get<GetAllProfileDtoRes>('http://localhost:8080/profiles')
     }
 
-    getById(id : number) : Observable<GetByIdProfileDtoRes> {
+    getById(id : string) : Observable<GetByIdProfileDtoRes> {
         return this.http.get<GetByIdProfileDtoRes>(`http://localhost:8080/profiles/${id}`)
     }
 
@@ -38,7 +38,7 @@ export class ProfileService {
         return this.http.put<UpdateProfileDtoRes>(`http://localhost:8080/profiles`,formData)
     }
 
-    delete(id : number) : Observable<DeleteProfileDtoRes> {
+    delete(id : string) : Observable<DeleteProfileDtoRes> {
         return this.http.delete<DeleteProfileDtoRes>(`http://localhost:8080/profiles/${id}`)
     }
 }
