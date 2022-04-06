@@ -23,7 +23,8 @@
                             <div class="col-1 text-muted"><i class="fa-solid fa-location-dot"></i></div>
                             <div class="col-5 text-muted">{{course.location}}</div>
                             <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
-                            <div class="col-5 text-muted">{{course.timeStart}} - {{course.timeEnd}}</div>
+                            <div class="col-5 text-muted">{{course.timeStart.substr(0,5)}} -
+                                {{course.timeEnd.substr(0,5)}}</div>
                             <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
                             <div class="col-5 text-muted">{{course.dateStart}} - {{course.dateEnd}}</div>
                             <div class="col-1 text-muted"><i class="fa-solid fa-ticket"></i></div>

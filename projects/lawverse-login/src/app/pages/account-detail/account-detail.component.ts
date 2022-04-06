@@ -10,6 +10,7 @@ import { GetPositionDtoDataRes } from 'src/app/dto/position/get-position-dto-dat
 import { PositionService } from 'src/app/service/position.service';
 import { ProfileService } from 'src/app/service/profile.service';
 import { InsertProfileDtoReq } from 'src/app/dto/profile/insert-profile-dto-req';
+import { LoginService } from 'src/app/service/login.service';
 
 @Component({
   selector: 'app-login',
@@ -43,17 +44,17 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  industrySubs? : Subscription
-  positionSubs? : Subscription
-  insertSubs? : Subscription
+  industrySubs?: Subscription
+  positionSubs?: Subscription
+  insertSubs?: Subscription
 
-  industries : GetIndustryDtoDataRes[] = []
-  positions : GetPositionDtoDataRes[] = []
-  insertProfileDtoReq : InsertProfileDtoReq = new InsertProfileDtoReq()
+  industries: GetIndustryDtoDataRes[] = []
+  positions: GetPositionDtoDataRes[] = []
+  insertProfileDtoReq: InsertProfileDtoReq = new InsertProfileDtoReq()
 
-  constructor(public configService: ConfigService, private title:Title, private router:Router,
-              private industryService:IndustryService, private positionService:PositionService,
-              private profileService:ProfileService) {
+  constructor(public configService: ConfigService, private title: Title, private router: Router,
+    private industryService: IndustryService, private positionService: PositionService,
+    private profileService: ProfileService, private loginService: LoginService) {
     title.setTitle('Account Detail')
   }
 
@@ -63,17 +64,18 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
       this.config = config;
     });
 
-    this.industrySubs = this.industryService.getAll().subscribe(result=>{
-      if(result) this.industries = result.data
+    this.industrySubs = this.industryService.getAll().subscribe(result => {
+      if (result) this.industries = result.data
     })
 
-    this.positionSubs = this.positionService.getAll().subscribe(result=>{
-      if(result) this.positions = result.data
+    this.positionSubs = this.positionService.getAll().subscribe(result => {
+      if (result) this.positions = result.data
     })
   }
 
-  insert(valid:boolean) : void {
-    if(valid){
+  insert(valid: boolean): void {
+    if (valid) {
+      this.insertProfileDtoReq.userId = this.loginService.getData().id
       this.insertSubs = this.profileService.insert(this.insertProfileDtoReq).subscribe()
     }
   }

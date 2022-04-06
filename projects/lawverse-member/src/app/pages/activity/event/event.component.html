@@ -22,7 +22,8 @@
                             <div class="col-1 text-muted"><i class="fa-solid fa-location-dot"></i></div>
                             <div class="col-5 text-muted">{{event.location}}</div>
                             <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
-                            <div class="col-5 text-muted">{{event.timeStart}} - {{event.timeEnd}}</div>
+                            <div class="col-5 text-muted">{{event.timeStart.substr(0,5)}} -
+                                {{event.timeEnd.substr(0,5)}}</div>
                             <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
                             <div class="col-5 text-muted">{{event.dateStart}} - {{event.dateEnd}}</div>
                             <div class="col-1 text-muted"><i class="fa-solid fa-ticket"></i></div>
