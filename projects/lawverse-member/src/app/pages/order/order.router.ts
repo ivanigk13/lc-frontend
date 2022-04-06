@@ -4,8 +4,6 @@ import { OrderStatusComponent } from "./order-status/order-status.component";
 import { OrderSubscriptionComponent } from "./order-subscription/order-subscription.component";
 import { SubscribtionComponent } from "./subscribtion/subscribtion.component";
 
-
-
 const routes: Routes = [
     {
         path: 'subscribtion',
@@ -16,7 +14,7 @@ const routes: Routes = [
         component: OrderStatusComponent
     },
     {
-        path: 'order-subscription',
+        path: 'order-subscription/:id',
         component: OrderSubscriptionComponent
     }
 ]

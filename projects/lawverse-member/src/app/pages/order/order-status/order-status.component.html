@@ -4,16 +4,12 @@
         <div class="col-12">
             <h2>Order List</h2>
         </div>
-        <div class="card col-6 py-3">
-            <div class="row align-items-center">
-                <div class="col-6">
-                    <img class="order-list-img"
-                        src="https://d3vhc53cl8e8km.cloudfront.net/hello-staging/wp-content/uploads/2017/12/22223742/Events-1200x630.jpg"
-                        alt="">
-                </div>
-                <div class="col-6 text-center">
-                    <h2 class="">A State of Trance 1000</h2>
-                    <p class="badge bg-danger text-status">Pending</p>
+        <div *ngFor="let order of orders" class="card col-6 py-3">
+            <div class="row align-items-center">                
+                <div class="col-6 text-center">            
+                    <h2 *ngIf="order.activityName != null" class="">{{order.activityName}}</h2>
+                    <h2 *ngIf="order.duration != null" class="">Subscribtion : {{order.duration}} Month</h2>
+                    <p class="badge bg-danger text-status">{{order.transactionStatusName}}</p>
                 </div>
             </div>
         </div>
