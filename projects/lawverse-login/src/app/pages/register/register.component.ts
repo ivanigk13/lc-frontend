@@ -66,7 +66,6 @@ export class RegisterComponent implements OnInit,OnDestroy {
           this.loginDtoReq.email = this.insertUserDtoReq.email
           this.loginDtoReq.password = this.insertUserDtoReq.password
           this.loginSubs = this.loginService.login(this.loginDtoReq).subscribe(result=>{
-            console.log(result)
             if(result) {
               this.loginService.saveData(result)
               this.router.navigateByUrl('/account-detail')

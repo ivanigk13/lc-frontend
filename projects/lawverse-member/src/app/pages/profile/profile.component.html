@@ -1,4 +1,5 @@
 <app-navbar></app-navbar>
+{{update|json}}
 <!-- Page content -->
 <div class="container-fluid">
     <div class="row mt-3">
@@ -16,17 +17,17 @@
                 </div>
                 <div class="card-body pt-0 pt-md-4">
                     <div class="text-center">
-                        <h3>Hena Triana</h3>
+                        <h3>{{update.fullName}}</h3>
                         <div class="h5 font-weight-300">
                             <i class="ni location_pin mr-2"></i>Indonesia, DKI Jakarta, Jakarta City, 657483
                         </div>
                         <div class="h5 font-weight-300">
-                            <i class="ni location_pin mr-2"></i>0874231847293</div>
+                            <i class="ni location_pin mr-2"></i>{{update.phoneNumber}}</div>
                         <div class="h5 mt-4">
                             <i class="ni business_briefcase-24 mr-2"></i> IT Consultan
                         </div>
                         <div>
-                            <i class="ni education_hat mr-2"></i>PT Lawencon Internasional
+                            <i class="ni education_hat mr-2"></i>{{update.companyName}}
                         </div>
                         <hr class="my-4">
                     </div>
@@ -47,38 +48,40 @@
                         <div class="p-fluid p-formgrid grid justify-content-start">
                             <div class="field col-12">
                                 <label htmlFor="name">Full Name</label>
-                                <input pInputText id="name" name="name" [required]="true" type="text" />
+                                <input pInputText id="name" name="name" [required]="true" type="text"
+                                    [(ngModel)]="update.fullName">
                             </div>
                             <div class="field sm:col-12">
                                 <label htmlFor="email" class="form-label">Email</label>
-                                <input pInputText id="email" name="email" [required]="true" type="email" />
+                                <input pInputText id="email" name="email" [required]="true" type="email" 
+                                    [value]="email" readonly>
                             </div>
                             <div class="field sm:col-12">
                                 <label htmlFor="phone" class="form-label">Phone Number</label>
                                 <input pInputText id="phone" name="phone" [required]="true" type="text"
-                                    placeholder="081237127323" />
+                                    [(ngModel)]="update.phoneNumber">
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="country" class="form-label">Country</label>
-                                <p-dropdown [options]="countries" [required]="true" optionLabel="label"
-                                    id="activity_type" name="activity_type">
-                                </p-dropdown>
+                                <input pInputText id="country" name="country" [required]="true" type="text"
+                                    value="Indonesia" readonly>
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="province" class="form-label">Province</label>
-                                <p-dropdown [options]="countries" [required]="true" optionLabel="label" id="province"
-                                    name="province">
+                                <p-dropdown [options]="provinces" [required]="true" optionLabel="provinceName" id="province"
+                                    optionValue="id" name="province" [(ngModel)]="update.provinceId">
                                 </p-dropdown>
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="city" class="form-label">City</label>
-                                <p-dropdown [options]="countries" [required]="true" optionLabel="label" id="city"
-                                    name="city">
+                                <p-dropdown [options]="cities" [required]="true" optionLabel="cityName" id="city"
+                                    optionValue="id" name="city" [(ngModel)]="update.cityId">
                                 </p-dropdown>
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="postal">Postal Code</label>
-                                <input pInputText id="postal" name="postal" [required]="true" type="text" />
+                                <input pInputText id="postal" name="postal" [required]="true" type="text" 
+                                    [(ngModel)]="update.postalCode"/>
                             </div>
                         </div>
                         <hr class="my-4">
@@ -87,18 +90,19 @@
                         <div class="p-fluid p-formgrid grid justify-content-start">
                             <div class="field col-12">
                                 <label htmlFor="company">Company</label>
-                                <input pInputText id="company" name="company" [required]="true" type="text" />
+                                <input pInputText id="company" name="company" [required]="true" type="text" 
+                                    [(ngModel)]="update.companyName"/>
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="industry" class="form-label">Industry</label>
-                                <p-dropdown [options]="countries" [required]="true" optionLabel="label" id="industry"
-                                    name="industry">
+                                <p-dropdown [options]="industries" [required]="true" optionLabel="industryName" id="industry"
+                                    optionValue="id" name="industry" [(ngModel)]="update.industryId">
                                 </p-dropdown>
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="position" class="form-label">Position</label>
-                                <p-dropdown [options]="countries" [required]="true" optionLabel="label" id="position"
-                                    name="position">
+                                <p-dropdown [options]="positions" [required]="true" optionLabel="positionName" id="position"
+                                    optionValue="id" name="position" [(ngModel)]="update.positionId">
                                 </p-dropdown>
                             </div>
                         </div>
@@ -128,7 +132,7 @@
                                     </div>
                                     <div class="col-6">
                                         <button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop">
+                                            data-bs-target="#staticBackdrop" (click)="setProfileId(update.id)">
                                             Save
                                         </button>
                                     </div>

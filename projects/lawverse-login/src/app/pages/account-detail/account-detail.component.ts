@@ -76,7 +76,9 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
   insert(valid: boolean): void {
     if (valid) {
       this.insertProfileDtoReq.userId = this.loginService.getData().id
-      this.insertSubs = this.profileService.insert(this.insertProfileDtoReq).subscribe()
+      this.insertSubs = this.profileService.insert(this.insertProfileDtoReq).subscribe(result=>{
+        if(result) this.router.navigateByUrl('/member/profile')
+      })
     }
   }
 
