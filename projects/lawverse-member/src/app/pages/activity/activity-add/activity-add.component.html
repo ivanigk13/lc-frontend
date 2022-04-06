@@ -15,6 +15,16 @@
                             [(ngModel)]="insertActivityDtoReq.activityName" type="text" />
                     </div>
                     <div class="field md:col-6 sm:col-12">
+                        <label htmlFor="firstname2">Activity Price</label>
+                        <input pInputText id="name" name="name" [required]="true"
+                            [(ngModel)]="insertActivityDtoReq.price" type="number" />
+                    </div>
+                    <div class="field md:col-6 sm:col-12">
+                        <label htmlFor="firstname2">Activity Location</label>
+                        <input pInputText id="location" name="location" [required]="true"
+                            [(ngModel)]="insertActivityDtoReq.location" type="text" />
+                    </div>
+                    <div class="field md:col-6 sm:col-12">
                         <label htmlFor="state">Activity Type</label>
                         <p-dropdown [options]="activityTypes" [required]="true" optionLabel="activityTypeName"
                             id="activity_type" name="activity_type" optionValue="id"

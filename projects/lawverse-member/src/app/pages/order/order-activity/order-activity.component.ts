@@ -7,9 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderActivityComponent implements OnInit {
 
+  file: File
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  onSubmit(data: boolean): void {
+    if (data) {
+
+    }
+  }
+
+  change(event: any): void {
+    this.file = event.target.files[0]
+  }
 }
