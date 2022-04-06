@@ -4,6 +4,7 @@ export class GetProfileDtoDataRes {
 	 industryId!: string 
 	 positionId!: string 
 	 cityId!: string 
+	 provinceId!: string
 	 fileId!: string 
 	 socialMediaId!: string 
 	 fullName!: string 
