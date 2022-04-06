@@ -27,37 +27,26 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Home',
                 items: [
-                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
+                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/admin/dashboard'] }
                 ]
             },
             {
                 label: 'Master',
                 items: [
-                    { label: 'Category', icon: 'pi pi-fw pi-table', routerLink: ['/dashboard/category/list'] },
-                    { label: 'Industry', icon: 'pi pi-fw pi-table', routerLink: ['/dashboard/industry/list'] },
-                    { label: 'Position', icon: 'pi pi-fw pi-table', routerLink: ['/dashboard/position/list'] },
-                    { label: 'Role', icon: 'pi pi-fw pi-table', routerLink: ['/dashboard/role/list'] },
-                    { label: 'Transaction Status', icon: 'pi pi-fw pi-table', routerLink: ['/dashboard/transaction-status/list'] },
-                    { label: 'User', icon: 'pi pi-fw pi-table', routerLink: ['/dashboard/user/list'] }
-
-
-
-
+                    { label: 'Category', icon: 'pi pi-fw pi-table', routerLink: ['/admin/category/list'] },
+                    { label: 'Industry', icon: 'pi pi-fw pi-table', routerLink: ['/admin/industry/list'] },
+                    { label: 'Position', icon: 'pi pi-fw pi-table', routerLink: ['/admin/position/list'] },
+                    { label: 'Role', icon: 'pi pi-fw pi-table', routerLink: ['/admin/role/list'] },
+                    { label: 'Transaction Status', icon: 'pi pi-fw pi-table', routerLink: ['/admin/transaction-status/list'] },
+                    { label: 'User', icon: 'pi pi-fw pi-table', routerLink: ['/admin/user/list'] }
                 ]
-            },            
+            },
             {
-                label: 'Pages',
+                label: 'Transaction',
                 items: [
-                    { label: 'Crud', icon: 'pi pi-fw pi-user-edit', routerLink: ['/pages/crud'] },
-                    { label: 'Timeline', icon: 'pi pi-fw pi-calendar', routerLink: ['/pages/timeline'] },
-                    { label: 'Landing', icon: 'pi pi-fw pi-globe', routerLink: ['pages/landing'] },
-                    { label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['pages/login'] },
-                    { label: 'Error', icon: 'pi pi-fw pi-times-circle', routerLink: ['pages/error'] },
-                    { label: 'Not Found', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['pages/notfound'] },
-                    { label: 'Access Denied', icon: 'pi pi-fw pi-lock', routerLink: ['pages/access'] },
-                    { label: 'Empty', icon: 'pi pi-fw pi-circle', routerLink: ['/pages/empty'] }
+                    { label: 'Crud', icon: 'pi pi-fw pi-table', routerLink: ['/pages/crud'] },
                 ]
-            },                       
+            },
         ];
     }
 
