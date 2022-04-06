@@ -12,7 +12,7 @@
                     <div class="field col-12">
                         <label htmlFor="firstname2">Activity Name</label>
                         <input pInputText id="name" name="name" [required]="true"
-                        [(ngModel)]="insertActivityDtoReq.activityName" type="text" />
+                            [(ngModel)]="insertActivityDtoReq.activityName" type="text" />
                     </div>
                     <div class="field md:col-6 sm:col-12">
                         <label htmlFor="state">Activity Type</label>
@@ -23,43 +23,43 @@
                     </div>
                     <div class="field md:col-6 sm:col-12">
                         <label htmlFor="state">Category</label>
-                        <p-dropdown [options]="categories" [required]="true" optionLabel="categoryName"
-                            id="category" name="category" optionValue="id" 
-                            [(ngModel)]="insertActivityDtoReq.categoryId">
+                        <p-dropdown [options]="categories" [required]="true" optionLabel="categoryName" id="category"
+                            name="category" optionValue="id" [(ngModel)]="insertActivityDtoReq.categoryId">
                         </p-dropdown>
                     </div>
                     <div class="field md:col-6 sm:col-12">
                         <h5>Date Start</h5>
                         <input type="date" id="datestart" name="datestart" [required]="true"
-                        [(ngModel)]="insertActivityDtoReq.dateStart" class="form-control">
+                            [(ngModel)]="insertActivityDtoReq.dateStart" class="form-control">
                     </div>
                     <div class="field md:col-6 sm:col-12">
                         <h5>Date End</h5>
                         <input type="date" id="dateend" name="dateend" [required]="true"
-                        [(ngModel)]="insertActivityDtoReq.dateEnd" class="form-control">
+                            [(ngModel)]="insertActivityDtoReq.dateEnd" class="form-control">
                     </div>
                     <div class="field md:col-6 sm:col-12">
                         <h5>Time Start</h5>
-                        <input type="time" id="timestart" name="timestart" [required]="true"
+                        <input type="time" id="timestart" step="2" name="timestart" [required]="true"
                             [(ngModel)]="insertActivityDtoReq.timeStart" class="form-control">
                     </div>
                     <div class="field md:col-6 sm:col-12">
                         <h5>Time End</h5>
-                        <input type="time" id="timeend" name="timeend" [required]="true"
+                        <input type="time" id="timeend" step="2" name="timeend" [required]="true"
                             [(ngModel)]="insertActivityDtoReq.timeEnd" class="form-control">
                     </div>
                     <div class="field md:col-6 sm:col-12">
                         <h5>Activity Picture</h5>
-                        <input type="file" name="file1" id="file1" (change)="changeFile($event)"
-                        class="form-control" [required]="true">
+                        <input type="file" name="file1" id="file1" (change)="changeFile($event)" class="form-control"
+                            [required]="true">
                     </div>
                     <div class="field md:col-6 sm:col-12">
                         <h5>Payment Picture</h5>
-                        <input type="file" name="file2" id="file2" (change)="changeFile($event)"
-                        class="form-control" [required]="true">
+                        <input type="file" name="file2" id="file2" (change)="changeFile($event)" class="form-control"
+                            [required]="true">
                     </div>
-                    <div class="field col-3 text-center">                   
-                        <button type="submit" pButton label="Submit" class="p-button-success" [disabled]="activityForm.form.invalid"></button>
+                    <div class="field col-3 text-center">
+                        <button type="submit" pButton label="Submit" class="p-button-success"
+                            [disabled]="activityForm.form.invalid"></button>
                     </div>
                 </div>
             </div>
