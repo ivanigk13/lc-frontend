@@ -51,6 +51,38 @@ import { AccessComponent } from './components/access/access.component';
                 path: 'member',
                 loadChildren: () => import('../../../lawverse-member/src/app/app.module').then(m => m.AppModule)
             },
+            {
+                path: 'admin',
+                component: AppMainComponent,
+                children: [
+                    { path: 'dashboard', component: DashboardComponent },
+                    {
+                        path: 'category',
+                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/category/category.module').then(m => m.CategoryModule)
+                    },
+                    {
+                        path: 'user',
+                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/user/user.module').then(m => m.UserModule)
+                    },
+                    {
+                        path: 'industry',
+                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/industry/industry.module').then(m => m.IndustryModule)
+                    },
+                    {
+                        path: 'position',
+                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/position/position.module').then(m => m.PositionModule)
+                    },
+                    {
+                        path: 'role',
+                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/role/role.module').then(m => m.RoleModule)
+                    },
+                    {
+                        path: 'transaction-status',
+                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/transaction-status/transaction-status.module').then(m => m.TransactionStatusModule)
+                    }
+
+                ],                
+            },
 
             { path: '', redirectTo: '/login', pathMatch: 'full' },
             { path: '**', redirectTo: 'pages/notfound' },
