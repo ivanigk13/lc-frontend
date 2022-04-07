@@ -93,6 +93,7 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
         // BrowserAnimationsModule,
         AccordionModule,
         AutoCompleteModule,
+        ProgressBarModule,
         AvatarModule,
         AvatarGroupModule,
         BadgeModule,
