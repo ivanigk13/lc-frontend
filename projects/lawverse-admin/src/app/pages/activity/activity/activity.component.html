@@ -1,43 +1,59 @@
-<app-navbar></app-navbar>
-<div class="container my-3">
-    <h2><span class="badge bg-primary"><i class="fa-regular fa-calendar"></i> Activity</span></h2>
-</div>
-<div class="container">
-    <div class="row">
-        <div *ngFor="let activity of activities" class="col-md-4 mb-4">
-            <a class="text-activity" href="#">
-                <div class="card p-0 relative">
-                    <img src="http://localhost:8080/files/{{activity.fileId}}" class="card-img-top activity-img"
-                        alt="...">
-                    <div class="card-body p-4">
-                        <div class="d-flex mb-2">
-                            <p class="badge-event w-100 px-3 py-2 text-white br-8 text-center"><i
-                                    class="fa-regular fa-calendar"></i>
-                                {{activity.activityTypeName}}
-                            </p>
-                        </div>
-                        <div class="card-title">
-                            <h4>{{activity.activityName}}</h4>
-                        </div>
-                        <div class="row">
-                            <div class="col-1 text-muted"><i class="fa-solid fa-location-dot"></i></div>
-                            <div class="col-5 text-muted">{{activity.location}}</div>
-                            <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
-                            <div class="col-5 text-muted">{{activity.timeStart}} - {{activity.timeEnd}}</div>
-                            <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
-                            <div class="col-5 text-muted">{{activity.dateStart}} - {{activity.dateEnd}}</div>
-                            <div class="col-1 text-muted"><i class="fa-solid fa-ticket"></i></div>
-                            <div class="col-5 text-muted">IDR {{activity.price}}</div>
-                            <div class="col-8 mx-auto">
-                                <p class="badge-activity-yellow px-3 py-2 br-8 text-center"><i
-                                        class="fa-regular fa-calendar"></i>
-                                    {{activity.categoryName}}
-                                </p>
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h5>Activity List</h5>
+            <p-table #dt1 [value]="activities" dataKey="id" [rows]="10" [rowHover]="true"
+                styleClass="p-datatable-gridlines" [paginator]="true" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Activity Type
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Payment File
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Action
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-data>
+                    <tr>
+                        <td style="min-width: 12rem;">
+                            {{data.activityTypeName}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            <a href="http://localhost:8080/files/{{data.paymentFileId}}" type="submit"><i
+                                    class="bi bi-file-earmark-arrow-down">File</i></a>
+                        </td>
+                        <td style="min-width: 12rem;">
+                            <button pButton label="Approv"
+                                class="p-element p-ripple p-button-success mr-2 mb-2 p-button p-component mb-2"
+                                (click)="onApprove(data.id)"></button>
+                            <button pButton label="Reject"
+                                class="p-element p-ripple p-button-danger mr-2 mb-2 p-button p-component mb-2"
+                                (click)="onReject(data.id)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">No activities found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="7">Loading activities data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
         </div>
+
     </div>
 </div>
