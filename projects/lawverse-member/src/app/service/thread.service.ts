@@ -15,8 +15,12 @@ import { UpdateThreadDtoRes } from "../dto/thread/update-thread-dto-res"
 export class ThreadService {
     constructor(private http: HttpClient) { }
 
-    getAll(): Observable<GetAllThreadDtoRes> {
-        return this.http.get<GetAllThreadDtoRes>('http://localhost:8080/threads')
+    getAll(start?:number, max?:number): Observable<GetAllThreadDtoRes> {
+        if(start==undefined && max==undefined){
+            return this.http.get<GetAllThreadDtoRes>('http://localhost:8080/threads')
+        }else{
+            return this.http.get<GetAllThreadDtoRes>(`http://localhost:8080/threads?start=${start}&max=${max}`)
+        }
     }
 
     getById(id: string): Observable<GetByIdThreadDtoRes> {
