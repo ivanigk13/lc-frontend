@@ -18,6 +18,10 @@ export class PollingDetailService {
         return this.http.get<GetAllPollingDetailDtoRes>('http://localhost:8080/polling-details')
     }
 
+    getAllByHeaderId(id: string): Observable<GetAllPollingDetailDtoRes> {
+        return this.http.get<GetAllPollingDetailDtoRes>(`http://localhost:8080/polling-details/header/${id}`)
+    }
+
     getById(id: string): Observable<GetByIdPollingDetailDtoRes> {
         return this.http.get<GetByIdPollingDetailDtoRes>(`http://localhost:8080/polling-details/${id}`)
     }
