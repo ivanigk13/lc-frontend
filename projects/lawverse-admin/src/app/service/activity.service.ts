@@ -8,6 +8,9 @@ import { InsertActivityDtoReq } from "../dto/activity/insert-activity-dto-req";
 import { InsertActivityDtoRes } from "../dto/activity/insert-activity-dto-res";
 import { UpdateActivityDtoReq } from "../dto/activity/update-activity-dto-req";
 import { UpdateActivityDtoRes } from "../dto/activity/update-activity-dto-res";
+import { UpdateActivityTransactionStatusDtoDataRes } from "../dto/activity/update-activity-transaction-status-dto-data-res";
+import { UpdateActivityTransactionStatusDtoReq } from "../dto/activity/update-activity-transaction-status-dto-req";
+import { UpdateActivityTransactionStatusDtoRes } from "../dto/activity/update-activity-transaction-status-dto-res";
 
 @Injectable({
     providedIn: 'root'
@@ -28,6 +31,10 @@ export class ActivityService {
         return this.http.get<GetAllActivityDtoRes>('http://localhost:8080/activities/approved-course')
     }
 
+    getAllActivityPending(): Observable<GetAllActivityDtoRes> {
+        return this.http.get<GetAllActivityDtoRes>('http://localhost:8080/activities/pending')
+    }
+
     getById(id: number): Observable<GetByIdActivityDtoRes> {
         return this.http.get<GetByIdActivityDtoRes>(`http://localhost:8080/activities/${id}`)
     }
@@ -46,6 +53,14 @@ export class ActivityService {
         if (files[0]) formData.append('file', files[0])
         if (files[1]) formData.append('file', files[1])
         return this.http.put<UpdateActivityDtoRes>(`http://localhost:8080/activities`, formData)
+    }
+
+    updateApprove(updateActivityReq: UpdateActivityTransactionStatusDtoReq): Observable<UpdateActivityTransactionStatusDtoRes> {
+        return this.http.put<UpdateActivityTransactionStatusDtoRes>(`http://localhost:8080/activities/approve`, updateActivityReq)
+    }
+
+    updateReject(updateActivityReq: UpdateActivityTransactionStatusDtoReq): Observable<UpdateActivityTransactionStatusDtoRes> {
+        return this.http.put<UpdateActivityTransactionStatusDtoRes>(`http://localhost:8080/activities/reject`, updateActivityReq)
     }
 
     delete(id: number): Observable<DeleteActivityDtoRes> {

@@ -44,7 +44,7 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Transaction',
                 items: [
-                    { label: 'Crud', icon: 'pi pi-fw pi-table', routerLink: ['/pages/crud'] },
+                    { label: 'Activity', icon: 'pi pi-fw pi-table', routerLink: ['/admin/activity'] },
                 ]
             },
         ];
