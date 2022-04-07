@@ -1,5 +1,6 @@
-export class InsertActivityTypeDtoReq { 
-	 activityTypeCode?: string 
-	 activityTypeName?: string 
-} 
+export class InsertActivityTypeDtoReq {
+	activityTypeCode?: string
+	activityTypeName?: string
+	price?: number
+}
 
