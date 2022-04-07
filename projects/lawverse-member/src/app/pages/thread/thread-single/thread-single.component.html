@@ -41,6 +41,20 @@
                             <p class="card-text text-secondary">
                                 {{thread.content}}
                             </p>
+                            <div *ngIf="pollingHeader != null" class="card">
+                                <div class="row">
+                                    <div class="col-md-12 card-title">
+                                        <h4>{{pollingHeader.title}}</h4>
+                                        <div *ngFor="let data of pollingDetails; let no=index" class="card-body">
+                                            <h6>{{data.pollingName}}</h6>
+                                            <a (click)="onVote(no)">
+                                                <p-progressBar [value]="data.pollingCounter"></p-progressBar>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
                         <div class="card-footer text-muted px-5">
                             <div class="row justify-content-between">
