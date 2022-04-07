@@ -4,6 +4,7 @@ import { Observable } from "rxjs"
 import { DeletePollingHeaderDtoRes } from "../dto/polling-header/delete-polling-header-dto-res"
 import { GetAllPollingHeaderDtoRes } from "../dto/polling-header/get-all-polling-header-dto-res"
 import { GetByIdPollingHeaderDtoRes } from "../dto/polling-header/get-by-id-polling-header-dto-res"
+import { GetByThreadIdPollingHeaderDtoRes } from "../dto/polling-header/get-by-thread-id-polling-header-dto-res"
 import { InsertPollingHeaderDtoReq } from "../dto/polling-header/insert-polling-header-dto-req"
 import { InsertPollingHeaderDtoRes } from "../dto/polling-header/insert-polling-header-dto-res"
 
@@ -16,6 +17,10 @@ export class PollingHeaderService {
 
     getAll(): Observable<GetAllPollingHeaderDtoRes> {
         return this.http.get<GetAllPollingHeaderDtoRes>('http://localhost:8080/polling-headers')
+    }
+
+    getByThreadId(id: string): Observable<GetByThreadIdPollingHeaderDtoRes> {
+        return this.http.get<GetByThreadIdPollingHeaderDtoRes>(`http://localhost:8080/polling-headers/thread/${id}`)
     }
 
     getById(id: string): Observable<GetByIdPollingHeaderDtoRes> {
