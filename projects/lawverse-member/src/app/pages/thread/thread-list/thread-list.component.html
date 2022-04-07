@@ -14,10 +14,13 @@
         <div class="col-md-8">
             <div class="row">
                 <div class="col-12">
-                    <button class="btn btn-primary w-100 text-center" routerLink="/thread/new">Write a thread</button>
+                    <button class="btn btn-primary w-100 text-center" routerLink="/member/thread/new">Write a thread</button>
                 </div>
-                <div class="col-12">
-                    <div class="card p-0">
+                <div *ngIf="threads.length==0" class="col-12">
+                    No Thread Available
+                </div>
+                <div *ngIf="threads.length>0" class="col-12">
+                    <div *ngFor="let thread of threads;let i = index" class="card p-0">
                         <div class="card-body p-5">
                             <div class="row justify-content-between align-items-center mb-3">
                                 <div class="col-8">
@@ -29,20 +32,15 @@
                                 </div>                                
                             </div>
                             <div class="card-title">
-                                <h4>10 Manusia Terkuat dibumi, nomor 2 bikin geleng kepala</h4>
+                                <h4>{{thread.title}}</h4>
                             </div>
-                            <p class="card-text text-secondary">Lorem Ipsum is simply dummy text of the printing and
-                                typesetting
-                                industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                when an unknown printer took a galley of type and scrambled it to make a type specimen
-                                book. It has survived not only five centuries, but also the leap into electronic
-                                typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-                                release of Letraset sheets containing Lorem Ipsum passages, and more recently with
-                                desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                            <p class="card-text text-secondary">
+                                {{thread.content}}
+                            </p>
                         </div>
                         <div class="card-footer text-muted px-5">
-                            <a href=""><i class="fa-regular fa-heart"></i></a>
-                            <a href="" class="ml-3"><i class="fa-regular fa-comment"></i></a>
+                            <span>{{likeCounters[i]}} <i class="fa-regular fa-heart"></i></span>
+                            <span class="ml-3">{{commentCounters[i]}} <i class="fa-regular fa-comment"></i></span>
                         </div>
                     </div>
                 </div>
