@@ -30,7 +30,7 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
 @NgModule({
     imports: [
-        RouterModule.forRoot([           
+        RouterModule.forRoot([
             {
                 path: 'login',
                 loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
@@ -38,15 +38,15 @@ import { AccessComponent } from './components/access/access.component';
             {
                 path: 'register',
                 loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule)
-            },    
+            },
             {
                 path: 'forgot-password',
                 loadChildren: () => import('./pages/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule)
-            },      
+            },
             {
                 path: 'account-detail',
                 loadChildren: () => import('./pages/account-detail/account-detail.module').then(m => m.AccountDetailModule)
-            },  
+            },
             {
                 path: 'member',
                 loadChildren: () => import('../../../lawverse-member/src/app/app.module').then(m => m.AppModule)
@@ -79,14 +79,18 @@ import { AccessComponent } from './components/access/access.component';
                     {
                         path: 'transaction-status',
                         loadChildren: () => import('../../../lawverse-admin/src/app/pages/transaction-status/transaction-status.module').then(m => m.TransactionStatusModule)
+                    },
+                    {
+                        path: "activity",
+                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/activity/activity.module').then(m => m.ActivityModule)
                     }
 
-                ],                
+                ],
             },
 
             { path: '', redirectTo: '/login', pathMatch: 'full' },
             { path: '**', redirectTo: 'pages/notfound' },
-            
+
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' })
     ],
     exports: [RouterModule]

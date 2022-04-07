@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { GetActivityDtoDataRes } from 'src/app/dto/activity/get-activity-dto-data-res';
-import { ActivityService } from 'src/app/service/activity.service';
+import { UpdateActivityTransactionStatusDtoReq } from '../../../dto/activity/update-activity-transaction-status-dto-req';
+import { GetActivityDtoDataRes } from '../../../dto/activity/get-activity-dto-data-res';
+import { ActivityService } from '../../../service/activity.service';
 
 @Component({
   selector: 'app-activity',
@@ -11,7 +12,10 @@ import { ActivityService } from 'src/app/service/activity.service';
 export class ActivityComponent implements OnInit, OnDestroy {
 
   activities: GetActivityDtoDataRes[] = []
+  updateActivityReq: UpdateActivityTransactionStatusDtoReq = new UpdateActivityTransactionStatusDtoReq()
   getAllSubs!: Subscription
+  updateApproveSubs?: Subscription
+  updateRejectSubs?: Subscription
 
   constructor(private activityService: ActivityService) { }
 
@@ -20,14 +24,26 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
   getAll(): void {
-    this.getAllSubs = this.activityService.getAll().subscribe(result => {
+    this.getAllSubs = this.activityService.getAllActivityPending().subscribe(result => {
       this.activities = result.data
       console.log(result)
     })
   }
 
+  onApprove(id: string): void {
+    this.updateActivityReq.id = id
+    this.updateApproveSubs = this.activityService.updateApprove(this.updateActivityReq).subscribe(result => { })
+  }
+
+  onReject(id: string): void {
+    this.updateActivityReq.id = id
+    this.updateRejectSubs = this.activityService.updateReject(this.updateActivityReq).subscribe(result => { })
+  }
+
   ngOnDestroy(): void {
     this.getAllSubs.unsubscribe()
+    this.updateApproveSubs.unsubscribe()
+    this.updateRejectSubs?.unsubscribe()
   }
 
 
