@@ -1,5 +1,4 @@
 <app-navbar></app-navbar>
-{{update|json}}
 <!-- Page content -->
 <div class="container-fluid">
     <div class="row mt-3">
@@ -68,15 +67,18 @@
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="province" class="form-label">Province</label>
-                                <p-dropdown [options]="provinces" [required]="true" optionLabel="provinceName" id="province"
+                                <select name="province" id="province" class="form-select" [(ngModel)]="update.provinceId" [required]="true">
+                                    <option *ngFor="let province of provinces" [value]="province.id">{{province.provinceName}}</option>
+                                </select>
+                                <!-- <p-dropdown [options]="provinces" [required]="true" optionLabel="provinceName" id="province"
                                     optionValue="id" name="province" [(ngModel)]="update.provinceId">
-                                </p-dropdown>
+                                </p-dropdown> -->
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="city" class="form-label">City</label>
-                                <p-dropdown [options]="cities" [required]="true" optionLabel="cityName" id="city"
-                                    optionValue="id" name="city" [(ngModel)]="update.cityId">
-                                </p-dropdown>
+                                <select name="city" id="city" class="form-select" [(ngModel)]="update.cityId" [required]="true">
+                                    <option *ngFor="let city of cities" [value]="city.id">{{city.cityName}}</option>
+                                </select>
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="postal">Postal Code</label>
@@ -95,15 +97,15 @@
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="industry" class="form-label">Industry</label>
-                                <p-dropdown [options]="industries" [required]="true" optionLabel="industryName" id="industry"
-                                    optionValue="id" name="industry" [(ngModel)]="update.industryId">
-                                </p-dropdown>
+                                <select name="industry" id="industry" class="form-select" [(ngModel)]="update.industryId" [required]="true">
+                                    <option *ngFor="let industry of industries" [value]="industry.id">{{industry.industryName}}</option>
+                                </select>
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="position" class="form-label">Position</label>
-                                <p-dropdown [options]="positions" [required]="true" optionLabel="positionName" id="position"
-                                    optionValue="id" name="position" [(ngModel)]="update.positionId">
-                                </p-dropdown>
+                                <select name="position" id="position" class="form-select" [(ngModel)]="update.positionId" [required]="true">
+                                    <option *ngFor="let position of positions" [value]="position.id">{{position.positionName}}</option>
+                                </select>
                             </div>
                         </div>
                         <hr class="my-4">
@@ -132,7 +134,7 @@
                                     </div>
                                     <div class="col-6">
                                         <button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop" (click)="setProfileId(update.id)">
+                                            data-bs-target="#staticBackdrop">
                                             Save
                                         </button>
                                     </div>
@@ -151,15 +153,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Confirmation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ...
+                Are you sure want to save these changes?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
             </div>
         </div>
     </div>

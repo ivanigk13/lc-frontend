@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
+import { Subscription, concat } from 'rxjs';
 import { GetCityDtoDataRes } from '../../dto/city/get-city-dto-data-res';
 import { GetIndustryDtoDataRes } from '../../dto/industry/get-industry-dto-data-res';
 import { GetPositionDtoDataRes } from '../../dto/position/get-position-dto-data-res';
@@ -22,7 +22,6 @@ import { PositionService } from '../../service/position.service';
 
 export class ProfileComponent implements OnInit,OnDestroy {
 
-  updatedId! : string
   email! : string
   editProfile : boolean = true
   countries = []
@@ -49,9 +48,6 @@ export class ProfileComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     this.email = this.loginService.getData().email
-    this.getByUserIdSubs = this.profileService.getByUserId(this.loginService.getData().id).subscribe(result=>{
-        this.update = result.data
-    })
     this.getCitySubs = this.cityService.getAll().subscribe(result=>{
       this.cities = result.data
     })
@@ -64,14 +60,13 @@ export class ProfileComponent implements OnInit,OnDestroy {
     this.getPositionSubs = this.positionService.getAll().subscribe(result=>{
       this.positions = result.data
     })
+    this.getByUserIdSubs = this.profileService.getByUserId(this.loginService.getData().id).subscribe(result=>{
+      this.update = result.data
+    })
   }
 
   edit() : void {
     this.editProfile = !this.editProfile
-  }
-
-  setProfileId(id:string) {
-    this.updatedId = id
   }
 
   onUpdate(){
