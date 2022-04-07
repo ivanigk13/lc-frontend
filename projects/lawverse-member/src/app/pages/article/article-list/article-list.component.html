@@ -12,11 +12,14 @@
                     <div class="card p-0">
                         <div class="card-body p-5">
                             <div class="row justify-content-between align-items-center mb-3">
-                                <div [ngClass]="article.fileId != null ? 'col-4' : ''">
+                                <div class="col-md-12">
+                                    <p><span class="text-muted">Posted By </span>{{article.publisherName}} <span class="text-muted">At </span>{{article.publishedTime}}</p>
+                                </div>
+                                <div *ngIf="article.fileId != null" class="col-md-4">
                                     <img src="http://localhost:8080/files/{{article.fileId}}"
                                         class="w-100" alt="">
                                 </div>
-                                <div [ngClass]="article.fileId != null ? 'col-8' : 'col-12'">
+                                <div [ngClass]="article.fileId != null ? 'col-md-8' : 'col-md-12'">
                                     <div class="card-title">
                                         <h4>{{article.title}}</h4>
                                     </div>

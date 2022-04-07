@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GetActivityDtoDataRes } from '../../../dto/activity/get-activity-dto-data-res';
 import { ActivityService } from '../../../service/activity.service';
@@ -14,10 +15,14 @@ export class CourseComponent implements OnInit {
 
   courseSubs?: Subscription
 
-  constructor(private activityService: ActivityService) { }
+  constructor(private router: Router, private activityService: ActivityService) { }
 
   ngOnInit(): void {
-    this.courseSubs = this.activityService.getAllCourse().subscribe(result => this.courses = result.data)
+    this.courseSubs = this.activityService.getAllEvent().subscribe(result => this.courses = result.data)
+  }
+
+  onClick(id: string): void {
+    this.router.navigateByUrl(`/member/order/order-activity/${id}`)
   }
 
   ngOnDestroy(): void {

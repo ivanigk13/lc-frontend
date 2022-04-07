@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { Observable } from "rxjs"
+import { DeleteThreadLikeDtoRes } from "../dto/thread-like/delete-thread-like-dto-res"
 import { GetByIdThreadLikeDtoRes } from "../dto/thread-like/get-by-id-thread-like-dto-res"
 import { InsertThreadLikeDtoReq } from "../dto/thread-like/insert-thread-like-dto-req"
 import { InsertThreadLikeDtoRes } from "../dto/thread-like/insert-thread-like-dto-res"
@@ -28,5 +29,13 @@ export class ThreadLikeService {
 
     getLikeCounterByThreadId(id : string) : Observable<number> {
         return this.http.get<number>(`http://localhost:8080/thread-likes/thread/${id}`)
+    }
+
+    isUserLikeByThreadId(threadId: string, userId: string): Observable<number> {
+        return this.http.get<number>(`http://localhost:8080/thread-likes/thread/${threadId}/${userId}`)
+    }
+
+    delete(id: string): Observable<DeleteThreadLikeDtoRes> {
+        return this.http.delete<DeleteThreadLikeDtoRes>(`http://localhost:8080/thread-likes/${id}`)
     }
 }

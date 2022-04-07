@@ -23,12 +23,21 @@
                     <div *ngFor="let thread of threads;let i = index" class="card p-0">
                         <div class="card-body p-5">
                             <div class="row justify-content-between align-items-center mb-3">
-                                <div class="col-8">
+                                <div class="col-md-8">
                                     <div class="d-flex align-items-center">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS79JnJy_zkaMg-tUw2qbapJ4ESUpD3paoVog&usqp=CAU"
-                                            height="40" width="40" class="br-full" alt="">
-                                        <p class="ml-3 thread-profile-text">Hans Sopandi</p>
+                                        <img *ngIf="thread.profilePictureId != null" src="http://localhost:8080/files/{{thread.profilePictureId}}"
+                                            height="40" width="40" class="br-full" alt="profile-img">
+                                        <img *ngIf="thread.profilePictureId == null"
+                                                src=".../../../../../../assets/img/default-profile-picture.jpg"
+                                                height="40" width="40" class="br-full" alt="profile-img">
+                                        <p class="ml-3 thread-profile-text">{{thread.fullName}}</p>
                                     </div>
+                                </div>
+                                <div class="col-md-4 relative">
+                                    <span
+                                        [ngClass]="thread.threadTypeName == 'Reguler' ? 'badge-thread bg-secondary w-100 px-3 py-2 text-white br-8 text-end' 
+                                        : thread.threadTypeName == 'Polling' ? 'badge-thread bg-primary w-100 px-3 py-2 text-white br-8 text-end' : 
+                                        'badge-thread bg-secondary w-100 px-3 py-2 text-white br-8 text-end'">{{thread.threadTypeName}}</span>
                                 </div>                                
                             </div>
                             <div class="card-title">
@@ -39,8 +48,15 @@
                             </p>
                         </div>
                         <div class="card-footer text-muted px-5">
-                            <span>{{likeCounters[i]}} <i class="fa-regular fa-heart"></i></span>
-                            <span class="ml-3">{{commentCounters[i]}} <i class="fa-regular fa-comment"></i></span>
+                            <div class="row justify-content-between">
+                                <div class="col-md-9">
+                                    <span>{{likeCounters[i]}} <i class="fa-regular fa-heart"></i></span>
+                                    <span class="ml-3">{{commentCounters[i]}} <i class="fa-regular fa-comment"></i></span>
+                                </div>
+                                <div class="col-md-3 text-end">
+                                    <button (click)="onClick(thread.id)">Read More -></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GetThreadDtoDataRes } from '../../../dto/thread/get-thread-dto-data-res';
 import { ThreadDetailService } from '../../../service/thread-detail.service';
@@ -11,7 +12,7 @@ import { ThreadService } from '../../../service/thread.service';
   templateUrl: './thread-list.component.html',
   styleUrls: ['./thread-list.component.scss']
 })
-export class ThreadListComponent implements OnInit {
+export class ThreadListComponent implements OnInit, OnDestroy {
 
   threads : GetThreadDtoDataRes[] = []
   likeCounters : number[] = []
@@ -20,9 +21,9 @@ export class ThreadListComponent implements OnInit {
   getAllThreadSubs? : Subscription
   counterSubs? : Subscription
 
-  constructor(private title:Title, private threadService:ThreadService, private threadLikeService:ThreadLikeService,
+  constructor(private title:Title, private router : Router, private threadService:ThreadService, private threadLikeService:ThreadLikeService,
               private threadDetailService:ThreadDetailService) {
-    title.setTitle('Thread List')
+    this.title.setTitle('Thread List')
   }
 
   ngOnInit(): void {
@@ -39,5 +40,14 @@ export class ThreadListComponent implements OnInit {
       }
     })
   }
+
+  onClick(id : string) : void {
+    this.router.navigateByUrl(`/member/thread/${id}`)
+  }
+
+  ngOnDestroy(): void {
+    this.getAllThreadSubs.unsubscribe()
+  }
+
 
 }

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { GetProfileDtoDataRes } from '../../dto/profile/get-profile-dto-data-res';
+import { LoginService } from '../../service/login.service';
+import { ProfileService } from '../../service/profile.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,9 +12,20 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  profile : GetProfileDtoDataRes
+  profileSubs! : Subscription
+
+  constructor(private router: Router, private profileService : ProfileService, 
+    private loginService : LoginService) { }
 
   ngOnInit(): void {
+  }
+
+  getProfile() : void {
+    let userId : string = this.loginService.getData().id
+    this.profileSubs = this.profileService.getByUserId(userId).subscribe(result =>{
+      this.profile = result.data
+    })
   }
 
   onClick(event) : void {

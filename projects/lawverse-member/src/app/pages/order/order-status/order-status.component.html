@@ -2,14 +2,25 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h2>Order List</h2>
+            <h2>My Order</h2>
         </div>
-        <div *ngFor="let order of orders" class="card col-6 py-3">
-            <div class="row align-items-center">                
-                <div class="col-6 text-center">            
-                    <h2 *ngIf="order.activityName != null" class="">{{order.activityName}}</h2>
-                    <h2 *ngIf="order.duration != null" class="">Subscribtion : {{order.duration}} Month</h2>
-                    <p class="badge bg-danger text-status">{{order.transactionStatusName}}</p>
+        <div *ngFor="let order of orders" class="card col-4 py-3 m-3">
+            <div class="row align-items-center">
+                <div class="col-12 text-start">
+                    <div *ngIf="order.activityName != null" class="">
+                        <p>Invoice : {{order.invoice}}</p>
+                        <p>Activity Name : {{order.activityName}}</p>
+                        <p>Status : <span [ngClass]="order.transactionStatusName == 'Pending' ? 'badge bg-danger' :
+                                'badge bg-success '"
+                                >{{order.transactionStatusName}}</span></p>
+                    </div>
+                    <div *ngIf="order.duration != null" class="">
+                        <p>Invoice : {{order.invoice}}</p>
+                        <p>Subscribtion : {{order.duration}} Month</p>
+                        <p>Status : <span [ngClass]="order.transactionStatusName == 'Pending' ? 'badge bg-danger ' :
+                                'badge bg-success '"
+                                >{{order.transactionStatusName}}</span></p>
+                    </div>
                 </div>
             </div>
         </div>

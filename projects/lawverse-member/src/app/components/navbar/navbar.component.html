@@ -53,8 +53,11 @@
                       <li class="nav-item dropdown mr-3 text-center p-1">
                           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                               data-bs-toggle="dropdown" aria-expanded="false">
-                              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80"
-                                 class="br-full" height="40" width="40" alt="profile-picture-img">
+                              <img *ngIf="profile.fileId != null" src="http://localhost:8080/files/{{profile.fileId}}"
+                                  height="40" width="40" class="br-full" alt="profile-img">
+                              <img *ngIf="profile.fileId == null"
+                                  src=".../../../../../../assets/img/default-profile-picture.jpg" height="40" width="40"
+                                  class="br-full" alt="profile-img">
                           </a>
                           <ul class="dropdown-menu navbar-profile-dropdown p-1" aria-labelledby="navbarDropdownMenuLink">
                               <li><a class="dropdown-item" routerLink="/profile">My Profile</a></li>                         

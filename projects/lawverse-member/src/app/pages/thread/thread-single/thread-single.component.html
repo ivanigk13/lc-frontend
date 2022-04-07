@@ -1,1 +1,141 @@
-<p>thread-single works!</p>
+<app-navbar></app-navbar>
+<div class="header min-height-60 relative mb-3">
+    <div class="header-overlay d-flex justify-content-center align-items-center text-center">
+        <h1 class="text-light">Welcome to Lawencon Universe <br> You can ask advice, exploring career path</h1>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="bg-success px-3 py-2 text-white br-8 max-content"><i class="fa-regular fa-comment-dots"></i>
+                Thread
+            </h5>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card p-0">
+                        <div class="card-body p-5">
+                            <div class="row justify-content-between align-items-center mb-3">
+                                <div class="col-md-8">
+                                    <div class="d-flex align-items-center">
+                                        <img *ngIf="thread.profilePictureId != null"
+                                            src="http://localhost:8080/files/{{thread.profilePictureId}}" height="40"
+                                            width="40" class="br-full" alt="profile-img">
+                                        <img *ngIf="thread.profilePictureId == null"
+                                            src=".../../../../../../assets/img/default-profile-picture.jpg" height="40"
+                                            width="40" class="br-full" alt="profile-img">
+                                        <p class="ml-3 thread-profile-text">{{thread.fullName}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 relative">
+                                    <span
+                                        [ngClass]="thread.threadTypeName == 'Reguler' ? 'badge-thread bg-secondary w-100 px-3 py-2 text-white br-8 text-end' 
+                                        : thread.threadTypeName == 'Polling' ? 'badge-thread bg-primary w-100 px-3 py-2 text-white br-8 text-end' : 
+                                        'badge-thread bg-secondary w-100 px-3 py-2 text-white br-8 text-end'">{{thread.threadTypeName}}</span>
+                                </div>
+                            </div>
+                            <div class="card-title">
+                                <h4>{{thread.title}}</h4>
+                            </div>
+                            <p class="card-text text-secondary">
+                                {{thread.content}}
+                            </p>
+                        </div>
+                        <div class="card-footer text-muted px-5">
+                            <div class="row justify-content-between">
+                                <div class="col-md-9">
+                                    <span>
+                                        <a *ngIf="isLike == false" (click)="onLike(isLike)"><i class="fa-regular fa-heart"></i></a>
+                                        {{likeCounter}}                                        
+                                    </span>
+                                    <span>
+                                        <a *ngIf="isLike == true" >
+                                            <i  class="fa-solid fa-heart"></i>
+                                        </a>
+                                    </span>
+                                    <span class="ml-3"> <a ><i class="fa-regular fa-comment"></i></a>
+                                        {{commentCounter}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngFor="let data of threadDetails" class="col-md-12">
+                    <div class="card p-0">
+                        <div class="card-body p-5">
+                            <div class="row justify-content-between align-items-center mb-3">
+                                <div class="col-md-8">
+                                    <div class="d-flex align-items-center">
+                                        <img *ngIf="data.profilePictureId != null"
+                                            src="http://localhost:8080/files/{{data.profilePictureId}}" height="40"
+                                            width="40" class="br-full" alt="profile-img">
+                                        <img *ngIf="data.profilePictureId == null"
+                                            src=".../../../../../../assets/img/default-profile-picture.jpg" height="40"
+                                            width="40" class="br-full" alt="profile-img">
+                                        <p class="ml-3 thread-profile-text">{{data.fullName}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 relative">
+
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p>{{data.comment}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form #FormThreadDetail="ngForm" class="col-md-12 card">                    
+                    <label for="comment" class="form-label">Comment</label>
+                    <textarea [(ngModel)]="threadDetail.comment" name="comment" class="form-control" id="comment" required></textarea>
+                    <button type="button" (click)="onSubmit(FormThreadDetail.form.valid)"
+                        [disabled]="FormThreadDetail.form.invalid"
+                    class="btn btn-success">Submit</button>
+                </form>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row justify-content-center">
+                <div class="col-10">
+                    <a class="text-activity" href="#">
+                        <div class="card p-0">
+                            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+                                class="card-img-top activity-img" alt="...">
+                            <div class="card-body px-4 py-3">
+                                <div class="d-flex mb-2">
+                                    <p class="badge-event w-100 px-3 py-2 text-white br-8 text-center"><i
+                                            class="fa-regular fa-calendar"></i>
+                                        Event
+                                    </p>
+                                </div>
+                                <div class="card-title">
+                                    <h4>Recruitment Interview Expert Training</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-1 text-muted"><i class="fa-solid fa-location-dot"></i></div>
+                                    <div class="col-5 text-muted">Online</div>
+                                    <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
+                                    <div class="col-5 text-muted">19.30 - 20.30</div>
+                                    <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
+                                    <div class="col-5 text-muted">Jumat, 1 February 21 - Kamis, 7 Februari 21</div>
+                                    <div class="col-1 text-muted"><i class="fa-solid fa-ticket"></i></div>
+                                    <div class="col-5 text-muted">Rp 200000</div>
+                                    <div class="col-8 mx-auto">
+                                        <p class="badge-activity-yellow px-3 py-2 br-8 text-center"><i
+                                                class="fa-regular fa-calendar"></i>
+                                            Career & Succession
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

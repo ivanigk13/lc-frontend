@@ -1,5 +1,7 @@
 export class GetThreadDtoDataRes { 
 	 id!: string 
+	 profilePictureId? : string
+	 fullName!: string
 	 threadTypeId!: string 
 	 threadTypeName!: string 
 	 fileId!: string 
