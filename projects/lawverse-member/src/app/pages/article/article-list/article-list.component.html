@@ -8,7 +8,7 @@
                    </div>
                </div>
             <div class="row">
-                <div *ngFor="let article of articles" class="col-12">
+                <div *ngFor="let article of articles; let no = index" class="col-12">
                     <div class="card p-0">
                         <div class="card-body p-5">
                             <div class="row justify-content-between align-items-center mb-3">
@@ -23,7 +23,12 @@
                                     <div class="card-title">
                                         <h4>{{article.title}}</h4>
                                     </div>
-                                    <p class="card-text text-secondary article-text">{{article.content}}</p>
+                                    <p *ngIf="article.content.length > 500 && !article.clicked" class="card-text text-secondary article-text">{{article.content.substr(0,500)}}...
+                                        <button (click)="onClick(no)">Read More</button></p>
+                                    <p *ngIf="article.clicked"
+                                        class="card-text text-secondary article-text">{{article.content}}</p>
+                                    <p *ngIf="article.content.length < 500 && !article.clicked"
+                                        class="card-text text-secondary article-text">{{article.content}}</p>
                                 </div>
 
                             </div>
