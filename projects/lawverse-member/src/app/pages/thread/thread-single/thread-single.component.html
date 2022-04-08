@@ -47,13 +47,15 @@
                                         <h4>{{pollingHeader.title}}</h4>
                                         <div *ngFor="let data of pollingDetails; let no=index" class="card-body">
                                             <h6>{{data.pollingName}}</h6>
-                                            <a (click)="onVote(no)">
-                                                <p-progressBar [value]="data.pollingCounter"></p-progressBar>
+                                            <a (click)="onVote(no, isVote)">
+                                                <p-progressBar [value]="pollingCounters[no]"></p-progressBar>
                                             </a>
                                         </div>
+                                        <p class="text-muted">totalVote = {{totalPolling}}</p>
                                     </div>
                                 </div>
                             </div>
+                            
                             
                         </div>
                         <div class="card-footer text-muted px-5">

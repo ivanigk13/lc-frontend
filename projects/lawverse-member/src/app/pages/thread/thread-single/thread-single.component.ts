@@ -14,6 +14,8 @@ import { PollingHeaderService } from '../../../service/polling-header.service';
 import { PollingDetailService } from '../../../service/polling-detail.service';
 import { GetPollingHeaderDtoDataRes } from '../../../dto/polling-header/get-polling-header-dto-data-res';
 import { GetPollingDetailDtoDataRes } from '../../../dto/polling-detail/get-polling-detail-dto-data-res';
+import { PollingVoterService } from '../../../service/polling-voter.service';
+import { InsertPollingVoterDtoReq } from '../../../dto/polling-voter/insert-polling-voter-dto-req';
 
 @Component({
   selector: 'app-thread-single',
@@ -27,47 +29,55 @@ export class ThreadSingleComponent implements OnInit, OnDestroy {
   pollingDetails: GetPollingDetailDtoDataRes[] = []
   threadDetail: InsertThreadDetailDtoReq = new InsertThreadDetailDtoReq()
   threadLike: InsertThreadLikeDtoReq = new InsertThreadLikeDtoReq()
+  pollingVoter: InsertPollingVoterDtoReq = new InsertPollingVoterDtoReq()
   threadDetails: GetThreadDetailDtoDataRes[] = []
   likeData: GetThreadLikeDtoDataRes
   insertThreadDetailSubs?: Subscription
+  pollingVoterSubs?: Subscription
   threadLikeSubs?: Subscription
   threadDislikeSubs?: Subscription
   likeCounter: number
+  totalPolling: number = 0
+  pollingCounters: number[] = []
   commentCounter: number
   threadDetailSubs?: Subscription
   activeRouteSubs?: Subscription
   threadSubs?: Subscription
   isLike: boolean = false
+  isVote: boolean = false
 
   constructor(private activatedRoute: ActivatedRoute, private threadService: ThreadService,
     private threadDetailService: ThreadDetailService, private threadLikeService: ThreadLikeService,
     private loginService: LoginService, private pollingHeaderService: PollingHeaderService,
-    private pollingDetailService: PollingDetailService) { }
+    private pollingDetailService: PollingDetailService, private pollingVoterService: PollingVoterService) { }
 
   ngOnInit(): void {
-    this.getData()
+    this.getData()        
   }
 
   getData(): void {
-
     this.threadSubs = this.activatedRoute.params.subscribe(result => {
       this.threadService.getById((result as any).id).subscribe(result => {
         this.thread = result.data
 
         this.threadDetailService.getAllByThreadId(this.thread.id).subscribe(result => {
-          this.threadDetails = result.data
+          this.threadDetails = result.data          
         })
 
-        this.pollingHeaderService.getByThreadId(this.thread.id).subscribe(result => {
-          if (result.data != null) {
-            this.pollingHeader = result.data
+        if (this.thread.threadTypeName == 'Polling') {
+          this.pollingHeaderService.getByThreadId(this.thread.id).subscribe(result => {
+            if (result.data != null) {
+              this.pollingHeader = result.data
 
-            this.pollingDetailService.getAllByHeaderId(this.pollingHeader.id).subscribe(result => {
-              this.pollingDetails = result.data
-            })
-          }
-        })        
-        
+              this.pollingDetailService.getAllByHeaderId(this.pollingHeader.id).subscribe(result => {
+                this.pollingDetails = result.data
+                console.log(this.pollingDetails)
+                this.totalPollingCount()                
+              })
+            }
+          })
+        }
+
         const userId: string = this.loginService.getData().id
 
         this.threadLikeService.isUserLikeByThreadId(this.thread.id, userId).subscribe(result => {
@@ -86,8 +96,39 @@ export class ThreadSingleComponent implements OnInit, OnDestroy {
     })
   }
 
-  onVote(index : number) : void {
-    this.pollingDetails[index].pollingCounter += 1
+  totalPollingCount(): void {
+    for (let i = 0; i < this.pollingDetails.length; i++) {
+      this.totalPolling += this.pollingDetails[i].pollingCounter      
+    }
+    for (let j= 0; j < this.pollingDetails.length; j++){
+      let polling: number = (this.pollingDetails[j].pollingCounter * 100) / this.totalPolling
+      this.pollingCounters.push(polling)
+    }
+  }
+
+  onVote(index: number, isVote: boolean): void {
+    const userId = this.loginService.getData().id
+    this.pollingVoterSubs = this.pollingVoterService.getCountIdByHeaderId(this.pollingHeader.id, userId).subscribe(result => {
+      if(result == 1){
+        isVote = true
+      }
+      if (isVote == false) {
+        this.pollingCounters = []
+        this.totalPolling = 0
+        this.pollingVoter.pollingDetailId = this.pollingDetails[index].id
+       this.pollingVoterService.insert(this.pollingVoter).subscribe(result => {
+          if (result) {
+            this.pollingDetails[index].pollingCounter = this.pollingDetails[index].pollingCounter + 1
+            this.pollingDetailService.update(this.pollingDetails[index]).subscribe(result => {
+              if (result) {               
+                this.getData()                
+              }
+            })
+           
+          }
+        })
+      }
+    })    
   }
 
   onLike(like: boolean): void {
