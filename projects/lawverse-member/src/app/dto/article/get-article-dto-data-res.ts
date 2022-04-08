@@ -7,5 +7,6 @@ export class GetArticleDtoDataRes {
 	 content?: string 
 	 version?: number 
 	 isActive?: boolean 
+	 clicked: boolean = false
 } 
 
