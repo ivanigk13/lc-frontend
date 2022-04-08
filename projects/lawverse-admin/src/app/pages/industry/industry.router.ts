@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { IndustryAddComponent } from "./industry-add/industry-add.component";
 import { IndustryListComponent } from "./industry-list/industry-list.component";
+import { IndustryUpdateComponent } from "./industry-update/industry-update.component";
 
 const routes: Routes = [
     {
@@ -11,6 +12,10 @@ const routes: Routes = [
     {
         path: 'new',
         component: IndustryAddComponent
+    },
+    {
+        path: ':id',
+        component: IndustryUpdateComponent
     }
 ]
 

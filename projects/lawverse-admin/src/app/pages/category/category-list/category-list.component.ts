@@ -14,6 +14,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   categories: GetCategoryDtoDataRes[] = []
 
   categorySubs?: Subscription
+  deleteCategorySubs?: Subscription
 
   constructor(private router: Router, private categoryService: CategoryService) { }
 
@@ -28,7 +29,19 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
 
   onClick(): void {
-    this.router.navigateByUrl('/dashboard/category/new')
+    this.router.navigateByUrl('/admin/category/new')
+  }
+
+  update(id: string) {
+    this.router.navigateByUrl(`/admin/category/${id}`)
+  }
+
+  delete(id: string): void {
+    this.deleteCategorySubs = this.categoryService.deleteById(id).subscribe(result => {
+      if (result.msg) {
+        this.getData()
+      }
+    })
   }
 
   ngOnDestroy(): void {

@@ -32,12 +32,16 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   onApprove(id: string): void {
     this.updateActivityReq.id = id
-    this.updateApproveSubs = this.activityService.updateApprove(this.updateActivityReq).subscribe(result => { })
+    this.updateApproveSubs = this.activityService.updateApprove(this.updateActivityReq).subscribe(result => {
+      this.getAll()
+    })
   }
 
   onReject(id: string): void {
     this.updateActivityReq.id = id
-    this.updateRejectSubs = this.activityService.updateReject(this.updateActivityReq).subscribe(result => { })
+    this.updateRejectSubs = this.activityService.updateReject(this.updateActivityReq).subscribe(result => {
+      this.getAll()
+    })
   }
 
   ngOnDestroy(): void {

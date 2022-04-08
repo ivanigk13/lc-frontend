@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { GetPositionDtoDataRes } from 'src/app/dto/position/get-position-dto-data-res';
-import { PositionService } from 'src/app/service/position.service';
+import { GetPositionDtoDataRes } from '../../../dto/position/get-position-dto-data-res';
+import { PositionService } from '../../../service/position.service';
 
 @Component({
   selector: 'app-position-list',
@@ -14,6 +14,7 @@ export class PositionListComponent implements OnInit, OnDestroy {
   positions: GetPositionDtoDataRes[] = []
 
   positionSubs?: Subscription
+  deletePositionSubs?: Subscription
 
   constructor(private router: Router, private positionService: PositionService) { }
 
@@ -27,11 +28,24 @@ export class PositionListComponent implements OnInit, OnDestroy {
     })
   }
 
+  update(id: string) {
+    this.router.navigateByUrl(`/admin/position/${id}`)
+  }
+
+  delete(id: string): void {
+    this.deletePositionSubs = this.positionService.delete(id).subscribe(result => {
+      if (result.msg) {
+        this.getData()
+      }
+    })
+  }
+
   onClick(): void {
-    this.router.navigateByUrl('/dashboard/position/new')
+    this.router.navigateByUrl('/admin/position/new')
   }
 
   ngOnDestroy(): void {
     this.positionSubs.unsubscribe()
+    this.deletePositionSubs?.unsubscribe()
   }
 }
