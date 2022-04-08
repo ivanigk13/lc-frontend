@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { RoleAddComponent } from "./role-add/role-add.component";
 import { RoleListComponent } from "./role-list/role-list.component";
+import { RoleUpdateComponent } from "./role-update/role-update.component";
 
 const routes: Routes = [
     {
@@ -11,6 +12,10 @@ const routes: Routes = [
     {
         path: 'new',
         component: RoleAddComponent
+    },
+    {
+        path: ':id',
+        component: RoleUpdateComponent
     }
 ]
 

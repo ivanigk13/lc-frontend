@@ -24,13 +24,13 @@ export class PositionAddComponent implements OnInit, OnDestroy {
   onSubmit(valid: boolean): void {
     if (valid) {
       this.positionSubs = this.positionService.insert(this.position).subscribe(result => {
-        this.router.navigateByUrl('/dashboard/position/list')
+        this.router.navigateByUrl('/admin/position/list')
       })
     }
   }
 
   back(): void {
-    this.router.navigateByUrl('/dashboard/position/list')
+    this.router.navigateByUrl('/admin/position/list')
   }
 
   ngOnDestroy(): void {

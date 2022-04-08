@@ -38,7 +38,7 @@ export class UserService {
         return this.http.put<ForgotPasswordRes>('http://localhost:8080/users/forgot-password', forgotPasswordReq)
     }
 
-    delete(id: number): Observable<DeleteUserDtoRes> {
+    delete(id: string): Observable<DeleteUserDtoRes> {
         return this.http.delete<DeleteUserDtoRes>(`http://localhost:8080/users/${id}`)
     }
 }

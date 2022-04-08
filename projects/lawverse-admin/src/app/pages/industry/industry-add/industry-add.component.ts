@@ -23,13 +23,13 @@ export class IndustryAddComponent implements OnInit, OnDestroy {
   onSubmit(valid: boolean): void {
     if (valid) {
       this.industrySubs = this.industryService.insert(this.industry).subscribe(result => {
-        this.router.navigateByUrl('/dashboard/industry/list')
+        this.router.navigateByUrl('/admin/industry/list')
       })
     }
   }
 
   back(): void {
-    this.router.navigateByUrl('/dashboard/industry/list')
+    this.router.navigateByUrl('/admin/industry/list')
   }
 
   ngOnDestroy(): void {

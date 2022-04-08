@@ -22,13 +22,13 @@ export class CategoryAddComponent implements OnInit, OnDestroy {
   onSubmit(valid: boolean): void {
     if (valid) {
       this.categorySubs = this.categoryService.insert(this.category).subscribe(result => {
-        this.router.navigateByUrl('/dashboard/category/list')
+        this.router.navigateByUrl('/admin/category/list')
       })
     }
   }
 
   back(): void {
-    this.router.navigateByUrl('/dashboard/category/list')
+    this.router.navigateByUrl('/admin/category/list')
   }
 
   ngOnDestroy(): void {

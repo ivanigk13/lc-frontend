@@ -10,29 +10,29 @@ import { UpdatePositionDtoReq } from "../dto/position/update-position-dto-req";
 import { UpdatePositionDtoRes } from "../dto/position/update-position-dto-res";
 
 @Injectable({
-    providedIn : 'root'
+    providedIn: 'root'
 })
 
 export class PositionService {
-    constructor(private http:HttpClient){}
+    constructor(private http: HttpClient) { }
 
-    getAll() : Observable<GetAllPositionDtoRes> {
+    getAll(): Observable<GetAllPositionDtoRes> {
         return this.http.get<GetAllPositionDtoRes>('http://localhost:8080/positions')
     }
 
-    getById(id : number) : Observable<GetByIdPositionDtoRes> {
+    getById(id: string): Observable<GetByIdPositionDtoRes> {
         return this.http.get<GetByIdPositionDtoRes>(`http://localhost:8080/positions/${id}`)
     }
 
-    insert(insertPositionDtoReq : InsertPositionDtoReq) : Observable<InsertPositionDtoRes> {
-        return this.http.post<InsertPositionDtoRes>('http://localhost:8080/positions',insertPositionDtoReq)
+    insert(insertPositionDtoReq: InsertPositionDtoReq): Observable<InsertPositionDtoRes> {
+        return this.http.post<InsertPositionDtoRes>('http://localhost:8080/positions', insertPositionDtoReq)
     }
 
-    update(updatePositionDtoReq : UpdatePositionDtoReq) : Observable<UpdatePositionDtoRes> {
-        return this.http.put<UpdatePositionDtoRes>(`http://localhost:8080/positions`,updatePositionDtoReq)
+    update(updatePositionDtoReq: UpdatePositionDtoReq): Observable<UpdatePositionDtoRes> {
+        return this.http.put<UpdatePositionDtoRes>(`http://localhost:8080/positions`, updatePositionDtoReq)
     }
 
-    delete(id : number) : Observable<DeletePositionDtoRes> {
+    delete(id: string): Observable<DeletePositionDtoRes> {
         return this.http.delete<DeletePositionDtoRes>(`http://localhost:8080/positions/${id}`)
     }
 }

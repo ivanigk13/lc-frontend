@@ -7,11 +7,13 @@ import { TableModule } from "primeng/table";
 import { IndustryAddComponent } from "./industry-add/industry-add.component";
 import { IndustryListComponent } from "./industry-list/industry-list.component";
 import { IndustryRouter } from "./industry.router";
+import { IndustryUpdateComponent } from './industry-update/industry-update.component';
 
 @NgModule({
     declarations: [
         IndustryListComponent,
-        IndustryAddComponent
+        IndustryAddComponent,
+        IndustryUpdateComponent
     ],
     imports: [
         FormsModule,
