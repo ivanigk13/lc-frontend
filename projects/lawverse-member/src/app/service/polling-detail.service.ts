@@ -6,6 +6,8 @@ import { GetAllPollingDetailDtoRes } from "../dto/polling-detail/get-all-polling
 import { GetByIdPollingDetailDtoRes } from "../dto/polling-detail/get-by-id-polling-detail-dto-res"
 import { InsertPollingDetailDtoReq } from "../dto/polling-detail/insert-polling-detail-dto-req"
 import { InsertPollingDetailDtoRes } from "../dto/polling-detail/insert-polling-detail-dto-res"
+import { UpdatePollingDetailDtoReq } from "../dto/polling-detail/update-polling-detail-dto-req"
+import { UpdatePollingDetailDtoRes } from "../dto/polling-detail/update-polling-detail-dto-res"
 
 @Injectable({
     providedIn: 'root'
@@ -32,5 +34,9 @@ export class PollingDetailService {
 
     delete(id: string): Observable<DeletePollingDetailDtoRes> {
         return this.http.delete<DeletePollingDetailDtoRes>(`http://localhost:8080/polling-details/${id}`)
+    }
+
+    update(updatePollingDetailDtoreq: UpdatePollingDetailDtoReq): Observable<UpdatePollingDetailDtoRes> {
+        return this.http.put<UpdatePollingDetailDtoRes>('http://localhost:8080/polling-details', updatePollingDetailDtoreq)
     }
 }

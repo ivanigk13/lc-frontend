@@ -15,18 +15,22 @@ export class PollingVoterService {
     constructor(private http: HttpClient) { }
 
     getAll(): Observable<GetAllPollingVoterDtoRes> {
-        return this.http.get<GetAllPollingVoterDtoRes>('http://localhost:8080/polling-details')
+        return this.http.get<GetAllPollingVoterDtoRes>('http://localhost:8080/polling-voters')
     }
 
     getById(id: string): Observable<GetByIdPollingVoterDtoRes> {
-        return this.http.get<GetByIdPollingVoterDtoRes>(`http://localhost:8080/polling-details/${id}`)
+        return this.http.get<GetByIdPollingVoterDtoRes>(`http://localhost:8080/polling-voters/${id}`)
+    }
+
+    getCountIdByHeaderId(id: string, userId: string): Observable<number> {
+        return this.http.get<number>(`http://localhost:8080/polling-voters/header/${id}/${userId}`)
     }
 
     insert(insertPollingVoterDtoReq: InsertPollingVoterDtoReq): Observable<InsertPollingVoterDtoRes> {
-        return this.http.post<InsertPollingVoterDtoRes>('http://localhost:8080/polling-details', insertPollingVoterDtoReq)
+        return this.http.post<InsertPollingVoterDtoRes>('http://localhost:8080/polling-voters', insertPollingVoterDtoReq)
     }
 
     delete(id: string): Observable<DeletePollingVoterDtoRes> {
-        return this.http.delete<DeletePollingVoterDtoRes>(`http://localhost:8080/polling-details/${id}`)
+        return this.http.delete<DeletePollingVoterDtoRes>(`http://localhost:8080/polling-voters/${id}`)
     }
 }
