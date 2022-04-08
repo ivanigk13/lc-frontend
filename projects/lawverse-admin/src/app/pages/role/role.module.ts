@@ -7,11 +7,13 @@ import { TableModule } from "primeng/table";
 import { RoleAddComponent } from "./role-add/role-add.component";
 import { RoleListComponent } from "./role-list/role-list.component";
 import { RoleRouter } from "./role.router";
+import { RoleUpdateComponent } from './role-update/role-update.component';
 
 @NgModule({
     declarations: [
         RoleListComponent,
-        RoleAddComponent
+        RoleAddComponent,
+        RoleUpdateComponent
     ],
     imports: [
         FormsModule,

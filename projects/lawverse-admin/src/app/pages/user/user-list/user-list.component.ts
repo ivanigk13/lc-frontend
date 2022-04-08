@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { GetUserDtoDataRes } from 'src/app/dto/user/get-user-dto-data-res';
-import { UserService } from 'src/app/service/user.service';
+import { GetUserDtoDataRes } from '../../../dto/user/get-user-dto-data-res';
+import { UserService } from '../../../service/user.service';
 
 @Component({
   selector: 'app-user-list',
@@ -13,10 +13,15 @@ export class UserListComponent implements OnInit, OnDestroy {
   users: GetUserDtoDataRes[] = []
 
   userSubs?: Subscription
+  deleteUserSubs?: Subscription
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.getData()
+  }
+
+  getData(): void {
     this.userSubs = this.userService.getAll().subscribe(result => {
       this.users = result.data
     })
@@ -24,5 +29,6 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.userSubs?.unsubscribe()
+    this.deleteUserSubs?.unsubscribe()
   }
 }

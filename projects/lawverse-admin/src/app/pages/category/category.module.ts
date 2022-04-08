@@ -6,12 +6,14 @@ import { InputTextModule } from "primeng/inputtext";
 import { TableModule } from "primeng/table";
 import { CategoryAddComponent } from "./category-add/category-add.component";
 import { CategoryListComponent } from "./category-list/category-list.component";
+import { CategoryUpdateComponent } from "./category-update/category-update.component";
 import { CategoryRouter } from "./category.router";
 
 @NgModule({
-    declarations:[
+    declarations: [
         CategoryAddComponent,
-        CategoryListComponent
+        CategoryListComponent,
+        CategoryUpdateComponent
     ],
     imports: [
         FormsModule,
@@ -24,4 +26,4 @@ import { CategoryRouter } from "./category.router";
 
 })
 
-export class CategoryModule{}
+export class CategoryModule { }
