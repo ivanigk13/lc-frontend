@@ -83,6 +83,10 @@ import { AccessComponent } from './components/access/access.component';
                     {
                         path: "activity",
                         loadChildren: () => import('../../../lawverse-admin/src/app/pages/activity/activity.module').then(m => m.ActivityModule)
+                    },
+                    {
+                        path: "subscribe",
+                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/subscribe/subscribe.module').then(m => m.SubscribeModule)
                     }
 
                 ],

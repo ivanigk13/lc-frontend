@@ -10,29 +10,29 @@ import { UpdateIndustryDtoReq } from "../dto/industry/update-industry-dto-req";
 import { UpdateIndustryDtoRes } from "../dto/industry/update-industry-dto-res";
 
 @Injectable({
-    providedIn : 'root'
+    providedIn: 'root'
 })
 
 export class IndustryService {
-    constructor(private http:HttpClient){}
+    constructor(private http: HttpClient) { }
 
-    getAll() : Observable<GetAllIndustryDtoRes> {
+    getAll(): Observable<GetAllIndustryDtoRes> {
         return this.http.get<GetAllIndustryDtoRes>('http://localhost:8080/industries')
     }
 
-    getById(id : number) : Observable<GetByIdIndustryDtoRes> {
+    getById(id: string): Observable<GetByIdIndustryDtoRes> {
         return this.http.get<GetByIdIndustryDtoRes>(`http://localhost:8080/industries/${id}`)
     }
 
-    insert(insertIndustryDtoReq : InsertIndustryDtoReq) : Observable<InsertIndustryDtoRes> {
-        return this.http.post<InsertIndustryDtoRes>('http://localhost:8080/industries',insertIndustryDtoReq)
+    insert(insertIndustryDtoReq: InsertIndustryDtoReq): Observable<InsertIndustryDtoRes> {
+        return this.http.post<InsertIndustryDtoRes>('http://localhost:8080/industries', insertIndustryDtoReq)
     }
 
-    update(updateIndustryDtoReq : UpdateIndustryDtoReq) : Observable<UpdateIndustryDtoRes> {
-        return this.http.put<UpdateIndustryDtoRes>(`http://localhost:8080/industries`,updateIndustryDtoReq)
+    update(updateIndustryDtoReq: UpdateIndustryDtoReq): Observable<UpdateIndustryDtoRes> {
+        return this.http.put<UpdateIndustryDtoRes>(`http://localhost:8080/industries`, updateIndustryDtoReq)
     }
 
-    delete(id : number) : Observable<DeleteIndustryDtoRes> {
+    deleteById(id: string): Observable<DeleteIndustryDtoRes> {
         return this.http.delete<DeleteIndustryDtoRes>(`http://localhost:8080/industries/${id}`)
     }
 }
