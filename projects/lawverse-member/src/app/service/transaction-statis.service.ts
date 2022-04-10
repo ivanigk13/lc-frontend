@@ -18,4 +18,12 @@ export class TransactionStatusService {
     getById(id: string): Observable<GetByIdTransactionStatusDtoRes> {
         return this.http.get<GetByIdTransactionStatusDtoRes>(`http://localhost:8080/transaction-statuses/${id}`)
     }
+
+    getApproveId(): Observable<string> {
+        return this.http.get<string>('http://localhost:8080/transaction-statuses/approve')
+    }
+
+    getRejectId(): Observable<string> {
+        return this.http.get<string>('http://localhost:8080/transaction-statuses/reject')
+    }
 }

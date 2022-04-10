@@ -24,11 +24,15 @@ export class ActivityService {
         return this.http.get<GetAllActivityDtoRes>('http://localhost:8080/activities/approved-event')
     }
 
+    getApprovedUserActivity(id: string): Observable<GetAllActivityDtoRes> {
+        return this.http.get<GetAllActivityDtoRes>(`http://localhost:8080/activities/approve/user/${id}`)
+    }
+
     getAllCourse(): Observable<GetAllActivityDtoRes> {
         return this.http.get<GetAllActivityDtoRes>('http://localhost:8080/activities/approved-course')
     }
 
-    getById(id: number): Observable<GetByIdActivityDtoRes> {
+    getById(id: string): Observable<GetByIdActivityDtoRes> {
         return this.http.get<GetByIdActivityDtoRes>(`http://localhost:8080/activities/${id}`)
     }
 

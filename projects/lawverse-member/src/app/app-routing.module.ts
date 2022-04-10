@@ -22,7 +22,12 @@ import { NgModule } from '@angular/core';
             {
                 path: 'order',
                 loadChildren: () => import('./pages/order/order.module').then( m => m.OrderModule)
-            }            
+            },
+            {
+                path: 'my-activity',
+                loadChildren: () => import('./pages/my-activity/my-activity.module').then(m => m.MyActivityModule)
+            }
+
         ])
     ],
     exports: [RouterModule]

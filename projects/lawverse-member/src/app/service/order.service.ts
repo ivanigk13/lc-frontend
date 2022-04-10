@@ -6,6 +6,8 @@ import { GetByIdOrderDtoRes } from "../dto/order/get-by-id-order-dto-res";
 import { GetByUserIdOrderDtoRes } from "../dto/order/get-by-user-id-order-dto-res";
 import { InsertOrderDtoReq } from "../dto/order/insert-order-dto-req";
 import { InsertOrderDtoRes } from "../dto/order/insert-order-dto-res";
+import { UpdateOrderDtoReq } from "../dto/order/update-order-dto-req";
+import { UpdateOrderDtoRes } from "../dto/order/update-order-dto-res";
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +22,14 @@ export class OrderService {
 
     getByUserId(id: string): Observable<GetByUserIdOrderDtoRes> {
         return this.http.get<GetByUserIdOrderDtoRes>(`http://localhost:8080/orders/user/${id}`)
+    }
+
+    getPendingOrderByActivityId(id: string): Observable<GetAllOrderDtoRes> {
+        return this.http.get<GetAllOrderDtoRes>(`http://localhost:8080/orders/activity/${id}`)
+    }
+
+    updateApprove(updateOrderDtoReq : UpdateOrderDtoReq): Observable<UpdateOrderDtoRes> {
+        return this.http.put<UpdateOrderDtoRes>('http://localhost:8080/orders/approve',updateOrderDtoReq)
     }
 
     getById(id: string): Observable<GetByIdOrderDtoRes> {
