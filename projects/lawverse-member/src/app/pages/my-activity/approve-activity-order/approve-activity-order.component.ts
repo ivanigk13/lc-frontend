@@ -18,7 +18,7 @@ export class ApproveActivityOrderComponent implements OnInit {
   getOrderSubs!: Subscription
   activatedRouteSubs!: Subscription
   constructor(private orderService: OrderService, private activatedRoute: ActivatedRoute,
-    private transtactionStatusService: TransactionStatusService) { }
+    ) { }
 
   ngOnInit(): void {
     this.activatedRouteSubs = this.activatedRoute.params.subscribe(result => {
