@@ -8,6 +8,10 @@ import { NgModule } from '@angular/core';
                 loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule)
             },
             {
+                path: 'bookmarked-thread',
+                loadChildren: () => import('./pages/bookmarked-thread/bookmarked-thread.module').then(m => m.BookmarkedThreadModule)
+            },
+            {
                 path: 'article',
                 loadChildren: () => import('./pages/article/article.module').then(m => m.ArticleModule)
             },
