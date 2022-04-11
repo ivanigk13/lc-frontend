@@ -48,12 +48,21 @@ body{
 }
 
 .badge-event {    
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    font-size: 18px;
+    font-size: 14px;
     background-color: rgba(233, 233, 233, 0.8);
     color: #353535 !important;
+}
+
+.title-activity{
+    color: #269BDB;
+}
+
+.fit-content{
+    width: fit-content;
+}
+
+.title-activity:hover{
+    text-decoration: underline;
 }
 
 .badge-thread { 
