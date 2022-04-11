@@ -13,26 +13,23 @@
         </div>
         <div class="col-md-8">
             <div class="row">
-                <div class="col-12">
-                    <div class="card p-0">
+                <div class="col-md-12 card p-0">                    
                         <div class="card-body p-5">
                             <div class="row justify-content-between align-items-center mb-3">
-                                <div class="col-md-8">
-                                    <div class="d-flex align-items-center">
+                                <div class="col-md-12">
+                                    <div class="d-flex flex-nowrap align-items-center">
                                         <img *ngIf="thread.profilePictureId != null"
                                             src="http://localhost:8080/files/{{thread.profilePictureId}}" height="40"
                                             width="40" class="br-full" alt="profile-img">
                                         <img *ngIf="thread.profilePictureId == null"
                                             src=".../../../../../../assets/img/default-profile-picture.jpg" height="40"
                                             width="40" class="br-full" alt="profile-img">
-                                        <p class="ml-3 thread-profile-text">{{thread.fullName}}</p>
+                                        <p class="ml-3  my-1 thread-profile-text">
+                                            {{thread.fullName}}</p><span
+                                            [ngClass]="thread.threadTypeName == 'Regular' ? 'badge-thread bg-secondary text-white px-3 py-2 br-8 ml-auto' 
+                                        : thread.threadTypeName == 'Polling' ? 'badge-thread bg-primary text-white px-3 py-2 br-8 ml-auto' : 
+                                        'badge-thread bg-warning text-white px-3 py-2 br-8 ml-auto'">{{thread.threadTypeName}}</span>
                                     </div>
-                                </div>
-                                <div class="col-md-4 relative">
-                                    <span
-                                        [ngClass]="thread.threadTypeName == 'Reguler' ? 'badge-thread bg-secondary w-100 px-3 py-2 text-white br-8 text-end' 
-                                        : thread.threadTypeName == 'Polling' ? 'badge-thread bg-primary w-100 px-3 py-2 text-white br-8 text-end' : 
-                                        'badge-thread bg-secondary w-100 px-3 py-2 text-white br-8 text-end'">{{thread.threadTypeName}}</span>
                                 </div>
                             </div>
                             <div class="card-title">
@@ -55,63 +52,66 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            
                         </div>
                         <div class="card-footer text-muted px-5">
                             <div class="row justify-content-between">
                                 <div class="col-md-9">
                                     <span>
-                                        <a *ngIf="isLike == false" (click)="onLike(isLike)"><i class="fa-regular fa-heart"></i></a>
-                                        {{likeCounter}}                                        
+                                        <a *ngIf="isLike == false" (click)="onLike(isLike)"><i
+                                                class="fa-regular fa-heart"></i></a>
+                                        {{likeCounter}}
                                     </span>
                                     <span>
-                                        <a *ngIf="isLike == true" >
-                                            <i  class="fa-solid fa-heart"></i>
+                                        <a *ngIf="isLike == true">
+                                            <i class="fa-solid fa-heart"></i>
                                         </a>
                                     </span>
-                                    <span class="ml-3"> <a ><i class="fa-regular fa-comment"></i></a>
+                                    <span class="ml-3"> <a><i class="fa-regular fa-comment"></i></a>
                                         {{commentCounter}}</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                 
                 </div>
+                <div class="col-md-12 card p-0">
+                    <form #FormThreadDetail="ngForm" class="col-md-12 card">
+                        <label for="comment" class="form-label">Comment</label>
+                        <div class="d-flex flex-nowrap">
+                        <textarea [(ngModel)]="threadDetail.comment" name="comment" class="form-control" id="comment"
+                            required rows="1"></textarea>
+                        <button type="button" (click)="onSubmit(FormThreadDetail.form.valid)"
+                            [disabled]="FormThreadDetail.form.invalid" class="btn btn-success">Submit</button>
+                        </div>
+                        
+                    </form>
 
-                <div *ngFor="let data of threadDetails" class="col-md-12">
-                    <div class="card p-0">
-                        <div class="card-body p-5">
+                    <div *ngFor="let data of threadDetails" class="col-md-12">
+                        <div class="card-body px-5 py-1">
                             <div class="row justify-content-between align-items-center mb-3">
                                 <div class="col-md-8">
-                                    <div class="d-flex align-items-center">
-                                        <img *ngIf="data.profilePictureId != null"
-                                            src="http://localhost:8080/files/{{data.profilePictureId}}" height="40"
-                                            width="40" class="br-full" alt="profile-img">
-                                        <img *ngIf="data.profilePictureId == null"
-                                            src=".../../../../../../assets/img/default-profile-picture.jpg" height="40"
-                                            width="40" class="br-full" alt="profile-img">
-                                        <p class="ml-3 thread-profile-text">{{data.fullName}}</p>
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <img *ngIf="data.profilePictureId != null"
+                                                src="http://localhost:8080/files/{{data.profilePictureId}}" height="40"
+                                                width="40" class="br-full" alt="profile-img">
+                                            <img *ngIf="data.profilePictureId == null"
+                                                src=".../../../../../../assets/img/default-profile-picture.jpg"
+                                                height="40" width="40" class="br-full" alt="profile-img">
+                                        </div>
+                                        <div class="col-md-11">
+                                            <p class="ml-2 thread-profile-text mb-0">{{data.fullName}}</p>
+                                            <p class="ml-2 mt-2">{{data.comment}}</p>
+                                        </div>
+                                        
+                                        
                                     </div>
                                 </div>
-                                <div class="col-md-4 relative">
-
-                                </div>
+                             
                             </div>
-                            <div class="card-body">
-                                <p>{{data.comment}}</p>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
-
-                <form #FormThreadDetail="ngForm" class="col-md-12 card">                    
-                    <label for="comment" class="form-label">Comment</label>
-                    <textarea [(ngModel)]="threadDetail.comment" name="comment" class="form-control" id="comment" required></textarea>
-                    <button type="button" (click)="onSubmit(FormThreadDetail.form.valid)"
-                        [disabled]="FormThreadDetail.form.invalid"
-                    class="btn btn-success">Submit</button>
-                </form>
-
             </div>
         </div>
         <div class="col-md-4">
