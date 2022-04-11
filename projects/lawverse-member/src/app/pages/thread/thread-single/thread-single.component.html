@@ -6,85 +6,91 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <h5 class="bg-success px-3 py-2 text-white br-8 max-content"><i class="fa-regular fa-comment-dots"></i>
-                Thread
-            </h5>
-        </div>
         <div class="col-md-8">
             <div class="row">
-                <div class="col-md-12 card p-0">                    
-                        <div class="card-body p-5">
-                            <div class="row justify-content-between align-items-center mb-3">
-                                <div class="col-md-12">
-                                    <div class="d-flex flex-nowrap align-items-center">
-                                        <img *ngIf="thread.profilePictureId != null"
-                                            src="http://localhost:8080/files/{{thread.profilePictureId}}" height="40"
-                                            width="40" class="br-full" alt="profile-img">
-                                        <img *ngIf="thread.profilePictureId == null"
-                                            src=".../../../../../../assets/img/default-profile-picture.jpg" height="40"
-                                            width="40" class="br-full" alt="profile-img">
-                                        <p class="ml-3  my-1 thread-profile-text">
-                                            {{thread.fullName}}</p><span
-                                            [ngClass]="thread.threadTypeName == 'Regular' ? 'badge-thread bg-secondary text-white px-3 py-2 br-8 ml-auto' 
+                <div class="col-md-12">
+                    <h5 class="bg-success px-3 py-2 text-white br-8 max-content"><i
+                            class="fa-regular fa-comment-dots"></i>
+                        Thread
+                    </h5>
+                </div>
+                <div class="col-md-12 card p-0">
+                    <div class="card-body p-5">
+                        <div class="row justify-content-between align-items-center mb-3">
+                            <div class="col-md-12">
+                                <div class="d-flex flex-nowrap align-items-center">
+                                    <img *ngIf="thread.profilePictureId != null"
+                                        src="http://localhost:8080/files/{{thread.profilePictureId}}" height="40"
+                                        width="40" class="br-full" alt="profile-img">
+                                    <img *ngIf="thread.profilePictureId == null"
+                                        src=".../../../../../../assets/img/default-profile-picture.jpg" height="40"
+                                        width="40" class="br-full" alt="profile-img">
+                                    <p class="ml-3  my-1 thread-profile-text">
+                                        {{thread.fullName}}</p><span
+                                        [ngClass]="thread.threadTypeName == 'Regular' ? 'badge-thread bg-secondary text-white px-3 py-2 br-8 ml-auto' 
                                         : thread.threadTypeName == 'Polling' ? 'badge-thread bg-primary text-white px-3 py-2 br-8 ml-auto' : 
                                         'badge-thread bg-warning text-white px-3 py-2 br-8 ml-auto'">{{thread.threadTypeName}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-title">
-                                <h4>{{thread.title}}</h4>
-                            </div>
-                            <p class="card-text text-secondary">
-                                {{thread.content}}
-                            </p>
-                            <div *ngIf="pollingHeader != null" class="card">
-                                <div class="row">
-                                    <div class="col-md-12 card-title">
-                                        <h4>{{pollingHeader.title}}</h4>
-                                        <div *ngFor="let data of pollingDetails; let no=index" class="card-body">
-                                            <h6>{{data.pollingName}}</h6>
-                                            <a (click)="onVote(no, isVote)">
-                                                <p-progressBar [value]="pollingCounters[no]"></p-progressBar>
-                                            </a>
-                                        </div>
-                                        <p class="text-muted">totalVote = {{totalPolling}}</p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer text-muted px-5">
-                            <div class="row justify-content-between">
-                                <div class="col-md-9">
-                                    <span>
-                                        <a *ngIf="isLike == false" (click)="onLike(isLike)"><i
-                                                class="fa-regular fa-heart"></i></a>
-                                        {{likeCounter}}
-                                    </span>
-                                    <span>
-                                        <a *ngIf="isLike == true">
-                                            <i class="fa-solid fa-heart"></i>
+                        <div class="card-title">
+                            <h4>{{thread.title}}</h4>
+                        </div>
+                        <p class="card-text text-secondary">
+                            {{thread.content}}
+                        </p>
+                        <div *ngIf="pollingHeader != null" class="card">
+                            <div class="row">
+                                <div class="col-md-12 card-title">
+                                    <h4>{{pollingHeader.title}}</h4>
+                                    <div *ngFor="let data of pollingDetails; let no=index" class="card-body">
+                                        <h6>{{data.pollingName}}</h6>
+                                        <a (click)="onVote(no, isVote)">
+                                            <p-progressBar [value]="pollingCounters[no]"></p-progressBar>
                                         </a>
-                                    </span>
-                                    <span class="ml-3"> <a><i class="fa-regular fa-comment"></i></a>
-                                        {{commentCounter}}</span>
+                                    </div>
+                                    <p class="text-muted">totalVote = {{totalPolling}}</p>
                                 </div>
                             </div>
                         </div>
-                 
+                    </div>
+                    <div class="card-footer text-muted px-5">
+                        <div class="row justify-content-between">
+                            <div class="col-md-9">
+                                <span>
+                                    <a *ngIf="isLike == false" (click)="onLike(isLike)"><i
+                                            class="fa-regular fa-heart"></i></a>
+                                    {{likeCounter}}
+                                     <a *ngIf="isLike == true">
+                                         <i class="fa-solid fa-heart"></i>
+                                     </a>
+                                </span>
+                                   
+                              
+                                <span class="ml-3"> <a><i class="fa-regular fa-comment"></i></a>
+                                    {{commentCounter}}</span>
+                                <span class="ml-3"> 
+                                    <a *ngIf="isBookmark == false" (click)="onBookmark(thread.id)">
+                                        <i class="fa-regular fa-bookmark"></i>
+                                    </a>
+                                    <a *ngIf="isBookmark == true">
+                                        <i class="fa-solid fa-bookmark"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-12 card p-0">
                     <form #FormThreadDetail="ngForm" class="col-md-12 card">
                         <label for="comment" class="form-label">Comment</label>
                         <div class="d-flex flex-nowrap">
-                        <textarea [(ngModel)]="threadDetail.comment" name="comment" class="form-control" id="comment"
-                            required rows="1"></textarea>
-                        <button type="button" (click)="onSubmit(FormThreadDetail.form.valid)"
-                            [disabled]="FormThreadDetail.form.invalid" class="btn btn-success">Submit</button>
+                            <textarea [(ngModel)]="threadDetail.comment" name="comment" class="form-control"
+                                id="comment" required rows="1"></textarea>
+                            <button type="button" (click)="onSubmit(FormThreadDetail.form.valid)"
+                                [disabled]="FormThreadDetail.form.invalid" class="btn btn-success">Submit</button>
                         </div>
-                        
                     </form>
-
                     <div *ngFor="let data of threadDetails" class="col-md-12">
                         <div class="card-body px-5 py-1">
                             <div class="row justify-content-between align-items-center mb-3">
@@ -102,54 +108,99 @@
                                             <p class="ml-2 thread-profile-text mb-0">{{data.fullName}}</p>
                                             <p class="ml-2 mt-2">{{data.comment}}</p>
                                         </div>
-                                        
-                                        
                                     </div>
                                 </div>
-                             
                             </div>
-                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="row justify-content-center">
-                <div class="col-10">
-                    <a class="text-activity" href="#">
-                        <div class="card p-0">
-                            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-                                class="card-img-top activity-img" alt="...">
-                            <div class="card-body px-4 py-3">
-                                <div class="d-flex mb-2">
-                                    <p class="badge-event w-100 px-3 py-2 text-white br-8 text-center"><i
-                                            class="fa-regular fa-calendar"></i>
-                                        Event
-                                    </p>
-                                </div>
-                                <div class="card-title">
-                                    <h4>Recruitment Interview Expert Training</h4>
-                                </div>
-                                <div class="row">
-                                    <div class="col-1 text-muted"><i class="fa-solid fa-location-dot"></i></div>
-                                    <div class="col-5 text-muted">Online</div>
-                                    <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
-                                    <div class="col-5 text-muted">19.30 - 20.30</div>
-                                    <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
-                                    <div class="col-5 text-muted">Jumat, 1 February 21 - Kamis, 7 Februari 21</div>
-                                    <div class="col-1 text-muted"><i class="fa-solid fa-ticket"></i></div>
-                                    <div class="col-5 text-muted">Rp 200000</div>
-                                    <div class="col-8 mx-auto">
-                                        <p class="badge-activity-yellow px-3 py-2 br-8 text-center"><i
-                                                class="fa-regular fa-calendar"></i>
-                                            Career & Succession
-                                        </p>
-                                    </div>
-                                </div>
+        <div class="col-md-4 col-sm-10">
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="bg-primary px-3 py-2 text-white br-8 max-content"><i class="fa-regular fa-calendar"></i>
+                        Latest Activity
+                    </h5>
+                </div>
+            </div>
+            <div *ngFor="let course of courses" class="col-md-12 mb-4">
+                <div class="card p-0 relative">
+                    <div class="card-img relative">
+                        <img src="http://localhost:8080/files/{{course.fileId}}" class="card-img-top activity-img"
+                            alt="...">
+                        <p class="badge-event px-3 py-2 text-white br-8 text-center"><i
+                                class="fa-regular fa-calendar"></i>
+                            {{course.activityTypeName}}
+                        </p>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <div class="card-title">
+                            <h4>{{course.activityName}}</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-1 text-muted"><i class="fa-solid fa-location-dot"></i></div>
+                            <div class="col-5 text-muted">{{course.location}}</div>
+                            <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
+                            <div class="col-5 text-muted">{{course.timeStart.substr(0,5)}} -
+                                {{course.timeEnd.substr(0,5)}}</div>
+                            <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
+                            <div class="col-11 text-muted">{{course.dateStart}} - {{course.dateEnd}}</div>
+
+                            <div class="col-10 mx-auto">
+                                <p class="badge-activity-yellow px-3 py-2 br-8 text-center"><i
+                                        class="fa-regular fa-calendar"></i>
+                                    {{course.categoryName}}
+                                </p>
+                            </div>
+                            <div class="row justify-content-center text-center">
+                                <div class="col-6">
+                                    <h4 class="mb-0">Rp{{course.price}}</h4>
+                                </div>                                
                             </div>
                         </div>
-                    </a>
+                    </div>
+                </div>
+            </div>
+            <div *ngFor="let event of events" class="col-md-12 mb-4">
+                <div class="card p-0 relative">
+                    <div class="card-img relative">
+                        <img src="http://localhost:8080/files/{{event.fileId}}" class="card-img-top activity-img"
+                            alt="...">
+                        <p class="badge-event px-3 py-2 text-white br-8 text-center"><i
+                                class="fa-regular fa-calendar"></i>
+                            {{event.activityTypeName}}
+                        </p>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <div class="card-title">
+                            <h4>{{event.activityName}}</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-1 text-muted"><i class="fa-solid fa-location-dot"></i></div>
+                            <div class="col-5 text-muted">{{event.location}}</div>
+                            <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
+                            <div class="col-5 text-muted">{{event.timeStart.substr(0,5)}} -
+                                {{event.timeEnd.substr(0,5)}}</div>
+                            <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
+                            <div class="col-11 text-muted">{{event.dateStart}} - {{event.dateEnd}}</div>
+
+                            <div class="col-10 mx-auto">
+                                <p class="badge-activity-yellow px-3 py-2 br-8 text-center"><i
+                                        class="fa-regular fa-calendar"></i>
+                                    {{event.categoryName}}
+                                </p>
+                            </div>
+                            <div class="row justify-content-center text-center">
+                                <div class="col-6">
+                                    <h4 class="mb-0">Rp{{event.price}}</h4>
+                                </div>                               
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

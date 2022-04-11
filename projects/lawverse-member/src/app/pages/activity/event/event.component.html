@@ -4,41 +4,37 @@
 </div>
 <div class="container">
     <div class="row">
-        <div *ngFor="let event of events" class="col-md-4 mb-4">
+        <div *ngFor="let event of events" class="col-lg-3 col-md-4 col-sm-12 mb-4">
             <div class="card p-0 relative">
                 <div class="card-img relative">
                     <img src="http://localhost:8080/files/{{event.fileId}}" class="card-img-top activity-img" alt="...">
-                    <p class="badge-event px-3 py-2 text-white br-8 text-center"><i class="fa-regular fa-calendar"></i>
-                        {{event.activityTypeName}}
-                    </p>
+                    
                 </div>
                 
                 <div class="card-body p-4">
                     <div class="card-title">
-                        <h4>{{event.activityName}}</h4>
+                        <p class="badge-event fit-content px-3 py-1 text-white br-8 text-center">
+                            <i class="fa-solid fa-award"></i> {{event.activityTypeName}}
+                        </p>
+                        <h5><a class="pointer title-activity" (click)="onClick(event.id)">{{event.activityName}}</a></h5>
                     </div>
                     <div class="row">
-                        <div class="col-1 text-muted"><i class="fa-solid fa-location-dot"></i></div>
-                        <div class="col-5 text-muted">{{event.location}}</div>
-                        <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
-                        <div class="col-5 text-muted">{{event.timeStart.substr(0,5)}} -
-                            {{event.timeEnd.substr(0,5)}}</div>
-                        <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
+                        <div class="col-1 text-muted"><i class="fa-solid fa-calendar"></i></div>
                         <div class="col-11 text-muted">{{event.dateStart}} - {{event.dateEnd}}</div>
+                        <div class="col-1 text-muted"><i class="fa-solid fa-location-dot"></i></div>
+                        <div class="col-11 text-muted">{{event.location}}</div>
+                        <div class="col-1 text-muted"><i class="fa-solid fa-clock"></i></div>
+                        <div class="col-11 text-muted">{{event.timeStart.substr(0,5)}} -
+                            {{event.timeEnd.substr(0,5)}}</div>                        
+                        <div class="col-1 text-muted"><i class="fa-solid fa-ticket"></i></div>
+                        <div class="col-11 text-muted">Rp{{event.price}}</div>
                         
-                        <div class="col-10 mx-auto">
+                        <div class="col-md-12 mr-auto">
                             <p class="badge-activity-yellow px-3 py-2 br-8 text-center"><i
                                     class="fa-regular fa-calendar"></i>
                                 {{event.categoryName}}
                             </p>
-                        </div>
-                        <div class="row justify-content-between text-center">
-                            <div class="col-6">
-                                <h4 class="mb-0">Rp{{event.price}}</h4>
-                            </div>
-                            <button type="button" (click)="onClick(event.id)" class="col-6 btn btn-success">Order</button>
-                        </div>
-
+                        </div>               
                     </div>
                 </div>
             </div>

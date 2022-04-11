@@ -16,6 +16,10 @@ import { GetPollingHeaderDtoDataRes } from '../../../dto/polling-header/get-poll
 import { GetPollingDetailDtoDataRes } from '../../../dto/polling-detail/get-polling-detail-dto-data-res';
 import { PollingVoterService } from '../../../service/polling-voter.service';
 import { InsertPollingVoterDtoReq } from '../../../dto/polling-voter/insert-polling-voter-dto-req';
+import { GetActivityDtoDataRes } from '../../../dto/activity/get-activity-dto-data-res';
+import { ActivityService } from '../../../service/activity.service';
+import { InsertThreadBookmarkDtoReq } from '../../../dto/thread-bookmark/insert-thread-bookmark-dto-req';
+import { ThreadBookmarkService } from '../../../service/thread-bookmark-service';
 
 @Component({
   selector: 'app-thread-single',
@@ -30,29 +34,42 @@ export class ThreadSingleComponent implements OnInit, OnDestroy {
   threadDetail: InsertThreadDetailDtoReq = new InsertThreadDetailDtoReq()
   threadLike: InsertThreadLikeDtoReq = new InsertThreadLikeDtoReq()
   pollingVoter: InsertPollingVoterDtoReq = new InsertPollingVoterDtoReq()
+  threadBookmark: InsertThreadBookmarkDtoReq = new InsertThreadBookmarkDtoReq()
   threadDetails: GetThreadDetailDtoDataRes[] = []
   likeData: GetThreadLikeDtoDataRes
-  insertThreadDetailSubs?: Subscription
-  pollingVoterSubs?: Subscription
-  threadLikeSubs?: Subscription
-  threadDislikeSubs?: Subscription
+  events: GetActivityDtoDataRes[] = []
+  courses: GetActivityDtoDataRes[] = []
   likeCounter: number
   totalPolling: number = 0
   pollingCounters: number[] = []
   commentCounter: number
+  isLike: boolean = false
+  isVote: boolean = false
+  isBookmark: boolean = false
+  userId: string
+
+  insertThreadDetailSubs?: Subscription
+  pollingVoterSubs?: Subscription
+  threadBookmarkSubs?: Subscription
+  threadLikeSubs?: Subscription
+  threadDislikeSubs?: Subscription
   threadDetailSubs?: Subscription
   activeRouteSubs?: Subscription
   threadSubs?: Subscription
-  isLike: boolean = false
-  isVote: boolean = false
+  getEventSubs!: Subscription
+  getCourseSubs!: Subscription
+
 
   constructor(private activatedRoute: ActivatedRoute, private threadService: ThreadService,
     private threadDetailService: ThreadDetailService, private threadLikeService: ThreadLikeService,
     private loginService: LoginService, private pollingHeaderService: PollingHeaderService,
-    private pollingDetailService: PollingDetailService, private pollingVoterService: PollingVoterService) { }
+    private pollingDetailService: PollingDetailService, private pollingVoterService: PollingVoterService,
+    private activityService: ActivityService, private threadBookmarkService: ThreadBookmarkService) { }
 
   ngOnInit(): void {
-    this.getData()        
+    this.getData()
+    this.getLastTwoCourse()
+    this.getLastTwoEvent()
   }
 
   getData(): void {
@@ -61,7 +78,7 @@ export class ThreadSingleComponent implements OnInit, OnDestroy {
         this.thread = result.data
 
         this.threadDetailService.getAllByThreadId(this.thread.id).subscribe(result => {
-          this.threadDetails = result.data          
+          this.threadDetails = result.data
         })
 
         if (this.thread.threadTypeName == 'Polling') {
@@ -72,18 +89,22 @@ export class ThreadSingleComponent implements OnInit, OnDestroy {
               this.pollingDetailService.getAllByHeaderId(this.pollingHeader.id).subscribe(result => {
                 this.pollingDetails = result.data
                 console.log(this.pollingDetails)
-                this.totalPollingCount()                
+                this.totalPollingCount()
               })
             }
           })
         }
 
-        const userId: string = this.loginService.getData().id
+        this.userId = this.loginService.getData().id
 
-        this.threadLikeService.isUserLikeByThreadId(this.thread.id, userId).subscribe(result => {
+        this.threadLikeService.isUserLikeByThreadId(this.thread.id, this.userId).subscribe(result => {
           if (result == 1) {
             this.isLike = true
           }
+        })
+
+        this.threadBookmarkSubs = this.threadBookmarkService.getThreadBookmarkByThreadId(this.thread.id).subscribe(result => {
+          this.isBookmark = true
         })
         this.threadLikeService.getLikeCounterByThreadId(this.thread.id).subscribe(result => {
           this.likeCounter = result
@@ -96,39 +117,45 @@ export class ThreadSingleComponent implements OnInit, OnDestroy {
     })
   }
 
+  getLastTwoEvent(): void {
+    this.getEventSubs = this.activityService.getLastTwoEvent().subscribe(result => this.events = result.data)
+  }
+
+  getLastTwoCourse(): void {
+    this.getCourseSubs = this.activityService.getLastTwoCourse().subscribe(result => this.courses = result.data)
+  }
+
   totalPollingCount(): void {
     for (let i = 0; i < this.pollingDetails.length; i++) {
-      this.totalPolling += this.pollingDetails[i].pollingCounter      
+      this.totalPolling += this.pollingDetails[i].pollingCounter
     }
-    for (let j= 0; j < this.pollingDetails.length; j++){
+    for (let j = 0; j < this.pollingDetails.length; j++) {
       let polling: number = (this.pollingDetails[j].pollingCounter * 100) / this.totalPolling
       this.pollingCounters.push(polling)
     }
   }
 
   onVote(index: number, isVote: boolean): void {
-    const userId = this.loginService.getData().id
-    this.pollingVoterSubs = this.pollingVoterService.getCountIdByHeaderId(this.pollingHeader.id, userId).subscribe(result => {
-      if(result == 1){
+    this.pollingVoterSubs = this.pollingVoterService.getCountIdByHeaderId(this.pollingHeader.id, this.userId).subscribe(result => {
+      if (result == 1) {
         isVote = true
       }
       if (isVote == false) {
         this.pollingCounters = []
         this.totalPolling = 0
         this.pollingVoter.pollingDetailId = this.pollingDetails[index].id
-       this.pollingVoterService.insert(this.pollingVoter).subscribe(result => {
+        this.pollingVoterService.insert(this.pollingVoter).subscribe(result => {
           if (result) {
             this.pollingDetails[index].pollingCounter = this.pollingDetails[index].pollingCounter + 1
             this.pollingDetailService.update(this.pollingDetails[index]).subscribe(result => {
-              if (result) {               
-                this.getData()                
+              if (result) {
+                this.getData()
               }
             })
-           
           }
         })
       }
-    })    
+    })
   }
 
   onLike(like: boolean): void {
@@ -137,7 +164,23 @@ export class ThreadSingleComponent implements OnInit, OnDestroy {
       this.threadLike.userId = this.loginService.getData().id
       this.threadLike.likeCounter = 1
       this.threadLikeSubs = this.threadLikeService.insert(this.threadLike).subscribe(result => {
-        if (result) this.getData()
+        if (result) {
+          this.isLike = true
+          this.getData()
+        }
+      })
+    }
+  }
+
+  onBookmark(): void {
+    if (!this.isBookmark) {
+      this.threadBookmark.userId = this.userId
+      this.threadBookmark.threadId = this.thread.id
+      this.threadBookmarkService.insert(this.threadBookmark).subscribe(result => {
+        if (result) {
+          this.isBookmark = true
+          this.getData()
+        }
       })
     }
   }
@@ -148,10 +191,12 @@ export class ThreadSingleComponent implements OnInit, OnDestroy {
 
   onSubmit(data: boolean): void {
     if (data) {
+      this.pollingCounters = []
+      this.totalPolling = 0
       this.threadDetail.threadId = this.thread.id
       this.insertThreadDetailSubs = this.threadDetailService.insert(this.threadDetail).subscribe(result => {
         if (result) {
-          // this.getData()
+          this.getData()
         }
       })
     }
@@ -160,6 +205,10 @@ export class ThreadSingleComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.activeRouteSubs?.unsubscribe()
     this.threadSubs?.unsubscribe()
+    this.getCourseSubs?.unsubscribe()
+    this.getEventSubs?.unsubscribe()
+    this.threadLikeSubs?.unsubscribe()
+    this.threadBookmarkSubs?.unsubscribe()
   }
 
 }

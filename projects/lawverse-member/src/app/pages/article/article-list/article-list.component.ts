@@ -39,8 +39,12 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     this.getCourseSubs = this.activityService.getLastTwoCourse().subscribe(result => this.courses = result.data)
   }
 
-  onClick(index : number) : void {
+  onReadMore(index : number) : void {
     this.articles[index].clicked = true
+  }
+
+  onReadLess(index : number) : void {
+    this.articles[index].clicked = false
   }
 
   ngOnDestroy(): void {

@@ -18,7 +18,7 @@ export class CourseComponent implements OnInit {
   constructor(private router: Router, private activityService: ActivityService) { }
 
   ngOnInit(): void {
-    this.courseSubs = this.activityService.getAllEvent().subscribe(result => this.courses = result.data)
+    this.courseSubs = this.activityService.getAllCourse().subscribe(result => this.courses = result.data)
   }
 
   onClick(id: string): void {
