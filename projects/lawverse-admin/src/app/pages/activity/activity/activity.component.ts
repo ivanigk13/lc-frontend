@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, map, Observable, Subscription } from 'rxjs';
 import { UpdateActivityTransactionStatusDtoReq } from '../../../dto/activity/update-activity-transaction-status-dto-req';
 import { GetActivityDtoDataRes } from '../../../dto/activity/get-activity-dto-data-res';
 import { ActivityService } from '../../../service/activity.service';
@@ -9,10 +9,11 @@ import { ActivityService } from '../../../service/activity.service';
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.scss']
 })
-export class ActivityComponent implements OnInit, OnDestroy {
+export class ActivityComponent implements OnInit {
 
-  activities: GetActivityDtoDataRes[] = []
-  updateActivityReq: UpdateActivityTransactionStatusDtoReq = new UpdateActivityTransactionStatusDtoReq()
+  
+  activities$: Observable<GetActivityDtoDataRes[]>
+  updateActivityReq : UpdateActivityTransactionStatusDtoReq = new UpdateActivityTransactionStatusDtoReq()
   getAllSubs!: Subscription
   updateApproveSubs?: Subscription
   updateRejectSubs?: Subscription
@@ -24,31 +25,18 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
   getAll(): void {
-    this.getAllSubs = this.activityService.getAllActivityPending().subscribe(result => {
-      this.activities = result.data
-      console.log(result)
-    })
+    this.activities$ = this.activityService.getAllActivityPending().pipe(map(result => result.data))
   }
 
-  onApprove(id: string): void {
+  async onApprove(id: string): Promise<void> {
     this.updateActivityReq.id = id
-    this.updateApproveSubs = this.activityService.updateApprove(this.updateActivityReq).subscribe(result => {
-      this.getAll()
-    })
+    const result = await firstValueFrom(this.activityService.updateApprove(this.updateActivityReq))
+    if(result) this.getAll()
   }
 
-  onReject(id: string): void {
+  async onReject(id: string): Promise<void> {
     this.updateActivityReq.id = id
-    this.updateRejectSubs = this.activityService.updateReject(this.updateActivityReq).subscribe(result => {
-      this.getAll()
-    })
+    const result = await firstValueFrom(this.activityService.updateReject(this.updateActivityReq))
+    if(result) this.getAll()
   }
-
-  ngOnDestroy(): void {
-    this.getAllSubs.unsubscribe()
-    this.updateApproveSubs.unsubscribe()
-    this.updateRejectSubs?.unsubscribe()
-  }
-
-
 }

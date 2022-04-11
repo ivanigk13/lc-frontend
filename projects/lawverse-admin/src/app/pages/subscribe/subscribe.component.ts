@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, map, Observable, Subscription } from 'rxjs';
 import { UpdateOrderDtoReq } from '../../dto/order/update-order-dto-req';
 import { GetOrderDtoDataRes } from '../../dto/order/get-order-dto-data-res';
 import { OrderService } from '../../service/order.service';
@@ -9,14 +9,10 @@ import { OrderService } from '../../service/order.service';
   templateUrl: './subscribe.component.html',
   styleUrls: ['./subscribe.component.scss']
 })
-export class SubscribeComponent implements OnInit, OnDestroy {
+export class SubscribeComponent implements OnInit {
 
-  subscribes: GetOrderDtoDataRes[] = []
+  subscribes$: Observable<GetOrderDtoDataRes[]>
   updateReq: UpdateOrderDtoReq = new UpdateOrderDtoReq()
-
-  subscribeSubs?: Subscription
-  updateApproveSubs?: Subscription
-  updateRejectSubs?: Subscription
 
   constructor(private orderService: OrderService) { }
 
@@ -25,29 +21,19 @@ export class SubscribeComponent implements OnInit, OnDestroy {
   }
 
   getData(): void {
-    this.subscribeSubs = this.orderService.getAllPendingSubscribe().subscribe(result => {
-      this.subscribes = result.data
-    })
+    this.subscribes$ = this.orderService.getAllPendingSubscribe().pipe(map(result => result.data))
   }
 
-  onApprove(id: string): void {
+  async onApprove(id: string): Promise<void> {
     this.updateReq.id = id
-    this.updateApproveSubs = this.orderService.updateApprove(this.updateReq).subscribe(result => {
-      this.getData()
-    })
+    const result = await firstValueFrom(this.orderService.updateApprove(this.updateReq))
+    if(result) this.getData()
   }
 
-  onReject(id: string): void {
+  async onReject(id: string): Promise<void> {
     this.updateReq.id = id
-    this.updateRejectSubs = this.orderService.updateReject(this.updateReq).subscribe(result => {
-      this.getData()
-    })
-  }
-
-  ngOnDestroy(): void {
-    this.subscribeSubs.unsubscribe()
-    this.updateApproveSubs.unsubscribe()
-    this.updateRejectSubs.unsubscribe()
+    const result = await firstValueFrom(this.orderService.updateReject(this.updateReq))
+    if (result) this.getData()
   }
 
 }

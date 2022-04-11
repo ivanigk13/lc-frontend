@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, map, Observable, Subscription } from 'rxjs';
 import { GetRoleDtoDataRes } from '../../../dto/role/get-role-dto-data-res';
 import { RoleService } from '../../../service/role.service';
 
@@ -9,12 +9,9 @@ import { RoleService } from '../../../service/role.service';
   templateUrl: './role-list.component.html',
   styleUrls: ['./role-list.component.scss']
 })
-export class RoleListComponent implements OnInit, OnDestroy {
+export class RoleListComponent implements OnInit {
 
-  roles: GetRoleDtoDataRes[] = []
-
-  roleSubs?: Subscription
-  deleteRoleSubs?: Subscription
+  roles$: Observable<GetRoleDtoDataRes[]>
 
   constructor(private router: Router, private roleService: RoleService) { }
 
@@ -23,9 +20,7 @@ export class RoleListComponent implements OnInit, OnDestroy {
   }
 
   getData(): void {
-    this.roleSubs = this.roleService.getAll().subscribe(result => {
-      this.roles = result.data
-    })
+    this.roles$ = this.roleService.getAll().pipe(map(result => result.data))
   }
 
   onClick(): void {
@@ -37,15 +32,7 @@ export class RoleListComponent implements OnInit, OnDestroy {
   }
 
   delete(id: string): void {
-    this.deleteRoleSubs = this.roleService.delete(id).subscribe(result => {
-      if (result.msg) {
-        this.getData()
-      }
-    })
-  }
-
-  ngOnDestroy(): void {
-    this.roleSubs?.unsubscribe()
-    this.deleteRoleSubs?.unsubscribe()
+    const result = firstValueFrom(this.roleService.delete(id))
+    if (result) this.getData()
   }
 }

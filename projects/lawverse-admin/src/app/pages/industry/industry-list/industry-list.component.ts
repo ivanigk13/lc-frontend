@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, map, Observable, Subscription } from 'rxjs';
 import { GetIndustryDtoDataRes } from '../../../dto/industry/get-industry-dto-data-res';
 import { IndustryService } from '../../../service/industry.service';
 
@@ -9,12 +9,10 @@ import { IndustryService } from '../../../service/industry.service';
   templateUrl: './industry-list.component.html',
   styleUrls: ['./industry-list.component.scss']
 })
-export class IndustryListComponent implements OnInit, OnDestroy {
+export class IndustryListComponent implements OnInit {
 
-  industries: GetIndustryDtoDataRes[] = []
-
-  industrySubs?: Subscription
-  deleteIndsustrySubs?: Subscription
+  
+  industries$: Observable<GetIndustryDtoDataRes[]>
 
   constructor(private router: Router, private industryService: IndustryService) { }
 
@@ -23,9 +21,7 @@ export class IndustryListComponent implements OnInit, OnDestroy {
   }
 
   getData() {
-    this.industrySubs = this.industryService.getAll().subscribe(result => {
-      this.industries = result.data
-    })
+    this.industries$ = this.industryService.getAll().pipe(map(result => result.data))
   }
 
   onClick(): void {
@@ -36,17 +32,9 @@ export class IndustryListComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(`/admin/industry/${id}`)
   }
 
-  delete(id: string): void {
-    this.deleteIndsustrySubs = this.industryService.deleteById(id).subscribe(result => {
-      if (result.msg) {
-        this.getData()
-      }
-    })
-  }
-
-  ngOnDestroy(): void {
-    this.industrySubs.unsubscribe()
-    this.industrySubs?.unsubscribe()
+  async delete(id: string): Promise<void> {
+    const result = await firstValueFrom(this.industryService.deleteById(id))
+    if (result) this.getData()
   }
 
 }

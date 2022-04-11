@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { GetTransactionStatusDtoDataRes } from 'src/app/dto/transaction-status/get-transaction-status-dto-data-res';
 import { TransactionStatusService } from 'src/app/service/transaction-statis.service';
 
@@ -8,22 +8,13 @@ import { TransactionStatusService } from 'src/app/service/transaction-statis.ser
   templateUrl: './transaction-status-list.component.html',
   styleUrls: ['./transaction-status-list.component.scss']
 })
-export class TransactionStatusListComponent implements OnInit, OnDestroy {
+export class TransactionStatusListComponent implements OnInit {
 
-  transactionStatus: GetTransactionStatusDtoDataRes[] = []
-
-  transactionStatusSubs?: Subscription
+  transactionStatus$: Observable<GetTransactionStatusDtoDataRes[]>
 
   constructor(private transactionStatusService: TransactionStatusService) { }
 
   ngOnInit(): void {
-    this.transactionStatusSubs = this.transactionStatusService.getAll().subscribe(result => {
-      this.transactionStatus = result.data
-
-    })
-  }
-
-  ngOnDestroy(): void {
-    this.transactionStatusSubs?.unsubscribe()
+    this.transactionStatus$ = this.transactionStatusService.getAll().pipe(map(result => result.data))
   }
 }

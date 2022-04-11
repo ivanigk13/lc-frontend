@@ -1,20 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { map, Observable, Subscription, firstValueFrom } from 'rxjs';
 import { GetCategoryDtoDataRes } from 'src/app/dto/category/get-category-dto-data-res';
 import { CategoryService } from 'src/app/service/category.service';
+
 
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.scss']
 })
-export class CategoryListComponent implements OnInit, OnDestroy {
-
-  categories: GetCategoryDtoDataRes[] = []
-
-  categorySubs?: Subscription
-  deleteCategorySubs?: Subscription
+export class CategoryListComponent implements OnInit {
+ 
+  categories$: Observable<GetCategoryDtoDataRes[]>
 
   constructor(private router: Router, private categoryService: CategoryService) { }
 
@@ -23,9 +21,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
 
   getData() {
-    this.categorySubs = this.categoryService.getAll().subscribe(result => {
-      this.categories = result.data
-    })
+    this.categories$ = this.categoryService.getAll().pipe(map(result => result.data))
   }
 
   onClick(): void {
@@ -36,16 +32,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(`/admin/category/${id}`)
   }
 
-  delete(id: string): void {
-    this.deleteCategorySubs = this.categoryService.deleteById(id).subscribe(result => {
-      if (result.msg) {
-        this.getData()
-      }
-    })
-  }
-
-  ngOnDestroy(): void {
-    this.categorySubs.unsubscribe()
+  async delete(id: string): Promise<void> {
+    const result = await firstValueFrom(this.categoryService.deleteById(id))
+    if(result) this.getData()
   }
 
 }

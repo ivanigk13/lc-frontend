@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { GetUserDtoDataRes } from '../../../dto/user/get-user-dto-data-res';
 import { UserService } from '../../../service/user.service';
 
@@ -8,12 +8,9 @@ import { UserService } from '../../../service/user.service';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit, OnDestroy {
+export class UserListComponent implements OnInit{
 
-  users: GetUserDtoDataRes[] = []
-
-  userSubs?: Subscription
-  deleteUserSubs?: Subscription
+  users$: Observable<GetUserDtoDataRes[]>
 
   constructor(private userService: UserService) { }
 
@@ -22,13 +19,6 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   getData(): void {
-    this.userSubs = this.userService.getAll().subscribe(result => {
-      this.users = result.data
-    })
-  }
-
-  ngOnDestroy(): void {
-    this.userSubs?.unsubscribe()
-    this.deleteUserSubs?.unsubscribe()
+    this.users$ = this.userService.getAll().pipe(map(result => result.data))
   }
 }
