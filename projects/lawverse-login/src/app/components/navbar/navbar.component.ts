@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GetProfileDtoDataRes } from '../../dto/profile/get-profile-dto-data-res';
@@ -10,21 +10,28 @@ import { ProfileService } from '../../service/profile.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit , OnDestroy{
 
   profile: GetProfileDtoDataRes
   profileSubs!: Subscription
+
+  items = [
+    { label: 'Activity', routerLink: '/activity/add' },
+    { label: 'Login', routerLink: '/login' },
+  ]
 
   constructor(private router: Router, private profileService: ProfileService,
     private loginService: LoginService) { }
 
   ngOnInit(): void {
+    this.getProfile()
   }
 
   getProfile(): void {
     let userId: string = this.loginService.getData().id
     this.profileSubs = this.profileService.getByUserId(userId).subscribe(result => {
       this.profile = result.data
+      console.log(this.profile)
     })
   }
 
@@ -37,9 +44,9 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl('/login')
   }
 
-  items = [
-    { label: 'Activity', routerLink: '/activity/add' },
-    { label: 'Login', routerLink: '/login' },
-  ]
+
+  ngOnDestroy(): void {
+    this.profileSubs.unsubscribe()
+  }
 
 }
