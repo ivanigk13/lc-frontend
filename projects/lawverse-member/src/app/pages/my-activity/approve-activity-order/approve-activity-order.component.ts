@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { TransactionStatusService } from 'src/app/service/transaction-statis.service';
 import { GetOrderDtoDataRes } from '../../../dto/order/get-order-dto-data-res';
 import { OrderService } from '../../../service/order.service';
 
@@ -18,7 +17,7 @@ export class ApproveActivityOrderComponent implements OnInit {
   getOrderSubs!: Subscription
   activatedRouteSubs!: Subscription
   constructor(private orderService: OrderService, private activatedRoute: ActivatedRoute,
-    ) { }
+    private router : Router) { }
 
   ngOnInit(): void {
     this.activatedRouteSubs = this.activatedRoute.params.subscribe(result => {
@@ -27,6 +26,10 @@ export class ApproveActivityOrderComponent implements OnInit {
         console.log(this.orders)
       })
     })
+  }
+
+  onBack() : void {
+    this.router.navigateByUrl('/member/my-activity')
   }
 
   onApprove(id: string): void {
