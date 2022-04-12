@@ -10,6 +10,13 @@
                             <button pButton label="Add" icon="pi pi-plus"
                                 class="p-element p-ripple p-button-success mr-2 mb-2 p-button p-component mb-2"
                                 (click)="onClick()"></button>
+
+                            <span class="p-input-icon-left ml-auto">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text"
+                                    (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                                    placeholder="Search keyword" />
+                            </span>
                         </div>
                     </ng-template>
                     <ng-template pTemplate="header">
