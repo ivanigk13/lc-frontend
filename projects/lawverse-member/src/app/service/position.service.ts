@@ -20,7 +20,7 @@ export class PositionService {
         return this.http.get<GetAllPositionDtoRes>('http://localhost:8080/positions')
     }
 
-    getById(id : number) : Observable<GetByIdPositionDtoRes> {
+    getById(id : string) : Observable<GetByIdPositionDtoRes> {
         return this.http.get<GetByIdPositionDtoRes>(`http://localhost:8080/positions/${id}`)
     }
 

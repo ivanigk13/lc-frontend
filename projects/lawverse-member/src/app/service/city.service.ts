@@ -20,7 +20,7 @@ export class CityService {
         return this.http.get<GetAllCityDtoRes>('http://localhost:8080/cities')
     }
 
-    getById(id : number) : Observable<GetByIdCityDtoRes> {
+    getById(id : string) : Observable<GetByIdCityDtoRes> {
         return this.http.get<GetByIdCityDtoRes>(`http://localhost:8080/cities/${id}`)
     }
 
