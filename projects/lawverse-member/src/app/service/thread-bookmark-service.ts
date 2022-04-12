@@ -18,8 +18,16 @@ export class ThreadBookmarkService {
         return this.http.get<GetAllThreadBookmarkDtoRes>('http://localhost:8080/thread-bookmarks')
     }
 
-    getById(id : number) : Observable<GetByIdThreadBookmarkDtoRes> {
+    getById(id : string) : Observable<GetByIdThreadBookmarkDtoRes> {
         return this.http.get<GetByIdThreadBookmarkDtoRes>(`http://localhost:8080/thread-bookmarks/${id}`)
+    }
+
+    getThreadBookmarkByThreadId(id: string): Observable<GetByIdThreadBookmarkDtoRes> {
+        return this.http.get<GetByIdThreadBookmarkDtoRes>(`http://localhost:8080/thread-bookmarks/thread/${id}`)
+    }
+
+    getThreadBookmarkByUserId(id: string): Observable<GetAllThreadBookmarkDtoRes> {
+       return this.http.get<GetAllThreadBookmarkDtoRes>(`http://localhost:8080/thread-bookmarks/user/${id}`)
     }
 
     insert(insertThreadBookmarkDtoReq : InsertThreadBookmarkDtoReq) : Observable<InsertThreadBookmarkDtoRes> {
