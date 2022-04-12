@@ -24,11 +24,8 @@ export class ProfileService {
         return this.http.get<GetByIdProfileDtoRes>(`http://localhost:8080/profiles/${id}`)
     }
 
-    insert(insertProfileDtoReq: InsertProfileDtoReq, file?: File): Observable<InsertProfileDtoRes> {
-        const formData: FormData = new FormData()
-        formData.append('data', JSON.stringify(insertProfileDtoReq))
-        if (file) formData.append('file', file)
-        return this.http.post<InsertProfileDtoRes>('http://localhost:8080/profiles', formData)
+    insert(insertProfileDtoReq: InsertProfileDtoReq): Observable<InsertProfileDtoRes> {
+        return this.http.post<InsertProfileDtoRes>('http://localhost:8080/profiles', insertProfileDtoReq)
     }
 
     update(updateProfileDtoReq: UpdateProfileDtoReq, file?: File): Observable<UpdateProfileDtoRes> {

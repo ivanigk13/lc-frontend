@@ -20,7 +20,7 @@ export class IndustryService {
         return this.http.get<GetAllIndustryDtoRes>('http://localhost:8080/industries')
     }
 
-    getById(id : number) : Observable<GetByIdIndustryDtoRes> {
+    getById(id : string) : Observable<GetByIdIndustryDtoRes> {
         return this.http.get<GetByIdIndustryDtoRes>(`http://localhost:8080/industries/${id}`)
     }
 

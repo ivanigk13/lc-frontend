@@ -23,7 +23,7 @@
                         <div class="h5 font-weight-300">
                             <i class="ni location_pin mr-2"></i>{{update.phoneNumber}}</div>
                         <div class="h5 mt-4">
-                            <i class="ni business_briefcase-24 mr-2"></i> IT Consultan
+                            <i class="ni business_briefcase-24 mr-2"></i> {{positionName}}, {{industryName}}
                         </div>
                         <div>
                             <i class="ni education_hat mr-2"></i>{{update.companyName}}
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form #profileForm (ngSubmit)="onUpdate()">
                         <div class="p-fluid p-formgrid grid justify-content-start">
                             <div class="field col-12">
                                 <label htmlFor="name">Full Name</label>
@@ -52,37 +52,36 @@
                             </div>
                             <div class="field sm:col-12">
                                 <label htmlFor="email" class="form-label">Email</label>
-                                <input pInputText id="email" name="email" [required]="true" type="email" 
+                                <input pInputText id="email" name="email" type="email" 
                                     [value]="email" readonly>
                             </div>
                             <div class="field sm:col-12">
                                 <label htmlFor="phone" class="form-label">Phone Number</label>
-                                <input pInputText id="phone" name="phone" [required]="true" type="text"
+                                <input pInputText id="phone" name="phone" type="text"
                                     [(ngModel)]="update.phoneNumber">
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="country" class="form-label">Country</label>
-                                <input pInputText id="country" name="country" [required]="true" type="text"
+                                <input pInputText id="country" name="country" type="text"
                                     value="Indonesia" readonly>
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="province" class="form-label">Province</label>
-                                <select name="province" id="province" class="form-select" [(ngModel)]="update.provinceId" [required]="true">
+                                <select name="province" id="province" class="form-select" [(ngModel)]="provinceId" 
+                                    disabled>
                                     <option *ngFor="let province of provinces" [value]="province.id">{{province.provinceName}}</option>
                                 </select>
-                                <!-- <p-dropdown [options]="provinces" [required]="true" optionLabel="provinceName" id="province"
-                                    optionValue="id" name="province" [(ngModel)]="update.provinceId">
-                                </p-dropdown> -->
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="city" class="form-label">City</label>
-                                <select name="city" id="city" class="form-select" [(ngModel)]="update.cityId" [required]="true">
+                                <select name="city" id="city" class="form-select" [(ngModel)]="update.cityId"
+                                    (ngModelChange)="setProvince()">
                                     <option *ngFor="let city of cities" [value]="city.id">{{city.cityName}}</option>
                                 </select>
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="postal">Postal Code</label>
-                                <input pInputText id="postal" name="postal" [required]="true" type="text" 
+                                <input pInputText id="postal" name="postal" type="text" 
                                     [(ngModel)]="update.postalCode"/>
                             </div>
                         </div>
@@ -92,18 +91,18 @@
                         <div class="p-fluid p-formgrid grid justify-content-start">
                             <div class="field col-12">
                                 <label htmlFor="company">Company</label>
-                                <input pInputText id="company" name="company" [required]="true" type="text" 
+                                <input pInputText id="company" name="company" type="text" 
                                     [(ngModel)]="update.companyName"/>
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="industry" class="form-label">Industry</label>
-                                <select name="industry" id="industry" class="form-select" [(ngModel)]="update.industryId" [required]="true">
+                                <select name="industry" id="industry" class="form-select" [(ngModel)]="update.industryId">
                                     <option *ngFor="let industry of industries" [value]="industry.id">{{industry.industryName}}</option>
                                 </select>
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="position" class="form-label">Position</label>
-                                <select name="position" id="position" class="form-select" [(ngModel)]="update.positionId" [required]="true">
+                                <select name="position" id="position" class="form-select" [(ngModel)]="update.positionId">
                                     <option *ngFor="let position of positions" [value]="position.id">{{position.positionName}}</option>
                                 </select>
                             </div>
@@ -114,16 +113,21 @@
                         <div class="p-fluid p-formgrid grid justify-content-start">
                             <div class="field col-12">
                                 <label htmlFor="instagram">Instagram</label>
-                                <input pInputText id="instagram" name="instagram" [required]="true" type="text" />
+                                <input pInputText id="instagram" name="instagram" type="text" 
+                                    [(ngModel)]="updateSosmed.instagram">
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="twitter">Twitter</label>
-                                <input pInputText id="twitter" name="twitter" [required]="true" type="text" />
+                                <input pInputText id="twitter" name="twitter" type="text"
+                                    [(ngModel)]="updateSosmed.twitter">
                             </div>
                             <div class="field md:col-6 sm:col-12">
                                 <label htmlFor="facebook">Facebook</label>
-                                <input pInputText id="facebook" name="facebook" [required]="true" type="text" />
+                                <input pInputText id="facebook" name="facebook" type="text"
+                                    [(ngModel)]="updateSosmed.facebook">
                             </div>
+                        </div>
+                        <div class="p-fluid p-formgrid grid justify-content-start">
                             <div class="field md:col-6 sm:col-12">
                                 <div class="row">
                                     <div class="col-6">
@@ -133,7 +137,7 @@
                                         </button>
                                     </div>
                                     <div class="col-6">
-                                        <button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
+                                        <button type="submit" class="btn btn-success w-100" data-bs-toggle="modal"
                                             data-bs-target="#staticBackdrop">
                                             Save
                                         </button>

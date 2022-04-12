@@ -6,11 +6,13 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { IndustryService } from '../../service/industry.service';
 import { GetIndustryDtoDataRes } from '../../dto/industry/get-industry-dto-data-res'
-import { GetPositionDtoDataRes } from 'src/app/dto/position/get-position-dto-data-res';
-import { PositionService } from 'src/app/service/position.service';
-import { ProfileService } from 'src/app/service/profile.service';
-import { InsertProfileDtoReq } from 'src/app/dto/profile/insert-profile-dto-req';
-import { LoginService } from 'src/app/service/login.service';
+import { GetPositionDtoDataRes } from '../../dto/position/get-position-dto-data-res';
+import { PositionService } from '../../service/position.service';
+import { ProfileService } from '../../service/profile.service';
+import { InsertProfileDtoReq } from '../../dto/profile/insert-profile-dto-req';
+import { LoginService } from '../../service/login.service';
+import { InsertSocialMediaDtoReq } from '../../dto/social-media/insert-social-media-dto-req';
+import { SocialMediaService } from '../../service/social-media.service';
 
 @Component({
   selector: 'app-login',
@@ -51,10 +53,12 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
   industries: GetIndustryDtoDataRes[] = []
   positions: GetPositionDtoDataRes[] = []
   insertProfileDtoReq: InsertProfileDtoReq = new InsertProfileDtoReq()
+  insertSosmed : InsertSocialMediaDtoReq = new InsertSocialMediaDtoReq()
 
   constructor(public configService: ConfigService, private title: Title, private router: Router,
     private industryService: IndustryService, private positionService: PositionService,
-    private profileService: ProfileService, private loginService: LoginService) {
+    private profileService: ProfileService, private loginService: LoginService,
+    private sosmedService:SocialMediaService) {
     title.setTitle('Account Detail')
   }
 
@@ -71,13 +75,21 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
     this.positionSubs = this.positionService.getAll().subscribe(result => {
       if (result) this.positions = result.data
     })
+    this.insertSosmed.facebook = ""
+    this.insertSosmed.twitter = ""
+    this.insertSosmed.instagram = ""
+    this.insertProfileDtoReq.userId = this.loginService.getData().id
   }
 
   insert(valid: boolean): void {
-    if (valid) {
-      this.insertProfileDtoReq.userId = this.loginService.getData().id
-      this.insertSubs = this.profileService.insert(this.insertProfileDtoReq).subscribe(result=>{
-        if(result) this.router.navigateByUrl('/member/profile')
+    if(valid) {
+      this.insertSubs = this.sosmedService.insert(this.insertSosmed).subscribe(result=>{
+        this.insertProfileDtoReq.socialMediaId = result.data.id
+        this.profileService.insert(this.insertProfileDtoReq).subscribe(result=>{
+          if(result) {
+            this.router.navigateByUrl('/member/profile')
+          }
+        })
       })
     }
   }

@@ -5,4 +5,5 @@ export class InsertProfileDtoReq {
 	companyName!: string
 	industryId!: string
 	positionId!: string
+	socialMediaId!: string
 }
