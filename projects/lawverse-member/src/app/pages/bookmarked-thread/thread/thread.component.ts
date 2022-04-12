@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, map, Observable, Subscription } from 'rxjs';
 import { LoginService } from '../../../service/login.service';
 import { GetThreadBookmarkDtoDataRes } from '../../../dto/thread-bookmark/get-thread-bookmark-dto-data-res';
 import { GetThreadDtoDataRes } from '../../../dto/thread/get-thread-dto-data-res';
@@ -13,51 +13,40 @@ import { ThreadDetailService } from '../../../service/thread-detail.service';
   templateUrl: './thread.component.html',
   styleUrls: ['./thread.component.css']
 })
-export class ThreadComponent implements OnInit, OnDestroy {
+export class ThreadComponent implements OnInit {
 
-  thread : GetThreadDtoDataRes
-  threads : GetThreadDtoDataRes [] = []
-  bookmarks : GetThreadBookmarkDtoDataRes [] = []
+
+  threads: GetThreadDtoDataRes[] = []
+  bookmarks: GetThreadBookmarkDtoDataRes[]
   likeCounters: number[] = []
   commentCounters: number[] = []
   userId: string
-  bookmarkSubs? : Subscription
-  
 
-  
-  constructor(private threadBookmarkService : ThreadBookmarkService, private threadService : ThreadService, 
-    private loginService : LoginService, private threadLikeService : ThreadLikeService,
-    private threadDetailService : ThreadDetailService) { }
+
+  constructor(private threadBookmarkService: ThreadBookmarkService, private threadService: ThreadService,
+    private loginService: LoginService, private threadLikeService: ThreadLikeService,
+    private threadDetailService: ThreadDetailService) { }
 
   ngOnInit(): void {
     this.getThread()
   }
 
-  getThread() : void {
+  async getThread(): Promise<void> {
     this.userId = this.loginService.getData().id
-    this.bookmarkSubs = this.threadBookmarkService.getThreadBookmarkByUserId(this.userId).subscribe(result => {
-      this.bookmarks = result.data
-      console.log(this.bookmarks)
-      for(let i = 0; i < this.bookmarks.length; i++){
-        this.threadService.getById(this.bookmarks[i].threadId).subscribe(result => {
-          this.thread = result.data
-          console.log(this.thread)
-          this.threads.push(this.thread)
+    const threadList = await firstValueFrom(this.threadBookmarkService.getThreadBookmarkByUserId(this.userId).pipe(map(result => result.data)))    
+    if(threadList) {
+      for (let i = 0; i < threadList.length; i++) {
+        const thread = await firstValueFrom(this.threadService.getById(threadList[i].threadId).pipe(map(result => result.data)))
+          
+          if(thread) this.threads.push(thread)
           for (let j = 0; j < this.threads.length; j++) {
-            this.threadLikeService.getLikeCounterByThreadId(this.threads[j].id).subscribe(result => {
-              this.likeCounters.push(result)
-            })
-            this.threadDetailService.getCommentTotalByThreadId(this.threads[j].id).subscribe(result => {
-              this.commentCounters.push(result)
-            })
+            let like = await firstValueFrom(this.threadLikeService.getLikeCounterByThreadId(this.threads[j].id).pipe(map(result => result)))
+            if(like) this.likeCounters.push(like)            
+
+            let totalComment = await firstValueFrom(this.threadDetailService.getCommentTotalByThreadId(this.threads[j].id).pipe(map(result => result)))
+            if(totalComment)this.commentCounters.push(totalComment)            
           }
-        })
+        }
       }
-    })
+    }
   }
-
-  ngOnDestroy(): void {
-    this.bookmarkSubs?.unsubscribe()
-  }
-
-}

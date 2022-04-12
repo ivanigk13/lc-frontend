@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { GetSubscribeDtoDataRes } from '../../../dto/subscribe/get-subscribe-dto-data-res';
 import { SubscribeService } from '../../../service/subscribe.service';
 
@@ -9,10 +9,9 @@ import { SubscribeService } from '../../../service/subscribe.service';
   templateUrl: './subscribtion.component.html',
   styleUrls: ['./subscribtion.component.scss']
 })
-export class SubscribtionComponent implements OnInit, OnDestroy{
+export class SubscribtionComponent implements OnInit{
 
-  subscribes : GetSubscribeDtoDataRes[] = []
-  getAllSubs! : Subscription
+  subscribes$ : Observable<GetSubscribeDtoDataRes[]>  
 
   constructor(private router: Router, private subscribeService : SubscribeService) { }
  
@@ -22,15 +21,11 @@ export class SubscribtionComponent implements OnInit, OnDestroy{
   }
 
   getAll() : void {
-    this.getAllSubs = this.subscribeService.getAll().subscribe(result => this.subscribes = result.data)
+    this.subscribes$ = this.subscribeService.getAll().pipe(map(result => result.data))
   }
 
   onSelect(id : string) : void {
     this.router.navigateByUrl(`/member/order/order-subscription/${id}`)
-  }
-
-  ngOnDestroy(): void {
-    this.getAllSubs.unsubscribe()
   }
 
 }

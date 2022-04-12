@@ -73,7 +73,7 @@
                                     <a *ngIf="isBookmark == false" (click)="onBookmark(thread.id)">
                                         <i class="fa-regular fa-bookmark"></i>
                                     </a>
-                                    <a *ngIf="isBookmark == true">
+                                    <a *ngIf="isBookmark == true" (click)="onUnBookmark()">
                                         <i class="fa-solid fa-bookmark"></i>
                                     </a>
                                 </span>

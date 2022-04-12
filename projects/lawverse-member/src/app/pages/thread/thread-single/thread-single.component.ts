@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, map} from 'rxjs';
 import { ThreadLikeService } from '../../../service/thread-like.service';
 import { GetThreadDetailDtoDataRes } from '../../../dto/thread-detail/get-thread-detail-dto-data-res';
 import { GetThreadDtoDataRes } from '../../../dto/thread/get-thread-dto-data-res';
@@ -26,7 +26,7 @@ import { ThreadBookmarkService } from '../../../service/thread-bookmark-service'
   templateUrl: './thread-single.component.html',
   styleUrls: ['./thread-single.component.scss']
 })
-export class ThreadSingleComponent implements OnInit, OnDestroy {
+export class ThreadSingleComponent implements OnInit {
 
   thread!: GetThreadDtoDataRes
   pollingHeader!: GetPollingHeaderDtoDataRes
@@ -47,18 +47,7 @@ export class ThreadSingleComponent implements OnInit, OnDestroy {
   isVote: boolean = false
   isBookmark: boolean = false
   userId: string
-
-  insertThreadDetailSubs?: Subscription
-  pollingVoterSubs?: Subscription
-  threadBookmarkSubs?: Subscription
-  threadLikeSubs?: Subscription
-  threadDislikeSubs?: Subscription
-  threadDetailSubs?: Subscription
-  activeRouteSubs?: Subscription
-  threadSubs?: Subscription
-  getEventSubs!: Subscription
-  getCourseSubs!: Subscription
-
+  threadBookmarkId: string  
 
   constructor(private activatedRoute: ActivatedRoute, private threadService: ThreadService,
     private threadDetailService: ThreadDetailService, private threadLikeService: ThreadLikeService,
@@ -72,57 +61,47 @@ export class ThreadSingleComponent implements OnInit, OnDestroy {
     this.getLastTwoEvent()
   }
 
-  getData(): void {
-    this.threadSubs = this.activatedRoute.params.subscribe(result => {
-      this.threadService.getById((result as any).id).subscribe(result => {
-        this.thread = result.data
-
-        this.threadDetailService.getAllByThreadId(this.thread.id).subscribe(result => {
-          this.threadDetails = result.data
-        })
+  async getData(): Promise<void> {
+    const result = await firstValueFrom(this.activatedRoute.params.pipe(map(result => result)))
+    if (result) {
+      this.thread = await firstValueFrom(this.threadService.getById((result as any).id).pipe(map(result => result.data)))
+      if (this.thread) {
+        this.threadDetails = await firstValueFrom(this.threadDetailService.getAllByThreadId(this.thread.id).pipe(map(result => result.data)))
 
         if (this.thread.threadTypeName == 'Polling') {
-          this.pollingHeaderService.getByThreadId(this.thread.id).subscribe(result => {
-            if (result.data != null) {
-              this.pollingHeader = result.data
-
-              this.pollingDetailService.getAllByHeaderId(this.pollingHeader.id).subscribe(result => {
-                this.pollingDetails = result.data
-                console.log(this.pollingDetails)
-                this.totalPollingCount()
-              })
-            }
-          })
+          const data = await firstValueFrom(this.pollingHeaderService.getByThreadId(this.thread.id).pipe(map(result => result.data)))
+          if (data) {
+            this.pollingHeader = data
+            this.pollingDetails = await firstValueFrom(this.pollingDetailService.getAllByHeaderId(this.pollingHeader.id).pipe(map(result => result.data)))
+            if (this.pollingDetails) this.totalPollingCount()
+          }
         }
 
         this.userId = this.loginService.getData().id
 
-        this.threadLikeService.isUserLikeByThreadId(this.thread.id, this.userId).subscribe(result => {
-          if (result == 1) {
-            this.isLike = true
-          }
-        })
+        const result = await firstValueFrom(this.threadLikeService.isUserLikeByThreadId(this.thread.id, this.userId).pipe(map(result => result)))
+        if (result == 1) {
+          this.isLike = true
+        }
 
-        this.threadBookmarkSubs = this.threadBookmarkService.getThreadBookmarkByThreadId(this.thread.id).subscribe(result => {
-          this.isBookmark = true
-        })
-        this.threadLikeService.getLikeCounterByThreadId(this.thread.id).subscribe(result => {
-          this.likeCounter = result
-        })
-        this.threadDetailService.getCommentTotalByThreadId(this.thread.id).subscribe(result => {
-          this.commentCounter = result
-        })
+        this.threadBookmarkId = await firstValueFrom(this.threadBookmarkService.getThreadBookmarkByThreadId(this.thread.id).pipe(map(result => result.data.id)))
+        if(this.threadBookmarkId) this.isBookmark = true
+      
+        const like = await firstValueFrom(this.threadLikeService.getLikeCounterByThreadId(this.thread.id).pipe(map(result => result)))
+          if(like)this.likeCounter = like
 
-      })
-    })
+        const totalComment = await firstValueFrom(this.threadDetailService.getCommentTotalByThreadId(this.thread.id).pipe(map(result => result)))
+          if(totalComment) this.commentCounter = totalComment        
+      }
+    }
   }
 
-  getLastTwoEvent(): void {
-    this.getEventSubs = this.activityService.getLastTwoEvent().subscribe(result => this.events = result.data)
+  async getLastTwoEvent(): Promise<void> {
+    this.events = await firstValueFrom(this.activityService.getLastTwoEvent().pipe(map(result => result.data)))
   }
 
-  getLastTwoCourse(): void {
-    this.getCourseSubs = this.activityService.getLastTwoCourse().subscribe(result => this.courses = result.data)
+  async getLastTwoCourse(): Promise<void> {
+    this.courses = await firstValueFrom(this.activityService.getLastTwoCourse().pipe(map(result => result.data)))
   }
 
   totalPollingCount(): void {
@@ -135,8 +114,8 @@ export class ThreadSingleComponent implements OnInit, OnDestroy {
     }
   }
 
-  onVote(index: number, isVote: boolean): void {
-    this.pollingVoterSubs = this.pollingVoterService.getCountIdByHeaderId(this.pollingHeader.id, this.userId).subscribe(result => {
+  async onVote(index: number, isVote: boolean): Promise<void> {
+    const result = await firstValueFrom(this.pollingVoterService.getCountIdByHeaderId(this.pollingHeader.id, this.userId).pipe(map(result => result)))
       if (result == 1) {
         isVote = true
       }
@@ -144,32 +123,33 @@ export class ThreadSingleComponent implements OnInit, OnDestroy {
         this.pollingCounters = []
         this.totalPolling = 0
         this.pollingVoter.pollingDetailId = this.pollingDetails[index].id
-        this.pollingVoterService.insert(this.pollingVoter).subscribe(result => {
-          if (result) {
+         const insert = await firstValueFrom(this.pollingVoterService.insert(this.pollingVoter))
+          if (insert) {
             this.pollingDetails[index].pollingCounter = this.pollingDetails[index].pollingCounter + 1
-            this.pollingDetailService.update(this.pollingDetails[index]).subscribe(result => {
-              if (result) {
+             const update = await firstValueFrom(this.pollingDetailService.update(this.pollingDetails[index]))
+              if (update) {
                 this.getData()
-              }
-            })
-          }
-        })
-      }
-    })
+              }            
+          }         
+    }
   }
 
-  onLike(like: boolean): void {
+  async onLike(like: boolean): Promise<void> {
     if (!like) {
       this.threadLike.threadId = this.thread.id
       this.threadLike.userId = this.loginService.getData().id
       this.threadLike.likeCounter = 1
-      this.threadLikeSubs = this.threadLikeService.insert(this.threadLike).subscribe(result => {
-        if (result) {
+      const insert = await firstValueFrom(this.threadLikeService.insert(this.threadLike))
+        if (insert) {
           this.isLike = true
           this.getData()
         }
-      })
+ 
     }
+  }
+
+  async onUnLike(like: boolean): Promise<void> {
+
   }
 
   onBookmark(): void {
@@ -185,30 +165,29 @@ export class ThreadSingleComponent implements OnInit, OnDestroy {
     }
   }
 
-  onDislike(id: string): void {
-    this.threadDislikeSubs = this.threadLikeService.delete(id).subscribe()
+  async onUnBookmark(): Promise<void> {
+    if (this.threadBookmarkId) {
+      const result = await firstValueFrom(this.threadBookmarkService.delete(this.threadBookmarkId))
+      if (result) {
+        this.isBookmark = false
+        this.getData()
+      }
+    }
   }
 
-  onSubmit(data: boolean): void {
+  async onDislike(id: string): Promise<void> {
+    this.threadLikeService.delete(id).subscribe()
+  }
+
+  async onSubmit(data: boolean): Promise<void> {
     if (data) {
       this.pollingCounters = []
       this.totalPolling = 0
       this.threadDetail.threadId = this.thread.id
-      this.insertThreadDetailSubs = this.threadDetailService.insert(this.threadDetail).subscribe(result => {
-        if (result) {
+      const insert = await firstValueFrom(this.threadDetailService.insert(this.threadDetail))
+      if (insert) {
           this.getData()
-        }
-      })
+        }      
     }
   }
-
-  ngOnDestroy(): void {
-    this.activeRouteSubs?.unsubscribe()
-    this.threadSubs?.unsubscribe()
-    this.getCourseSubs?.unsubscribe()
-    this.getEventSubs?.unsubscribe()
-    this.threadLikeSubs?.unsubscribe()
-    this.threadBookmarkSubs?.unsubscribe()
-  }
-
 }

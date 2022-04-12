@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { first, firstValueFrom, map, Observable, Subscription } from 'rxjs';
 import { InsertActivityDtoReq } from 'src/app/dto/activity/insert-activity-dto-req';
 import { GetCategoryDtoDataRes } from 'src/app/dto/category/get-category-dto-data-res';
 import { ActivityTypeService } from 'src/app/service/activity-type.service';
@@ -14,44 +14,40 @@ import { GetActivityTypeDtoDataRes } from '../../../dto/activity-type/get-activi
   templateUrl: './activity-add.component.html',
   styleUrls: ['./activity-add.component.scss']
 })
-export class ActivityAddComponent implements OnInit,OnDestroy {
+export class ActivityAddComponent implements OnInit {
 
-  insertSubs? : Subscription
-  getCategorySubs? : Subscription
-  getActivityTypeSubs? : Subscription
-  files : File[] = []
-  categories : GetCategoryDtoDataRes[] = []
-  activityTypes: GetActivityTypeDtoDataRes[] = []
-  insertActivityDtoReq : InsertActivityDtoReq = new InsertActivityDtoReq()
+  files: File[] = []
+  categories$: Observable<GetCategoryDtoDataRes[]>
+  activityTypes$: Observable<GetActivityTypeDtoDataRes[]>
+  insertActivityDtoReq: InsertActivityDtoReq = new InsertActivityDtoReq()
 
-  constructor(private title:Title, private activityService:ActivityService, private router:Router,
-              private categoryService:CategoryService, private activityTypeService:ActivityTypeService) {
+  constructor(private title: Title, private activityService: ActivityService, private router: Router,
+    private categoryService: CategoryService, private activityTypeService: ActivityTypeService) {
     title.setTitle('Insert Activity')
   }
   ngOnInit(): void {
-    this.getCategorySubs = this.categoryService.getAll().subscribe(result=>{
-      this.categories = result.data
-    })
-    this.getActivityTypeSubs = this.activityTypeService.getAll().subscribe(result=>{
-      this.activityTypes = result.data
-    })
+    this.getCategory()
+    this.getActivityType()
   }
 
-  insert(valid:boolean) {
-    if(valid){
-      this.insertSubs = this.activityService.insert(this.insertActivityDtoReq, this.files).subscribe(result=>{
-        if(result.data.id) this.router.navigateByUrl('/member/activity')
-      })
+  getCategory(): void {
+    this.categories$ = this.categoryService.getAll().pipe(map(result => result.data))
+  }
+
+  getActivityType(): void {
+    this.activityTypes$ = this.activityTypeService.getAll().pipe(map(result => result.data))
+  }
+
+  async insert(valid: boolean): Promise<void> {
+    if (valid) {
+      const result = await firstValueFrom(this.activityService.insert(this.insertActivityDtoReq, this.files).pipe(map(result => result.data)))
+      if (result) this.router.navigateByUrl('/member/event')
     }
   }
 
-  changeFile(event : any) {
+  changeFile(event: any) {
     this.files.push(event.target.files[0])
     console.log(this.files)
-  }  
-
-  ngOnDestroy(): void {
-    this.insertSubs?.unsubscribe()
   }
 
 }

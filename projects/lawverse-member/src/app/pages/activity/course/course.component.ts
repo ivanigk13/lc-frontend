@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { GetActivityDtoDataRes } from '../../../dto/activity/get-activity-dto-data-res';
 import { ActivityService } from '../../../service/activity.service';
 
@@ -11,22 +11,16 @@ import { ActivityService } from '../../../service/activity.service';
 })
 export class CourseComponent implements OnInit {
 
-  courses: GetActivityDtoDataRes[] = []
-
-  courseSubs?: Subscription
+  courses$: Observable<GetActivityDtoDataRes[]>
 
   constructor(private router: Router, private activityService: ActivityService) { }
 
   ngOnInit(): void {
-    this.courseSubs = this.activityService.getAllCourse().subscribe(result => this.courses = result.data)
+    this.courses$ = this.activityService.getAllCourse().pipe(map(result => result.data))
   }
 
   onClick(id: string): void {
     this.router.navigateByUrl(`/member/order/order-activity/${id}`)
-  }
-
-  ngOnDestroy(): void {
-    this.courseSubs?.unsubscribe()
-  }
+  } 
 
 }
