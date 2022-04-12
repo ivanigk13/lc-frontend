@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { GetActivityDtoDataRes } from '../../../dto/activity/get-activity-dto-data-res';
 import { ActivityService } from '../../../service/activity.service';
 
@@ -9,24 +9,18 @@ import { ActivityService } from '../../../service/activity.service';
   templateUrl: './event.component.html',
   styleUrls: ['./event.component.scss']
 })
-export class EventComponent implements OnInit, OnDestroy {
+export class EventComponent implements OnInit{
 
-  events: GetActivityDtoDataRes[] = []
-
-  eventSubs?: Subscription
+  events$: Observable<GetActivityDtoDataRes[]>  
 
   constructor(private router : Router, private activityService: ActivityService) { }
 
   ngOnInit(): void {
-    this.eventSubs = this.activityService.getAllEvent().subscribe(result => this.events = result.data)
+    this.events$ = this.activityService.getAllEvent().pipe(map(result => result.data))
   }
 
   onClick(id : string) : void {
     this.router.navigateByUrl(`/member/order/order-activity/${id}`)
-  }
-
-  ngOnDestroy(): void {
-    this.eventSubs?.unsubscribe()
   }
 
 }

@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, map, Observable,  } from 'rxjs';
 import { ThreadTypeList } from '../../../constant/thread-type-list';
-import { InsertPollingDetailDtoReq } from '../../../dto/polling-detail/insert-polling-detail-dto-req';
 import { InsertPollingHeaderDtoReq } from '../../../dto/polling-header/insert-polling-header-dto-req';
 import { GetThreadTypeDtoDataRes } from '../../../dto/thread-type/get-thread-type-dto-data-res';
 import { InsertThreadDtoReq } from '../../../dto/thread/insert-thread-dto-req';
@@ -16,24 +15,19 @@ import { ThreadService } from '../../../service/thread.service';
   templateUrl: './thread-add.component.html',
   styleUrls: ['./thread-add.component.scss']
 })
-export class ThreadAddComponent implements OnInit, OnDestroy {
+export class ThreadAddComponent implements OnInit {
 
   file?: File
+
+  threadTypes$: Observable<GetThreadTypeDtoDataRes[]>
+  insertThread: InsertThreadDtoReq = new InsertThreadDtoReq()
+  insertPollingHeader: InsertPollingHeaderDtoReq = new InsertPollingHeaderDtoReq()
 
   selectedDrop: any
   pollingDetailCounter: number = 2
   pollingCode: string = ThreadTypeList.POLLING
   reduceDisable: boolean = true
 
-  threadTypes: GetThreadTypeDtoDataRes[] = []
-  threadTypeSubs?: Subscription
-  threadTypeByIdSubs?: Subscription
-
-  insertThread: InsertThreadDtoReq = new InsertThreadDtoReq()
-  insertSubs?: Subscription
-  insertPollingHeaderSubs?: Subscription
-
-  insertPollingHeader: InsertPollingHeaderDtoReq = new InsertPollingHeaderDtoReq()
   pollingNames: String[] = []
   pollingName!: string
 
@@ -43,9 +37,7 @@ export class ThreadAddComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.threadTypeSubs = this.threadTypeService.getAll().subscribe(result => {
-      this.threadTypes = result.data
-    })
+    this.threadTypes$ = this.threadTypeService.getAll().pipe(map(result => result.data))
   }
 
   onAdd(): void {
@@ -56,17 +48,15 @@ export class ThreadAddComponent implements OnInit, OnDestroy {
     return new Array(num)
   }
 
-  insert(valid: boolean) {
+  async insert(valid: boolean) {
     if (valid) {
-      this.insertSubs = this.threadService.insert(this.insertThread, this.file).subscribe(result => {
-        if (this.selectedDrop == this.pollingCode) {
-          this.insertPollingHeader.threadId = result.data.id
-          this.insertPollingHeader.data = this.pollingNames
-          this.insertPollingHeaderSubs = this.pollingHeaderService.insert(this.insertPollingHeader).subscribe(result => {
-            this.router.navigateByUrl('/thread')
-          })
-        }
-      })
+      const result = await firstValueFrom(this.threadService.insert(this.insertThread, this.file).pipe(map(result => result.data)))
+      if (this.selectedDrop == this.pollingCode) {
+        this.insertPollingHeader.threadId = result.id
+        this.insertPollingHeader.data = this.pollingNames
+        const id = await firstValueFrom(this.pollingHeaderService.insert(this.insertPollingHeader).pipe(map(result => result.data)))
+        if (id) this.router.navigateByUrl('/thread')
+      }
     }
   }
 
@@ -74,21 +64,13 @@ export class ThreadAddComponent implements OnInit, OnDestroy {
     this.file = event.target.files[0]
   }
 
-  changeType() {
-    this.threadTypeByIdSubs = this.threadTypeService.getById(this.insertThread.threadTypeId).subscribe(result => {
-      this.selectedDrop = result.data.threadTypeCode
-    })
+  async changeType() {
+    const result = await firstValueFrom(this.threadTypeService.getById(this.insertThread.threadTypeId).pipe(map(result => result.data)))
+    this.selectedDrop = result.threadTypeCode
   }
 
   onDelete(index: number): void {
     this.pollingNames.splice(index, 1)
-  }
-
-  ngOnDestroy(): void {
-    this.threadTypeSubs?.unsubscribe()
-    this.threadTypeByIdSubs?.unsubscribe()
-    this.insertSubs?.unsubscribe()
-    this.insertPollingHeaderSubs?.unsubscribe()
   }
 
 }

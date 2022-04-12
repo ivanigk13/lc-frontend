@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, map, Observable, Subscription } from 'rxjs';
 import { GetOrderDtoDataRes } from '../../../dto/order/get-order-dto-data-res';
 import { OrderService } from '../../../service/order.service';
 
@@ -10,34 +10,34 @@ import { OrderService } from '../../../service/order.service';
   styleUrls: ['./approve-activity-order.component.css']
 })
 export class ApproveActivityOrderComponent implements OnInit {
+  
+  orders$: Observable<GetOrderDtoDataRes[]>  
 
-
-  order: GetOrderDtoDataRes
-  orders: GetOrderDtoDataRes[] = []
-  getOrderSubs!: Subscription
-  activatedRouteSubs!: Subscription
   constructor(private orderService: OrderService, private activatedRoute: ActivatedRoute,
     private router : Router) { }
 
   ngOnInit(): void {
-    this.activatedRouteSubs = this.activatedRoute.params.subscribe(result => {
-      this.getOrderSubs = this.orderService.getPendingOrderByActivityId((result as any).id).subscribe(result => {
-        this.orders = result.data
-        console.log(this.orders)
-      })
-    })
+   this.getOrder()
+  }
+
+
+  async getOrder(): Promise<void> {
+    const id = await firstValueFrom(this.activatedRoute.params.pipe(map(result => result)))
+    if (id) {
+      this.orders$ = this.orderService.getPendingOrderByActivityId((id as any).id).pipe(map(result => result.data))      
+    }
   }
 
   onBack() : void {
     this.router.navigateByUrl('/member/my-activity')
   }
 
-  onApprove(id: string): void {
-    this.orderService.getById(id).subscribe(result => {
-      this.order = result.data
-      this.orderService.updateApprove(this.order).subscribe()
-    })
+  async onApprove(id: string): Promise<void> {
+     const result = await firstValueFrom(this.orderService.getById(id).pipe(map(result => result.data)))      
+      if(result) this.orderService.updateApprove(result)    
   }
+
+
 }
 
 

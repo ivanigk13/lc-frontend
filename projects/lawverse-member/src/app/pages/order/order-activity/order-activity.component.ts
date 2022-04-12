@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, map, Subscription } from 'rxjs';
 import { InsertOrderDetailDtoReq } from '../../../dto/order-detail/insert-order-detail-dto-req';
 import { InsertOrderDtoReq } from '../../../dto/order/insert-order-dto-req';
 import { GetActivityDtoDataRes } from '../../../dto/activity/get-activity-dto-data-res';
@@ -14,15 +14,11 @@ import { OrderService } from '../../../service/order.service';
   templateUrl: './order-activity.component.html',
   styleUrls: ['./order-activity.component.scss']
 })
-export class OrderActivityComponent implements OnInit, OnDestroy {
+export class OrderActivityComponent implements OnInit {
 
   activity: GetActivityDtoDataRes
   order: InsertOrderDtoReq = new InsertOrderDtoReq()
   orderDetail: InsertOrderDetailDtoReq = new InsertOrderDetailDtoReq()
-  orderSubs!: Subscription
-  orderDetailSubs!: Subscription
-  activeRouteSubs: Subscription
-  getByIdSubs!: Subscription
   file!: File
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute,
@@ -31,37 +27,30 @@ export class OrderActivityComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.activeRouteSubs = this.activatedRoute.params.subscribe(result => {
-      this.getByIdSubs = this.activityService.getById((result as any).id).subscribe(result => {
-        this.activity = result.data
-        this.orderDetail.activityId = result.data.id
-      })
-    })
+    this.getActivity()
   }
 
-  onSubmit(data: boolean): void {
+  async getActivity(): Promise<void> {
+    const id = await firstValueFrom(this.activatedRoute.params.pipe(map(result => result)))
+    if (id) {
+      this.activity = await firstValueFrom(this.activityService.getById((id as any).id).pipe(map(result => result.data)))
+      if (this.activity) this.orderDetail.activityId = this.activity.id
+    }
+  }
+
+  async onSubmit(data: boolean): Promise<void> {
     if (data) {
       this.order.userId = this.loginService.getData().id
-      this.orderSubs = this.orderService.insert(this.order, this.file).subscribe(result => {
-        if (result) {
-          console.log(result.data.id)
-          this.orderDetail.orderId = result.data.id
-          console.log(this.orderDetail)
-          this.orderDetailSubs = this.orderDetailService.insert(this.orderDetail).subscribe(result => {
-            if (result) {
-              this.router.navigateByUrl('/member/order/status')
-            }
-          })
-        }
-      })
+      const result = await firstValueFrom(this.orderService.insert(this.order, this.file).pipe(map(result => result.data)))
+      if (result) {
+        this.orderDetail.orderId = result.id
+        const id = await firstValueFrom(this.orderDetailService.insert(this.orderDetail).pipe(map(result => result.data)))
+        if (id) this.router.navigateByUrl('/member/order/status')
+      }
     }
   }
 
   change(event: any): void {
     this.file = event.target.files[0]
-  }
-
-  ngOnDestroy(): void {
-
   }
 }

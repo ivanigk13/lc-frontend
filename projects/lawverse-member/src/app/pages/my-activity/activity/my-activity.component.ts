@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { GetActivityDtoDataRes } from '../../../dto/activity/get-activity-dto-data-res';
 import { ActivityService } from '../../../service/activity.service';
 import { LoginService } from '../../../service/login.service';
@@ -10,33 +10,25 @@ import { LoginService } from '../../../service/login.service';
   templateUrl: './my-activity.component.html',
   styleUrls: ['./my-activity.component.css']
 })
-export class MyActivityComponent implements OnInit, OnDestroy {
+export class MyActivityComponent implements OnInit {
 
-  events =[]
-  activities : GetActivityDtoDataRes[] = []
-  getActivitySubs!: Subscription
-  constructor(private activityService: ActivityService, private router : Router, 
-    private loginService : LoginService) { }
+  activities$: Observable<GetActivityDtoDataRes[]>
+
+  constructor(private activityService: ActivityService, private router: Router,
+    private loginService: LoginService) { }
 
 
   ngOnInit(): void {
     this.getActivity()
   }
 
-  getActivity() : void {
+  getActivity(): void {
     const userId = this.loginService.getData().id
-    this.getActivitySubs = this.activityService.getApprovedUserActivity(userId).subscribe(result => {
-      this.activities = result.data 
-      console.log(this.activities)
-    })
+    this.activities$ = this.activityService.getApprovedUserActivity(userId).pipe(map(result => result.data))
   }
 
-  onClick(id : string) : void {
+  onClick(id: string): void {
     this.router.navigateByUrl(`/member/my-activity/${id}`)
-  }
-
-  ngOnDestroy(): void {
-    this.getActivitySubs.unsubscribe()
   }
 
 }

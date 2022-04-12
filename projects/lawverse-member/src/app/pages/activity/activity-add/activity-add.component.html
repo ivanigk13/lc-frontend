@@ -26,16 +26,22 @@
                     </div>
                     <div class="field md:col-6 sm:col-12">
                         <label htmlFor="state">Activity Type</label>
-                        <p-dropdown [options]="activityTypes" [required]="true" optionLabel="activityTypeName"
-                            id="activity_type" name="activity_type" optionValue="id"
-                            [(ngModel)]="insertActivityDtoReq.activityTypeId">
-                        </p-dropdown>
+                        <ng-container *ngIf="activityTypes$ | async as activityTypes">
+                            <p-dropdown [options]="activityTypes" [required]="true" optionLabel="activityTypeName"
+                                id="activity_type" name="activity_type" optionValue="id"
+                                [(ngModel)]="insertActivityDtoReq.activityTypeId">
+                            </p-dropdown>
+                        </ng-container>
+                        
                     </div>
                     <div class="field md:col-6 sm:col-12">
                         <label htmlFor="state">Category</label>
-                        <p-dropdown [options]="categories" [required]="true" optionLabel="categoryName" id="category"
-                            name="category" optionValue="id" [(ngModel)]="insertActivityDtoReq.categoryId">
-                        </p-dropdown>
+                        <ng-container *ngIf="categories$ | async as categories">
+                            <p-dropdown [options]="categories" [required]="true" optionLabel="categoryName"
+                                id="category" name="category" optionValue="id"
+                                [(ngModel)]="insertActivityDtoReq.categoryId">
+                            </p-dropdown>
+                        </ng-container>                        
                     </div>
                     <div class="field md:col-6 sm:col-12">
                         <h5>Date Start</h5>
