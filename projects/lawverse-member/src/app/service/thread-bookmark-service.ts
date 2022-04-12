@@ -34,7 +34,7 @@ export class ThreadBookmarkService {
         return this.http.post<InsertThreadBookmarkDtoRes>('http://localhost:8080/thread-bookmarks',insertThreadBookmarkDtoReq)
     }
 
-    delete(id : number) : Observable<DeleteThreadBookmarkDtoRes> {
+    delete(id : string) : Observable<DeleteThreadBookmarkDtoRes> {
         return this.http.delete<DeleteThreadBookmarkDtoRes>(`http://localhost:8080/thread-bookmarks/${id}`)
     }
 }
