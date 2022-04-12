@@ -5,12 +5,19 @@
             <p-table #dt1 [value]="categories" dataKey="id" [lazy]="true" (onLazyLoad)="loadData($event)"
                 [rows]="dataPerPage" [rowHover]="true" styleClass="p-datatable-gridlines"
                 [paginator]="true" responsiveLayout="scroll" [totalRecords]="record">
+            
                 <ng-template pTemplate="caption">
-                    <div class="flex justify-content-end flex-column sm:flex-row">
+                    <div class="flex">
                         <button pButton label="Add" (click)="onClick()" icon="pi pi-plus"
                             class="p-element p-ripple p-button-success mr-2 mb-2 p-button p-component mb-2"></button>
+
+                        <span class="p-input-icon-left ml-auto">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                        </span>
                     </div>
                 </ng-template>
+
                 <ng-template pTemplate="header">
                     <tr>
                         <th>

@@ -17,11 +17,15 @@ export class CategoryService {
 
     constructor(private http: HttpClient) { }
 
-    getAll(start?:number, max?:number): Observable<GetAllCategoryDtoRes> {
+    getAll(start?:number, max?:number,query?:string): Observable<GetAllCategoryDtoRes> {
         if(!start && !max){
             return this.http.get<GetAllCategoryDtoRes>(`http://localhost:8080/categories`)
         }else{
-            return this.http.get<GetAllCategoryDtoRes>(`http://localhost:8080/categories?start=${start}&max=${max}`)
+            if(!query){
+                return this.http.get<GetAllCategoryDtoRes>(`http://localhost:8080/categories?start=${start}&max=${max}`)
+            }else{
+                return this.http.get<GetAllCategoryDtoRes>(`http://localhost:8080/categories?query=${query}&start=${start}&max=${max}`)
+            }
         }
     }
 

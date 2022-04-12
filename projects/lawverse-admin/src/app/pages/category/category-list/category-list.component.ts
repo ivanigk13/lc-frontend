@@ -18,16 +18,17 @@ export class CategoryListComponent{
   record = 0
   categories$: Observable<GetCategoryDtoDataRes[]>
   categories:GetCategoryDtoDataRes[] = []
+
   constructor(private title:Title,private router: Router, private categoryService: CategoryService) {
     title.setTitle('Category List')
   }
 
   loadData(event: LazyLoadEvent) {
-    this.getData(event.first, event.rows)
+    this.getData(event.first, event.rows, event.globalFilter)
   }
 
-  async getData(start:number = 0, max:number = this.dataPerPage) {
-    const result = await firstValueFrom(this.categoryService.getAll(start, max))
+  async getData(start:number = 0, max:number = this.dataPerPage, query?:string) {
+    const result = await firstValueFrom(this.categoryService.getAll(start, max, query))
     this.categories = result.data
     this.record = result.rows
   }
@@ -42,7 +43,7 @@ export class CategoryListComponent{
 
   async delete(id: string): Promise<void> {
     const result = await firstValueFrom(this.categoryService.deleteById(id))
-    if(result) this.getData()
+    if(result) this.getData(0,this.dataPerPage)
   }
 
 }
