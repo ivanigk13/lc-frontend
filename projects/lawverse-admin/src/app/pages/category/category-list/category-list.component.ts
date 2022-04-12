@@ -1,8 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { map, Observable, Subscription, firstValueFrom } from 'rxjs';
-import { GetCategoryDtoDataRes } from 'src/app/dto/category/get-category-dto-data-res';
-import { CategoryService } from 'src/app/service/category.service';
+import { LazyLoadEvent } from 'primeng/api';
+import { Observable, firstValueFrom } from 'rxjs';
+import { GetCategoryDtoDataRes } from '../../../dto/category/get-category-dto-data-res';
+import { CategoryService } from '../../../service/category.service';
 
 
 @Component({
@@ -10,18 +12,24 @@ import { CategoryService } from 'src/app/service/category.service';
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.scss']
 })
-export class CategoryListComponent implements OnInit {
+export class CategoryListComponent{
  
+  dataPerPage : number = 10
+  record = 0
   categories$: Observable<GetCategoryDtoDataRes[]>
-
-  constructor(private router: Router, private categoryService: CategoryService) { }
-
-  ngOnInit(): void {
-    this.getData()
+  categories:GetCategoryDtoDataRes[] = []
+  constructor(private title:Title,private router: Router, private categoryService: CategoryService) {
+    title.setTitle('Category List')
   }
 
-  getData() {
-    this.categories$ = this.categoryService.getAll().pipe(map(result => result.data))
+  loadData(event: LazyLoadEvent) {
+    this.getData(event.first, event.rows)
+  }
+
+  async getData(start:number = 0, max:number = this.dataPerPage) {
+    const result = await firstValueFrom(this.categoryService.getAll(start, max))
+    this.categories = result.data
+    this.record = result.rows
   }
 
   onClick(): void {
