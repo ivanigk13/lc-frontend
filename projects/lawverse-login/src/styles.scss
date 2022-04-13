@@ -57,6 +57,19 @@ body{
     color: #269BDB;
 }
 
+.article-img{
+    max-width: 500px;
+}
+
+.text-lock{
+    font-size: 20px;
+}
+
+.shadow-0{
+    box-shadow: none !important;
+    border: 0;
+}
+
 .fit-content{
     width: fit-content;
 }
