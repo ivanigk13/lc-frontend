@@ -1,5 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { LazyLoadEvent } from 'primeng/api';
 import { firstValueFrom, map, Observable, Subscription } from 'rxjs';
 import { GetPositionDtoDataRes } from '../../../dto/position/get-position-dto-data-res';
 import { PositionService } from '../../../service/position.service';
@@ -9,18 +11,25 @@ import { PositionService } from '../../../service/position.service';
   templateUrl: './position-list.component.html',
   styleUrls: ['./position-list.component.scss']
 })
-export class PositionListComponent implements OnInit {
+export class PositionListComponent {
 
+  dataPerPage = 1
+  record = 0
   positions$: Observable<GetPositionDtoDataRes[]>
+  positions : GetPositionDtoDataRes[] = []
 
-  constructor(private router: Router, private positionService: PositionService) { }
-
-  ngOnInit(): void {
-    this.getData()
+  constructor(private title:Title,private router: Router, private positionService: PositionService) {
+    title.setTitle('Position List')
   }
 
-  getData(): void {
-    this.positions$ = this.positionService.getAll().pipe(map(result => result.data))
+  loadData(event: LazyLoadEvent) {
+    this.getData(event.first, event.rows, event.globalFilter)
+  }
+
+  async getData(start:number = 0, max:number = this.dataPerPage, query?:string) {
+    const result = await firstValueFrom(this.positionService.getAll(start,max,query))
+    this.positions = result.data
+    this.record = result.rows
   }
 
   update(id: string): void {
@@ -29,7 +38,7 @@ export class PositionListComponent implements OnInit {
 
   async delete(id: string): Promise<void> {
     const result = await firstValueFrom(this.positionService.delete(id))
-    if (result) this.getData()
+    if (result) this.getData(0,this.dataPerPage)
   }
 
   onClick(): void {

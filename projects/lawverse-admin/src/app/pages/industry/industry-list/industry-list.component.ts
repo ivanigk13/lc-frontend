@@ -1,6 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { firstValueFrom, map, Observable, Subscription } from 'rxjs';
+import { LazyLoadEvent } from 'primeng/api';
+import { firstValueFrom, Observable } from 'rxjs';
 import { GetIndustryDtoDataRes } from '../../../dto/industry/get-industry-dto-data-res';
 import { IndustryService } from '../../../service/industry.service';
 
@@ -9,19 +11,25 @@ import { IndustryService } from '../../../service/industry.service';
   templateUrl: './industry-list.component.html',
   styleUrls: ['./industry-list.component.scss']
 })
-export class IndustryListComponent implements OnInit {
+export class IndustryListComponent {
 
-  
+  dataPerPage : number = 3
+  record : number = 0
   industries$: Observable<GetIndustryDtoDataRes[]>
+  industries : GetIndustryDtoDataRes[] = []
 
-  constructor(private router: Router, private industryService: IndustryService) { }
-
-  ngOnInit(): void {
-    this.getData()
+  constructor(private title:Title,private router: Router, private industryService: IndustryService) {
+    title.setTitle('Industry List')
   }
 
-  getData() {
-    this.industries$ = this.industryService.getAll().pipe(map(result => result.data))
+  loadData(event: LazyLoadEvent) {
+    this.getData(event.first, event.rows, event.globalFilter)
+  }
+
+  async getData(start:number = 0, max:number = this.dataPerPage, query?:string) {
+    const result = await firstValueFrom(this.industryService.getAll(start,max,query))
+    this.industries = result.data
+    this.record = result.rows
   }
 
   onClick(): void {
@@ -34,7 +42,7 @@ export class IndustryListComponent implements OnInit {
 
   async delete(id: string): Promise<void> {
     const result = await firstValueFrom(this.industryService.deleteById(id))
-    if (result) this.getData()
+    if (result) this.getData(0,this.dataPerPage)
   }
 
 }
