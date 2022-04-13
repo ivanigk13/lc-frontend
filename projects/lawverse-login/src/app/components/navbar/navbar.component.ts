@@ -30,8 +30,7 @@ export class NavbarComponent implements OnInit , OnDestroy{
   getProfile(): void {
     let userId: string = this.loginService.getData().id
     this.profileSubs = this.profileService.getByUserId(userId).subscribe(result => {
-      this.profile = result.data
-      console.log(this.profile)
+      this.profile = result.data     
     })
   }
 
