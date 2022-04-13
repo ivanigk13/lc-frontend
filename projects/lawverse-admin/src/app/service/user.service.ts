@@ -18,8 +18,16 @@ import { UpdateUserDtoRes } from "../dto/user/update-user-dto-res";
 export class UserService {
     constructor(private http: HttpClient) { }
 
-    getAll(): Observable<GetAllUserDtoRes> {
-        return this.http.get<GetAllUserDtoRes>('http://localhost:8080/users')
+    getAll(start?:number, max?:number,query?:string): Observable<GetAllUserDtoRes> {
+        if(!start && !max){
+            return this.http.get<GetAllUserDtoRes>(`http://localhost:8080/users`)
+        }else{
+            if(!query){
+                return this.http.get<GetAllUserDtoRes>(`http://localhost:8080/users?start=${start}&max=${max}`)
+            }else{
+                return this.http.get<GetAllUserDtoRes>(`http://localhost:8080/users?query=${query}&start=${start}&max=${max}`)
+            }
+        }
     }
 
     getById(id: number): Observable<GetByIdUserDtoRes> {

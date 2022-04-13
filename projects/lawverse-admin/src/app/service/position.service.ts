@@ -16,8 +16,16 @@ import { UpdatePositionDtoRes } from "../dto/position/update-position-dto-res";
 export class PositionService {
     constructor(private http: HttpClient) { }
 
-    getAll(): Observable<GetAllPositionDtoRes> {
-        return this.http.get<GetAllPositionDtoRes>('http://localhost:8080/positions')
+    getAll(start?:number, max?:number,query?:string): Observable<GetAllPositionDtoRes> {
+        if(!start && !max){
+            return this.http.get<GetAllPositionDtoRes>(`http://localhost:8080/positions`)
+        }else{
+            if(!query){
+                return this.http.get<GetAllPositionDtoRes>(`http://localhost:8080/positions?start=${start}&max=${max}`)
+            }else{
+                return this.http.get<GetAllPositionDtoRes>(`http://localhost:8080/positions?query=${query}&start=${start}&max=${max}`)
+            }
+        }
     }
 
     getById(id: string): Observable<GetByIdPositionDtoRes> {

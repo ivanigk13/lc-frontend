@@ -16,8 +16,16 @@ import { UpdateRoleDtoRes } from "../dto/role/update-role-dto-res"
 export class RoleService {
     constructor(private http: HttpClient) { }
 
-    getAll(): Observable<GetAllRoleDtoRes> {
-        return this.http.get<GetAllRoleDtoRes>('http://localhost:8080/roles')
+    getAll(start?:number, max?:number,query?:string): Observable<GetAllRoleDtoRes> {
+        if(!start && !max){
+            return this.http.get<GetAllRoleDtoRes>(`http://localhost:8080/roles`)
+        }else{
+            if(!query){
+                return this.http.get<GetAllRoleDtoRes>(`http://localhost:8080/roles?start=${start}&max=${max}`)
+            }else{
+                return this.http.get<GetAllRoleDtoRes>(`http://localhost:8080/roles?query=${query}&start=${start}&max=${max}`)
+            }
+        }
     }
 
     getById(id: string): Observable<GetByIdRoleDtoRes> {

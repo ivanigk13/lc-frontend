@@ -16,8 +16,16 @@ import { UpdateIndustryDtoRes } from "../dto/industry/update-industry-dto-res";
 export class IndustryService {
     constructor(private http: HttpClient) { }
 
-    getAll(): Observable<GetAllIndustryDtoRes> {
-        return this.http.get<GetAllIndustryDtoRes>('http://localhost:8080/industries')
+    getAll(start?:number, max?:number,query?:string): Observable<GetAllIndustryDtoRes> {
+        if(!start && !max){
+            return this.http.get<GetAllIndustryDtoRes>(`http://localhost:8080/industries`)
+        }else{
+            if(!query){
+                return this.http.get<GetAllIndustryDtoRes>(`http://localhost:8080/industries?start=${start}&max=${max}`)
+            }else{
+                return this.http.get<GetAllIndustryDtoRes>(`http://localhost:8080/industries?query=${query}&start=${start}&max=${max}`)
+            }
+        }
     }
 
     getById(id: string): Observable<GetByIdIndustryDtoRes> {
