@@ -8,6 +8,7 @@ import { GetAllUserDtoRes } from "../dto/user/get-all-user-dto-res";
 import { GetByIdUserDtoRes } from "../dto/user/get-by-id-user-dto-res";
 import { InsertUserDtoReq } from "../dto/user/insert-user-dto-req";
 import { InsertUserDtoRes } from "../dto/user/insert-user-dto-res";
+import { SubscriptionRes } from "../dto/user/subscription-res";
 import { UpdateUserDtoReq } from "../dto/user/update-user-dto-req";
 import { UpdateUserDtoRes } from "../dto/user/update-user-dto-res";
 
@@ -40,6 +41,10 @@ export class UserService {
 
     update(updateUserDtoReq: UpdateUserDtoReq): Observable<UpdateUserDtoRes> {
         return this.http.put<UpdateUserDtoRes>(`http://localhost:8080/users`, updateUserDtoReq)
+    }
+
+    updateSubcription(id : string , duration : number, updateUser : string) : Observable<SubscriptionRes> {
+        return this.http.put<SubscriptionRes>(`http://localhost:8080/users/subcription?id=${id}&duration=${duration}&userId=${updateUser}`, {})
     }
 
     forgotPassowrd(forgotPasswordReq: ForgotPasswordReq): Observable<ForgotPasswordRes> {
