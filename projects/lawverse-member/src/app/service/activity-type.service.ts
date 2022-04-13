@@ -20,7 +20,7 @@ export class ActivityTypeService {
         return this.http.get<GetAllActivityTypeDtoRes>('http://localhost:8080/activity-types')
     }
 
-    getById(id: number): Observable<GetByIdActivityTypeDtoRes> {
+    getById(id: string): Observable<GetByIdActivityTypeDtoRes> {
         return this.http.get<GetByIdActivityTypeDtoRes>(`http://localhost:8080/activity-types/${id}`)
     }
 
