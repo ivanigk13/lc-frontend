@@ -1,0 +1,17 @@
+<div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="grid justify-content-center p-2 lg:p-0 shadow-3 br-20" style="min-width:50%">      
+        <div class="md:col-12 py-8 px-2">
+            <div class="text-center mb-6">
+                <div class="text-900 text-3xl font-medium mb-3">Submit Registration Code</div>                
+            </div>
+            <form class="w-full md:w-10 mx-auto">
+                <label for="code" class="block text-900 text-xl font-medium mb-2">Registration Code</label>
+                <input id="code" name="code" type="text" placeholder="Code" pInputText class="w-full mb-3"
+                    style="padding:1rem;" [required]="true" >
+              
+                <button type="submit" pButton pRipple label="Submit" class="w-full p-3 text-xl"
+                    ></button>
+            </form>
+        </div>
+    </div>
+</div>
