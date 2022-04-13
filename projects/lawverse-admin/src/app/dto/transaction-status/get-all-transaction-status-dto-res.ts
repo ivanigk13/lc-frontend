@@ -2,6 +2,7 @@ import { GetTransactionStatusDtoDataRes } from "./get-transaction-status-dto-dat
 
 export class GetAllTransactionStatusDtoRes {
 	msg?: string
-	data?: GetTransactionStatusDtoDataRes[]
+	rows! : number
+	data!: GetTransactionStatusDtoDataRes[]
 }
 
