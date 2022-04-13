@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { map, Observable, Subscription } from 'rxjs';
+import { firstValueFrom, map, Observable, Subscription } from 'rxjs';
 import { GetActivityDtoDataRes } from '../../../dto/activity/get-activity-dto-data-res';
 import { ActivityService } from '../../../service/activity.service';
 import { GetArticleDtoDataRes } from '../../../dto/article/get-article-dto-data-res';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class ArticleListComponent implements OnInit{
 
-  articles$: Observable<GetArticleDtoDataRes[]>
+  articles: GetArticleDtoDataRes[] = []
   events$: Observable<GetActivityDtoDataRes[]>
   courses$: Observable<GetActivityDtoDataRes[]>
 
@@ -26,8 +26,15 @@ export class ArticleListComponent implements OnInit{
     this.getLastTwoEvent()
   }
 
-  getAll() : void {
-    this.articles$ = this.articleService.getAll().pipe(map(result => result.data))
+  async getAll() : Promise<void> {
+    this.articles = await firstValueFrom(this.articleService.getAll().pipe(map(result => result.data)))
+  }
+
+  onScroll() : void {
+    this.addData()
+  }
+
+  addData(): void { 
   }
 
   getLastTwoEvent() : void {
