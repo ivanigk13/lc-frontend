@@ -13,7 +13,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class ActivityComponent {
 
-  dataPerPage = 10
+  dataPerPage = 1
   record = 0
   activities$: Observable<GetActivityDtoDataRes[]>
   activities : GetActivityDtoDataRes[] = []

@@ -3,11 +3,16 @@
         <div class="card">
             <h5>Activity List</h5>
             <p-table #dt1 [value]="activities" dataKey="id" [lazy]="true" (onLazyLoad)="loadData($event)"
-                [rows]="10" [rowHover]="true" styleClass="p-datatable-gridlines" 
+                [rows]="dataPerPage" [rowHover]="true" styleClass="p-datatable-gridlines" 
                 [paginator]="true" responsiveLayout="scroll" [totalRecords]="record">
 
                 <ng-template pTemplate="header">
                     <tr>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Activity Name
+                            </div>
+                        </th>
                         <th>
                             <div class="flex justify-content-between align-items-center">
                                 Activity Type
@@ -28,11 +33,15 @@
                 <ng-template pTemplate="body" let-data>
                     <tr>
                         <td style="min-width: 12rem;">
+                            {{data.activityName}}
+                        </td>
+                        <td style="min-width: 12rem;">
                             {{data.activityTypeName}}
                         </td>
                         <td style="min-width: 12rem;">
-                            <a href="http://localhost:8080/files/{{data.paymentFileId}}" type="submit"><i
-                                    class="bi bi-file-earmark-arrow-down">File</i></a>
+                            <p-image src="http://localhost:8080/files/{{data.paymentFileId}}" alt="payment-img"
+                                width="100"
+                                [preview]="true"></p-image>                            
                         </td>
                         <td style="min-width: 12rem;">
                             <button pButton label="Approv"
