@@ -19,8 +19,12 @@ import { UpdateActivityTransactionStatusDtoRes } from "../dto/activity/update-ac
 export class ActivityService {
     constructor(private http: HttpClient) { }
 
-    getAll(): Observable<GetAllActivityDtoRes> {
-        return this.http.get<GetAllActivityDtoRes>('http://localhost:8080/activities')
+    getAll(start:number, max:number, query?:string): Observable<GetAllActivityDtoRes> {
+        if(!query){
+            return this.http.get<GetAllActivityDtoRes>(`http://localhost:8080/activities?start=${start}&max=${max}`)
+        }else{
+            return this.http.get<GetAllActivityDtoRes>(`http://localhost:8080/activities?start=${start}&max=${max}&query=${query}`)
+        }
     }
 
     getAllEvent(): Observable<GetAllActivityDtoRes> {
@@ -31,8 +35,12 @@ export class ActivityService {
         return this.http.get<GetAllActivityDtoRes>('http://localhost:8080/activities/approved-course')
     }
 
-    getAllActivityPending(): Observable<GetAllActivityDtoRes> {
-        return this.http.get<GetAllActivityDtoRes>('http://localhost:8080/activities/pending')
+    getAllActivityPending(start?:number, max?:number): Observable<GetAllActivityDtoRes> {
+        if(!start && !max) {
+            return this.http.get<GetAllActivityDtoRes>('http://localhost:8080/activities/pending')
+        }else{
+            return this.http.get<GetAllActivityDtoRes>(`http://localhost:8080/activities/pending?start=${start}&max=${max}`)
+        }
     }
 
     getById(id: number): Observable<GetByIdActivityDtoRes> {
