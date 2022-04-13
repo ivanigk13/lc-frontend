@@ -25,21 +25,19 @@
                             [(ngModel)]="insertActivityDtoReq.location" type="text" />
                     </div>
                     <div class="field md:col-6 sm:col-12">
-                        <label htmlFor="state">Activity Type</label>
-                        <ng-container *ngIf="activityTypes$ | async as activityTypes">
+                        <label htmlFor="state">Activity Type</label>                        
                             <p-dropdown [options]="activityTypes" [required]="true" optionLabel="activityTypeName"
                                 id="activity_type" name="activity_type" optionValue="id"
-                                [(ngModel)]="insertActivityDtoReq.activityTypeId">
-                            </p-dropdown>
-                        </ng-container>
-                        
+                                [(ngModel)]="insertActivityDtoReq.activityTypeId"
+                                (ngModelChange)="change(insertActivityDtoReq.activityTypeId)">
+                            </p-dropdown>                                                
                     </div>
                     <div class="field md:col-6 sm:col-12">
                         <label htmlFor="state">Category</label>
                         <ng-container *ngIf="categories$ | async as categories">
                             <p-dropdown [options]="categories" [required]="true" optionLabel="categoryName"
                                 id="category" name="category" optionValue="id"
-                                [(ngModel)]="insertActivityDtoReq.categoryId">
+                                [(ngModel)]="insertActivityDtoReq.categoryId" >
                             </p-dropdown>
                         </ng-container>                        
                     </div>
@@ -63,11 +61,16 @@
                         <input type="time" id="timeend" step="2" name="timeend" [required]="true"
                             [(ngModel)]="insertActivityDtoReq.timeEnd" class="form-control">
                     </div>
+                    
+                    <div class="md:col-12">
+                        <h5>Transfer Rp {{price}} to BRI 64362154273642</h5>                        
+                    </div>
                     <div class="field md:col-6 sm:col-12">
                         <h5>Activity Picture</h5>
                         <input type="file" name="file1" id="file1" (change)="changeFile($event)" class="form-control"
                             [required]="true">
                     </div>
+                    
                     <div class="field md:col-6 sm:col-12">
                         <h5>Payment Picture</h5>
                         <input type="file" name="file2" id="file2" (change)="changeFile($event)" class="form-control"

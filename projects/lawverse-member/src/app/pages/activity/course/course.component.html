@@ -7,7 +7,7 @@
             </h5>
         </div>
         <ng-container *ngIf="courses$ | async as courses">
-            <div *ngFor="let course of courses" class="col-md-4 mb-4">
+            <div *ngFor="let course of courses" class="col-md-3 mb-4">
                 <div class="card p-0 relative">
                     <div class="card-img relative">
                         <img src="http://localhost:8080/files/{{course.fileId}}" class="card-img-top activity-img"
