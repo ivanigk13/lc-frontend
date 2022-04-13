@@ -12,6 +12,6 @@
     </a>
 
     <div class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active':appMain.topMenuActive}">
-        <button pButton class="p-button-danger">Logout</button>
+        <button pButton (click)="onClick()" class="p-button-danger">Logout</button>
     </div>
 </div>
