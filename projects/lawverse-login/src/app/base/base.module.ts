@@ -84,6 +84,8 @@ import { TreeModule } from 'primeng/tree';
 import { TreeSelectModule } from 'primeng/treeselect';
 import { TreeTableModule } from 'primeng/treetable';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
@@ -175,7 +177,9 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
         VirtualScrollerModule,        
         StyleClassModule,
     ],
-    exports: [               
+    exports: [   
+        // BrowserModule,
+        // BrowserAnimationsModule,            
         FormsModule,
         HttpClientModule,        
         AccordionModule,

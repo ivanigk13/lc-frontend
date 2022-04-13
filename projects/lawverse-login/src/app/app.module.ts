@@ -114,8 +114,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
     imports: [        
-        BrowserModule,
-        FormsModule,
+        // BrowserModule,
+        // FormsModule,
         AppRoutingModule,
         HttpClientModule,
         BrowserAnimationsModule,

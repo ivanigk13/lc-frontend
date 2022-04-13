@@ -6,6 +6,7 @@ import { CheckboxModule } from "primeng/checkbox";
 import { InputTextModule } from "primeng/inputtext";
 import { PasswordModule } from "primeng/password";
 import { TableModule } from "primeng/table";
+import { BaseModule } from "src/app/base/base.module";
 import { RegisterComponent } from "./register.component";
 import { RegisterRouter } from "./register.router";
 
@@ -15,13 +16,7 @@ import { RegisterRouter } from "./register.router";
         RegisterComponent
     ],
     imports: [
-        FormsModule,
-        CommonModule,
-        TableModule,
-        ButtonModule,
-        InputTextModule,        
-        CheckboxModule,
-        PasswordModule,
+        BaseModule,
         RegisterRouter
     ]
 

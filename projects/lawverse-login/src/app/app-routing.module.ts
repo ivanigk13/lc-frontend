@@ -22,6 +22,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
                 loadChildren: () => import('./pages/account-detail/account-detail.module').then(m => m.AccountDetailModule)
             },
             {
+                path: 'verification',
+                loadChildren: () => import('./pages/register-verification/register-verification.module').then(m => m.RegisterVerificarionModule)
+            },
+            {
                 path: 'member',
                 loadChildren: () => import('../../../lawverse-member/src/app/app.module').then(m => m.AppModule)
             },
