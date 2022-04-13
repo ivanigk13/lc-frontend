@@ -11,13 +11,12 @@
                 <div class="p-fluid p-formgrid grid justify-content-start">
                     <div class="field md:col-6 sm:col-12">
                         <label htmlFor="state">Thread Type</label>
-                        <ng-container *ngIf="threadTypes$ | async as threadTypes">
+                        
                             <p-dropdown [options]="threadTypes" id="threadType" name="threadType"
                                 optionLabel="threadTypeName" optionValue="id" [(ngModel)]="insertThread.threadTypeId"
                                 placeholder="Select Thread Type" [showClear]="true" [required]="true"
                                 (ngModelChange)="changeType()">
-                            </p-dropdown>
-                        </ng-container>                        
+                            </p-dropdown>                                          
                     </div>
                     <div class="field col-12">
                         <label htmlFor="title">Title</label>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom, map} from 'rxjs';
 import { ThreadLikeService } from '../../../service/thread-like.service';
 import { GetThreadDetailDtoDataRes } from '../../../dto/thread-detail/get-thread-detail-dto-data-res';
@@ -20,6 +20,7 @@ import { GetActivityDtoDataRes } from '../../../dto/activity/get-activity-dto-da
 import { ActivityService } from '../../../service/activity.service';
 import { InsertThreadBookmarkDtoReq } from '../../../dto/thread-bookmark/insert-thread-bookmark-dto-req';
 import { ThreadBookmarkService } from '../../../service/thread-bookmark-service';
+import { RoleList } from 'src/app/constant/role-list';
 
 @Component({
   selector: 'app-thread-single',
@@ -46,6 +47,7 @@ export class ThreadSingleComponent implements OnInit {
   isLike: boolean = false
   isVote: boolean = false
   isBookmark: boolean = false
+  isPremium: boolean = false
   userId: string
   threadBookmarkId: string  
 
@@ -53,7 +55,8 @@ export class ThreadSingleComponent implements OnInit {
     private threadDetailService: ThreadDetailService, private threadLikeService: ThreadLikeService,
     private loginService: LoginService, private pollingHeaderService: PollingHeaderService,
     private pollingDetailService: PollingDetailService, private pollingVoterService: PollingVoterService,
-    private activityService: ActivityService, private threadBookmarkService: ThreadBookmarkService) { }
+    private activityService: ActivityService, private threadBookmarkService: ThreadBookmarkService,
+    private router : Router) { }
 
   ngOnInit(): void {
     this.getData()
@@ -77,15 +80,21 @@ export class ThreadSingleComponent implements OnInit {
           }
         }
 
-        this.userId = this.loginService.getData().id
+        const user = this.loginService.getData()
+        if(user.roleCode == RoleList.PREMIUM) this.isPremium = true
+
+        this.userId = user.id
 
         const result = await firstValueFrom(this.threadLikeService.isUserLikeByThreadId(this.thread.id, this.userId).pipe(map(result => result)))
         if (result == 1) {
           this.isLike = true
         }
 
-        this.threadBookmarkId = await firstValueFrom(this.threadBookmarkService.getThreadBookmarkByThreadId(this.thread.id).pipe(map(result => result.data.id)))
-        if(this.threadBookmarkId) this.isBookmark = true
+        const bookmark = await firstValueFrom(this.threadBookmarkService.getThreadBookmarkByThreadId(this.thread.id))
+        if(bookmark.data.id) {
+          this.threadBookmarkId = bookmark.data.id
+          this.isBookmark = true
+        }
       
         const like = await firstValueFrom(this.threadLikeService.getLikeCounterByThreadId(this.thread.id).pipe(map(result => result)))
           if(like)this.likeCounter = like
@@ -95,6 +104,11 @@ export class ThreadSingleComponent implements OnInit {
       }
     }
   }
+
+  onOrder() : void {
+    this.router.navigateByUrl('/member/order/subscribtion')
+  }
+  
 
   async getLastTwoEvent(): Promise<void> {
     this.events = await firstValueFrom(this.activityService.getLastTwoEvent().pipe(map(result => result.data)))

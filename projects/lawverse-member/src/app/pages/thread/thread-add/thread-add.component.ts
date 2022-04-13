@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { firstValueFrom, map, Observable,  } from 'rxjs';
+import { firstValueFrom, map, Observable, } from 'rxjs';
+import { RoleList } from 'src/app/constant/role-list';
+import { LoginService } from 'src/app/service/login.service';
+import { RoleService } from 'src/app/service/role.service';
 import { ThreadTypeList } from '../../../constant/thread-type-list';
 import { InsertPollingHeaderDtoReq } from '../../../dto/polling-header/insert-polling-header-dto-req';
 import { GetThreadTypeDtoDataRes } from '../../../dto/thread-type/get-thread-type-dto-data-res';
@@ -19,7 +22,7 @@ export class ThreadAddComponent implements OnInit {
 
   file?: File
 
-  threadTypes$: Observable<GetThreadTypeDtoDataRes[]>
+  threadTypes: GetThreadTypeDtoDataRes[] = []
   insertThread: InsertThreadDtoReq = new InsertThreadDtoReq()
   insertPollingHeader: InsertPollingHeaderDtoReq = new InsertPollingHeaderDtoReq()
 
@@ -32,12 +35,22 @@ export class ThreadAddComponent implements OnInit {
   pollingName!: string
 
   constructor(private title: Title, private threadTypeService: ThreadTypeService, private threadService: ThreadService,
-    private pollingHeaderService: PollingHeaderService, private router: Router) {
+    private pollingHeaderService: PollingHeaderService, private router: Router, private loginService: LoginService) {
     this.title.setTitle('Insert Thread')
   }
 
   ngOnInit(): void {
-    this.threadTypes$ = this.threadTypeService.getAll().pipe(map(result => result.data))
+    this.getThreadType()
+  }
+
+  async getThreadType(): Promise<void> {
+    const user = this.loginService.getData()
+    if (user.roleCode == RoleList.MEMBER) {
+      this.threadTypes = await firstValueFrom(this.threadTypeService.getAll().pipe(map(result => result.data)))
+      this.threadTypes.splice((this.threadTypes.length - 1), 1)
+    } else if (user.roleCode == RoleList.PREMIUM) {
+      this.threadTypes = await firstValueFrom(this.threadTypeService.getAll().pipe(map(result => result.data)))
+    }
   }
 
   onAdd(): void {
@@ -51,12 +64,17 @@ export class ThreadAddComponent implements OnInit {
   async insert(valid: boolean) {
     if (valid) {
       const result = await firstValueFrom(this.threadService.insert(this.insertThread, this.file).pipe(map(result => result.data)))
-      if (this.selectedDrop == this.pollingCode) {
-        this.insertPollingHeader.threadId = result.id
-        this.insertPollingHeader.data = this.pollingNames
-        const id = await firstValueFrom(this.pollingHeaderService.insert(this.insertPollingHeader).pipe(map(result => result.data)))
-        if (id) this.router.navigateByUrl('/thread')
+      if (result) {
+        if (this.selectedDrop == this.pollingCode) {
+          this.insertPollingHeader.threadId = result.id
+          this.insertPollingHeader.data = this.pollingNames
+          const id = await firstValueFrom(this.pollingHeaderService.insert(this.insertPollingHeader).pipe(map(result => result.data)))
+          if (id) this.router.navigateByUrl('/member/thread')
+        } else {
+          this.router.navigateByUrl('/member/thread')
+        }
       }
+
     }
   }
 
