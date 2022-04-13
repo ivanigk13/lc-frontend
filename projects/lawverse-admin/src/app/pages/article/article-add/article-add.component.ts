@@ -34,7 +34,7 @@ export class ArticleAddComponent implements OnInit {
 
   change(event : any) : void {
     this.file = event.target.files[0]
-    console.log(event.target.files[0])
+    (event.target.files[0])
   }
 
 }
