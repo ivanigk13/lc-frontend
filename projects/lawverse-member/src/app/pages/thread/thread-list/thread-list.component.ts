@@ -21,9 +21,8 @@ export class ThreadListComponent implements OnInit {
   commentCounters : number[] = []
   events$: Observable<GetActivityDtoDataRes[]>
   courses$: Observable<GetActivityDtoDataRes[]>
-
-  getAllThreadSubs? : Subscription
-  counterSubs? : Subscription
+  initialPage: number = 0
+  maxPage: number = 5
 
   constructor(private title:Title, private router : Router, private threadService:ThreadService, private threadLikeService:ThreadLikeService,
               private threadDetailService:ThreadDetailService, private activityService : ActivityService) {
@@ -37,7 +36,7 @@ export class ThreadListComponent implements OnInit {
   }
 
   async getAllThread() : Promise<void> {
-    this.threads = await firstValueFrom(this.threadService.getAll().pipe(map(result => result.data)))
+    this.threads = await firstValueFrom(this.threadService.getAll(this.initialPage, this.maxPage).pipe(map(result => result.data)))
     if(this.threads) {
       for (let i = 0; i < this.threads.length; i++) {
         let like = await firstValueFrom(this.threadLikeService.getLikeCounterByThreadId(this.threads[i].id).pipe(map(result => result)))
@@ -47,6 +46,12 @@ export class ThreadListComponent implements OnInit {
         if(commentCounter) this.commentCounters.push(commentCounter)        
       }
     }
+  }
+
+  async onScroll() : Promise<void> {
+    this.initialPage = this.initialPage + 5
+    const result = await firstValueFrom(this.threadService.getAll(this.initialPage, this.maxPage).pipe(map(result => result.data)))
+    if(result) this.threads = [...this.threads, ...result]
   }
 
   getLastTwoEvent(): void {

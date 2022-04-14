@@ -70,7 +70,7 @@
 
                     <div *ngIf="selectedDrop != pollingCode" class="field col-12">
                         <h5>Picture</h5>
-                        <input type="file" id="file" name="file" (click)="changeFile($event)" class="form-control">
+                        <input type="file" id="file" name="file" (change)="changeFile($event)" class="form-control">
                     </div>
 
                     <div class="field col-3 text-center">

@@ -80,6 +80,7 @@ export class ThreadAddComponent implements OnInit {
 
   changeFile(event: any) {
     this.file = event.target.files[0]
+    console.log(this.file)
   }
 
   async changeType() {
