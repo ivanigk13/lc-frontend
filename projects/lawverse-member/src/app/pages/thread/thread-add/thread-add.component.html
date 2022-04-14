@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="field col-3 text-center">
-                        <button type="submit" pButton label="Submit" class="p-button-success"
+                        <button type="submit" pButton label="Submit" [loading]="isLoading" class="p-button-success"
                             [disabled]="threadForm.form.invalid"></button>
                     </div>
                     <div class="field col-3 text-center">

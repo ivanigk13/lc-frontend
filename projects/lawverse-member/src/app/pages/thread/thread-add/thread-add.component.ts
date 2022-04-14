@@ -33,6 +33,7 @@ export class ThreadAddComponent implements OnInit {
 
   pollingNames: String[] = []
   pollingName!: string
+  isLoading : boolean = false
 
   constructor(private title: Title, private threadTypeService: ThreadTypeService, private threadService: ThreadService,
     private pollingHeaderService: PollingHeaderService, private router: Router, private loginService: LoginService) {
@@ -63,8 +64,9 @@ export class ThreadAddComponent implements OnInit {
 
   async insert(valid: boolean) {
     if (valid) {
+      this.isLoading = true
       const result = await firstValueFrom(this.threadService.insert(this.insertThread, this.file).pipe(map(result => result.data)))
-      if (result) {
+      if (result) {        
         if (this.selectedDrop == this.pollingCode) {
           this.insertPollingHeader.threadId = result.id
           this.insertPollingHeader.data = this.pollingNames
@@ -79,8 +81,7 @@ export class ThreadAddComponent implements OnInit {
   }
 
   changeFile(event: any) {
-    this.file = event.target.files[0]
-    console.log(this.file)
+    this.file = event.target.files[0]    
   }
 
   async changeType() {
