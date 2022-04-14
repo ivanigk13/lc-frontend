@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ConfigService } from '../../service/app.config.service';
 import { AppConfig } from '../../api/appconfig';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { LoginService } from 'src/app/service/login.service';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -39,12 +39,15 @@ export class RegisterComponent implements OnInit,OnDestroy {
   subscription: Subscription
   
   registerSubs? : Subscription
-  loginSubs? : Subscription
   cpassword: string
   isSame: boolean = false
   insertUserDtoReq : InsertUserDtoReq = new InsertUserDtoReq()
 
   loginDtoReq : LoginDtoReq = new LoginDtoReq()
+
+  verifCode! : string
+  insertVerifCode : string = ""
+  isCodeSame : boolean = false
 
   constructor(public configService: ConfigService, private title:Title, private router:Router,
               private userService:UserService, private loginService:LoginService) {
@@ -52,28 +55,14 @@ export class RegisterComponent implements OnInit,OnDestroy {
   } 
 
   ngOnInit(): void {
+    this.initConfig()
+  }
+
+  initConfig() {
     this.config = this.configService.config;
     this.subscription = this.configService.configUpdate$.subscribe(config => {
       this.config = config;
     });
-  }
-
-  onRegister(valid:boolean) {
-    if(valid){
-      this.registerSubs = this.userService.insert(this.insertUserDtoReq).subscribe(result=>{
-        if(result) {
-          this.loginDtoReq = new LoginDtoReq()
-          this.loginDtoReq.email = this.insertUserDtoReq.email
-          this.loginDtoReq.password = this.insertUserDtoReq.password
-          this.loginSubs = this.loginService.login(this.loginDtoReq).subscribe(result=>{
-            if(result) {
-              this.loginService.saveData(result)
-              this.router.navigateByUrl('/account-detail')
-            }
-          })
-        }
-      })
-    }
   }
 
   isPassSame() : void {
@@ -88,14 +77,36 @@ export class RegisterComponent implements OnInit,OnDestroy {
     else return true
   }
 
+  async getVerifCode() {
+    const result = await firstValueFrom(this.userService.getVerificationCode(this.insertUserDtoReq.email))
+    this.verifCode = result.verificationCode
+  }
+
+  checkIsCodeSame() : void {
+    if(this.verifCode == this.insertVerifCode) this.isCodeSame = true
+    else this.isCodeSame = false
+  }
+
+  async onRegister(valid:boolean) {
+    if(valid){
+      const resultRegister = await firstValueFrom(this.userService.insert(this.insertUserDtoReq))
+      if(resultRegister){
+        this.loginDtoReq = new LoginDtoReq()
+        this.loginDtoReq.email = this.insertUserDtoReq.email
+        this.loginDtoReq.password = this.insertUserDtoReq.password
+        
+        const resultLogin = await firstValueFrom(this.loginService.login(this.loginDtoReq))
+        if(resultLogin){
+          this.loginService.saveData(resultLogin)
+          this.router.navigateByUrl('/account-detail')
+        }
+      }
+    }
+  }
+
   ngOnDestroy(): void {
     if (this.subscription){
-    this.subscription.unsubscribe()
+      this.subscription.unsubscribe()
     }
-
-    if(this.registerSubs){
-      this.registerSubs.unsubscribe()
-    }
-    this.loginSubs?.unsubscribe()
   }
 }
