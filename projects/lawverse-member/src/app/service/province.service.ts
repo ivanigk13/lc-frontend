@@ -15,7 +15,7 @@ export class ProvinceService {
         return this.http.get<GetAllProvinceDtoRes>('http://localhost:8080/provinces')
     }
 
-    getById(id : number) : Observable<GetByIdProvinceDtoRes> {
+    getById(id : string) : Observable<GetByIdProvinceDtoRes> {
         return this.http.get<GetByIdProvinceDtoRes>(`http://localhost:8080/provinces/${id}`)
     }
 
