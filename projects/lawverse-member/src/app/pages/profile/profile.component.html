@@ -7,27 +7,29 @@
                 <div class="row justify-content-center mb-3">
                     <div class="col-md-12 order-lg-2">
                         <div class="card-profile-image text-center">
-                            <a href="#">
-                                <img src="https://demos.creative-tim.com/argon-dashboard/assets-old/img/theme/team-4.jpg"
-                                    class="rounded-circle profile-img">
-                            </a>
+                            <img *ngIf="profile.fileId" src="http://localhost:8080/files/{{profile.fileId}}"
+                                class="rounded-circle profile-img">
+                            <img *ngIf="!profile.fileId" src="../../../assets/img/default-profile-picture.jpg"
+                                class="rounded-circle profile-img">
                         </div>
                     </div>
                 </div>
                 <div class="card-body pt-0 pt-md-4">
                     <div class="text-center">
-                        <h3>{{update.fullName}}</h3>
+                        <h3>{{profile.fullName}}</h3>
                         <div class="h5 font-weight-300">
-                            <i class="ni location_pin mr-2"></i>Indonesia, DKI Jakarta, Jakarta City, 657483
+                            <i class="ni location_pin mr-2"></i>{{city}} {{province}} {{profile.postalCode}}
                         </div>
                         <div class="h5 font-weight-300">
-                            <i class="ni location_pin mr-2"></i>{{update.phoneNumber}}</div>
+                            <i class="ni location_pin mr-2"></i>{{profile.phoneNumber}}
+                        </div>
+                         <div class="h5">
+                             <i class="ni education_hat mr-2"></i>{{profile.companyName}}
+                         </div>
                         <div class="h5 mt-4">
                             <i class="ni business_briefcase-24 mr-2"></i> {{positionName}}, {{industryName}}
                         </div>
-                        <div>
-                            <i class="ni education_hat mr-2"></i>{{update.companyName}}
-                        </div>
+                       
                         <hr class="my-4">
                     </div>
                 </div>
@@ -46,7 +48,7 @@
                         </div>
                         <div class="card-body">
                             <form #profileForm (ngSubmit)="onUpdate()">
-                                <div class="p-fluid p-formgrid grid justify-content-start">
+                                <div class="p-fluid p-formgrid grid justify-content-start">                                    
                                     <div class="field col-12">
                                         <label htmlFor="name">Full Name</label>
                                         <input pInputText id="name" name="name" [required]="true" type="text"
@@ -86,6 +88,11 @@
                                         <label htmlFor="postal">Postal Code</label>
                                         <input pInputText id="postal" name="postal" type="text"
                                             [(ngModel)]="update.postalCode" />
+                                    </div>
+                                    <div class="field md:col-12 text">
+                                        <label htmlFor="file">Profile Image</label>
+                                        <input class="form-control" type="file" id="file" name="file"
+                                            (change)="changeFile($event)">
                                     </div>
                                 </div>
                                 <hr class="my-4">
@@ -144,8 +151,7 @@
                                                 </button>
                                             </div>
                                             <div class="col-6">
-                                                <button type="submit" class="btn btn-success w-100"
-                                                    >
+                                                <button type="submit" class="btn btn-success w-100">
                                                     Save
                                                 </button>
                                             </div>
@@ -171,14 +177,13 @@
                                     <div class="field col-12">
                                         <label htmlFor="password">New Password</label>
                                         <input pInputText id="password" name="password" [required]="true"
-                                            type="password" [(ngModel)]="user.password" 
+                                            type="password" [(ngModel)]="user.password"
                                             (ngModelChange)="isPasswordSame()">
                                     </div>
                                     <div class="field col-12">
                                         <label htmlFor="password">Confirm Password</label>
                                         <input pInputText id="password" name="password" [required]="true"
-                                            type="password" [(ngModel)]="cPassword" 
-                                            (ngModelChange)="isPasswordSame()">
+                                            type="password" [(ngModel)]="cPassword" (ngModelChange)="isPasswordSame()">
                                     </div>
                                 </div>
                                 <hr class="my-4">
@@ -192,7 +197,8 @@
                                                 </button>
                                             </div>
                                             <div class="col-6">
-                                                <button type="submit" class="btn btn-success w-100" [disabled]="!isSame">
+                                                <button type="submit" class="btn btn-success w-100"
+                                                    [disabled]="!isSame">
                                                     Save
                                                 </button>
                                             </div>
@@ -202,10 +208,8 @@
                             </form>
                         </div>
                     </div>
-                </p-tabPanel>            
-            </p-tabView>                       
+                </p-tabPanel>
+            </p-tabView>
         </div>
     </div>
 </div>
-
-

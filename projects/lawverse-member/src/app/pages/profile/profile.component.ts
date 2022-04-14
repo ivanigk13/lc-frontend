@@ -40,7 +40,7 @@ export class ProfileComponent implements OnInit,OnDestroy {
   cities : GetCityDtoDataRes[] = []
   provinces : GetProvinceDtoDataRes[] = []
   industries : GetIndustryDtoDataRes[] = []
-  positions : GetPositionDtoDataRes[] = []
+  positions : GetPositionDtoDataRes[] = []  
 
   items: MenuItem[];
   getByUserIdSubs? : Subscription
@@ -50,8 +50,10 @@ export class ProfileComponent implements OnInit,OnDestroy {
   getIndustrySubs? : Subscription
   getPositionSubs? : Subscription
   getByIdCitySubs? : Subscription
+  city : string
+  province : string
 
-  profile : GetProfileDtoDataRes = new GetProfileDtoDataRes()
+  profile : GetProfileDtoDataRes 
   update : UpdateProfileDtoReq = new UpdateProfileDtoReq()
   user : UpdateUserDtoReq = new UpdateUserDtoReq()
   updateSosmed : UpdateSocialMediaDtoReq = new UpdateSocialMediaDtoReq()
@@ -67,6 +69,7 @@ export class ProfileComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit(): void {
+    this.getProfile()
     this.getData()    
   }
 
@@ -109,6 +112,22 @@ export class ProfileComponent implements OnInit,OnDestroy {
     })
   }
 
+  async getProfile() : Promise<void>{
+    const userId = this.loginService.getData().id
+    this.profile = await firstValueFrom(this.profileService.getByUserId(userId).pipe(map(result => result.data)))
+    if(this.profile){
+      const cityData = await firstValueFrom(this.cityService.getById(this.profile.cityId).pipe(map(result => result.data)))
+      if(this.city) {
+        this.city = cityData.cityName
+        this.province = await firstValueFrom(this.provinceService.getById(cityData.provinceId).pipe(map(result => result.data.provinceName)))
+      }
+    } 
+  }
+
+  changeFile(event : any): void {
+    this.file = event.target.files[0]
+  }
+
   isPasswordSame() : void {
     if(this.cPassword == this.user.password){
       this.isSame = true
@@ -131,7 +150,10 @@ export class ProfileComponent implements OnInit,OnDestroy {
     this.updateProfileSubs = this.profileService.update(this.update, this.file).subscribe(result=>{
       if(result){
         this.sosmedService.update(this.updateSosmed).subscribe(result=>{
-          if(result) this.getData()
+          if(result) {
+            this.getData() 
+            this.getProfile()
+          } 
         })
       }
     })
