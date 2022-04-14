@@ -41,17 +41,16 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
         AppConfigComponent,
         AppMenuComponent,
         AppMenuitemComponent,
-        DashboardComponent,
-        
+        DashboardComponent
     ],
     providers: [
-        {provide: LocationStrategy, useClass: HashLocationStrategy},
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService, MenuService, ConfigService,
         {
-            provide : HTTP_INTERCEPTORS,
-            useClass : HttpHandlerAsset,
-            multi : true
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpHandlerAsset,
+            multi: true
         },
         MessageService
     ],
