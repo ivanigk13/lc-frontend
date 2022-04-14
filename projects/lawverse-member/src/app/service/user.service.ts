@@ -22,7 +22,7 @@ export class UserService {
         return this.http.get<GetAllUserDtoRes>('http://localhost:8080/users')
     }
 
-    getById(id: number): Observable<GetByIdUserDtoRes> {
+    getById(id: string): Observable<GetByIdUserDtoRes> {
         return this.http.get<GetByIdUserDtoRes>(`http://localhost:8080/users/${id}`)
     }
 

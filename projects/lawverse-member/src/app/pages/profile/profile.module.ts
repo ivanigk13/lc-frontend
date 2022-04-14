@@ -3,6 +3,8 @@ import { BaseModule } from "src/app/base/base.module";
 import { ComponentModule } from "src/app/components/component.module";
 import { ProfileComponent } from "./profile.component";
 import { ProfileRouter } from "./profile.router";
+import { TabMenuModule } from 'primeng/tabmenu';
+
 
 @NgModule({
     declarations: [
@@ -11,7 +13,8 @@ import { ProfileRouter } from "./profile.router";
     imports: [
         ComponentModule,
         BaseModule,
-        ProfileRouter
+        ProfileRouter,
+        TabMenuModule,        
     ]
 
 })

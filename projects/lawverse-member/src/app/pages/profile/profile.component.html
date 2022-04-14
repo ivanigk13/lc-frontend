@@ -2,7 +2,7 @@
 <!-- Page content -->
 <div class="container-fluid">
     <div class="row mt-3">
-        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+        <div class="col-xl-4 order-xl-2 mt-7 mb-5 mb-xl-0">
             <div class="card card-profile shadow">
                 <div class="row justify-content-center mb-3">
                     <div class="col-md-12 order-lg-2">
@@ -34,120 +34,172 @@
             </div>
         </div>
         <div class="col-xl-8 order-xl-1">
-            <div class="card bg-light shadow">
-                <div class="card-header bg-light border-0">
-                    <div class="row align-items-center">
-                        <div class="col-8">
-                            <h3 class="mb-0">My account</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <form #profileForm (ngSubmit)="onUpdate()">
-                        <div class="p-fluid p-formgrid grid justify-content-start">
-                            <div class="field col-12">
-                                <label htmlFor="name">Full Name</label>
-                                <input pInputText id="name" name="name" [required]="true" type="text"
-                                    [(ngModel)]="update.fullName">
-                            </div>
-                            <div class="field sm:col-12">
-                                <label htmlFor="email" class="form-label">Email</label>
-                                <input pInputText id="email" name="email" type="email" 
-                                    [value]="email" readonly>
-                            </div>
-                            <div class="field sm:col-12">
-                                <label htmlFor="phone" class="form-label">Phone Number</label>
-                                <input pInputText id="phone" name="phone" type="text"
-                                    [(ngModel)]="update.phoneNumber">
-                            </div>
-                            <div class="field md:col-6 sm:col-12">
-                                <label htmlFor="country" class="form-label">Country</label>
-                                <input pInputText id="country" name="country" type="text"
-                                    value="Indonesia" readonly>
-                            </div>
-                            <div class="field md:col-6 sm:col-12">
-                                <label htmlFor="province" class="form-label">Province</label>
-                                <select name="province" id="province" class="form-select" [(ngModel)]="provinceId" 
-                                    disabled>
-                                    <option *ngFor="let province of provinces" [value]="province.id">{{province.provinceName}}</option>
-                                </select>
-                            </div>
-                            <div class="field md:col-6 sm:col-12">
-                                <label htmlFor="city" class="form-label">City</label>
-                                <select name="city" id="city" class="form-select" [(ngModel)]="update.cityId"
-                                    (ngModelChange)="setProvince()">
-                                    <option *ngFor="let city of cities" [value]="city.id">{{city.cityName}}</option>
-                                </select>
-                            </div>
-                            <div class="field md:col-6 sm:col-12">
-                                <label htmlFor="postal">Postal Code</label>
-                                <input pInputText id="postal" name="postal" type="text" 
-                                    [(ngModel)]="update.postalCode"/>
-                            </div>
-                        </div>
-                        <hr class="my-4">
-                        <!-- Job -->
-                        <h6 class="heading-small text-muted mb-4">Job</h6>
-                        <div class="p-fluid p-formgrid grid justify-content-start">
-                            <div class="field col-12">
-                                <label htmlFor="company">Company</label>
-                                <input pInputText id="company" name="company" type="text" 
-                                    [(ngModel)]="update.companyName"/>
-                            </div>
-                            <div class="field md:col-6 sm:col-12">
-                                <label htmlFor="industry" class="form-label">Industry</label>
-                                <select name="industry" id="industry" class="form-select" [(ngModel)]="update.industryId">
-                                    <option *ngFor="let industry of industries" [value]="industry.id">{{industry.industryName}}</option>
-                                </select>
-                            </div>
-                            <div class="field md:col-6 sm:col-12">
-                                <label htmlFor="position" class="form-label">Position</label>
-                                <select name="position" id="position" class="form-select" [(ngModel)]="update.positionId">
-                                    <option *ngFor="let position of positions" [value]="position.id">{{position.positionName}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <hr class="my-4">
-                        <!-- Sosmed -->
-                        <h6 class="heading-small text-muted mb-4">Social Media</h6>
-                        <div class="p-fluid p-formgrid grid justify-content-start">
-                            <div class="field col-12">
-                                <label htmlFor="instagram">Instagram</label>
-                                <input pInputText id="instagram" name="instagram" type="text" 
-                                    [(ngModel)]="updateSosmed.instagram">
-                            </div>
-                            <div class="field md:col-6 sm:col-12">
-                                <label htmlFor="twitter">Twitter</label>
-                                <input pInputText id="twitter" name="twitter" type="text"
-                                    [(ngModel)]="updateSosmed.twitter">
-                            </div>
-                            <div class="field md:col-6 sm:col-12">
-                                <label htmlFor="facebook">Facebook</label>
-                                <input pInputText id="facebook" name="facebook" type="text"
-                                    [(ngModel)]="updateSosmed.facebook">
-                            </div>
-                        </div>
-                        <div class="p-fluid p-formgrid grid justify-content-start">
-                            <div class="field md:col-6 sm:col-12">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop">
-                                            Cancel
-                                        </button>
-                                    </div>
-                                    <div class="col-6">
-                                        <button type="submit" class="btn btn-success w-100" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop">
-                                            Save
-                                        </button>
-                                    </div>
+            <p-tabView>
+                <p-tabPanel header="Edit Profile">
+                    <div class="card bg-light shadow">
+                        <div class="card-header bg-light border-0">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h3 class="mb-0">My account</h3>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
+                        <div class="card-body">
+                            <form #profileForm (ngSubmit)="onUpdate()">
+                                <div class="p-fluid p-formgrid grid justify-content-start">
+                                    <div class="field col-12">
+                                        <label htmlFor="name">Full Name</label>
+                                        <input pInputText id="name" name="name" [required]="true" type="text"
+                                            [(ngModel)]="update.fullName">
+                                    </div>
+                                    <div class="field sm:col-12">
+                                        <label htmlFor="email" class="form-label">Email</label>
+                                        <input pInputText id="email" name="email" type="email" [value]="email" readonly>
+                                    </div>
+                                    <div class="field sm:col-12">
+                                        <label htmlFor="phone" class="form-label">Phone Number</label>
+                                        <input pInputText id="phone" name="phone" type="text"
+                                            [(ngModel)]="update.phoneNumber">
+                                    </div>
+                                    <div class="field md:col-6 sm:col-12">
+                                        <label htmlFor="country" class="form-label">Country</label>
+                                        <input pInputText id="country" name="country" type="text" value="Indonesia"
+                                            readonly>
+                                    </div>
+                                    <div class="field md:col-6 sm:col-12">
+                                        <label htmlFor="province" class="form-label">Province</label>
+                                        <select name="province" id="province" class="form-select"
+                                            [(ngModel)]="provinceId" disabled>
+                                            <option *ngFor="let province of provinces" [value]="province.id">
+                                                {{province.provinceName}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="field md:col-6 sm:col-12">
+                                        <label htmlFor="city" class="form-label">City</label>
+                                        <select name="city" id="city" class="form-select" [(ngModel)]="update.cityId"
+                                            (ngModelChange)="setProvince()">
+                                            <option *ngFor="let city of cities" [value]="city.id">{{city.cityName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="field md:col-6 sm:col-12">
+                                        <label htmlFor="postal">Postal Code</label>
+                                        <input pInputText id="postal" name="postal" type="text"
+                                            [(ngModel)]="update.postalCode" />
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+                                <!-- Job -->
+                                <h6 class="heading-small text-muted mb-4">Job</h6>
+                                <div class="p-fluid p-formgrid grid justify-content-start">
+                                    <div class="field col-12">
+                                        <label htmlFor="company">Company</label>
+                                        <input pInputText id="company" name="company" type="text"
+                                            [(ngModel)]="update.companyName" />
+                                    </div>
+                                    <div class="field md:col-6 sm:col-12">
+                                        <label htmlFor="industry" class="form-label">Industry</label>
+                                        <select name="industry" id="industry" class="form-select"
+                                            [(ngModel)]="update.industryId">
+                                            <option *ngFor="let industry of industries" [value]="industry.id">
+                                                {{industry.industryName}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="field md:col-6 sm:col-12">
+                                        <label htmlFor="position" class="form-label">Position</label>
+                                        <select name="position" id="position" class="form-select"
+                                            [(ngModel)]="update.positionId">
+                                            <option *ngFor="let position of positions" [value]="position.id">
+                                                {{position.positionName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+                                <!-- Sosmed -->
+                                <h6 class="heading-small text-muted mb-4">Social Media</h6>
+                                <div class="p-fluid p-formgrid grid justify-content-start">
+                                    <div class="field col-12">
+                                        <label htmlFor="instagram">Instagram</label>
+                                        <input pInputText id="instagram" name="instagram" type="text"
+                                            [(ngModel)]="updateSosmed.instagram">
+                                    </div>
+                                    <div class="field md:col-6 sm:col-12">
+                                        <label htmlFor="twitter">Twitter</label>
+                                        <input pInputText id="twitter" name="twitter" type="text"
+                                            [(ngModel)]="updateSosmed.twitter">
+                                    </div>
+                                    <div class="field md:col-6 sm:col-12">
+                                        <label htmlFor="facebook">Facebook</label>
+                                        <input pInputText id="facebook" name="facebook" type="text"
+                                            [(ngModel)]="updateSosmed.facebook">
+                                    </div>
+                                </div>
+                                <div class="p-fluid p-formgrid grid justify-content-start">
+                                    <div class="field md:col-6 sm:col-12">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <button type="button" class="btn btn-secondary w-100"
+                                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button type="submit" class="btn btn-success w-100"
+                                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                    Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <p-tabPanel header="Change Password">
+                    <div class="card bg-light shadow">
+                        <div class="card-header bg-light border-0">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h3 class="mb-0">Change Password</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form #ChangePasswordForm (ngSubmit)="onChangePassword()">
+                                <div class="p-fluid p-formgrid grid justify-content-start">
+                                    <div class="field col-12">
+                                        <label htmlFor="password">New Password</label>
+                                        <input pInputText id="password" name="password" [required]="true"
+                                            type="password" [(ngModel)]="user.password">
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+                                <div class="p-fluid p-formgrid grid justify-content-start">
+                                    <div class="field md:col-6 sm:col-12">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <button type="button" class="btn btn-secondary w-100"
+                                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button type="submit" class="btn btn-success w-100">
+                                                    Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <p-tabPanel header="TabView Component">
+                    <p>Content3</p>
+                </p-tabPanel>
+            </p-tabView>                       
         </div>
     </div>
 </div>

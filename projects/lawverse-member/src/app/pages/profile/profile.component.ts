@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, map, Subscription } from 'rxjs';
 import { GetCityDtoDataRes } from '../../dto/city/get-city-dto-data-res';
 import { GetIndustryDtoDataRes } from '../../dto/industry/get-industry-dto-data-res';
 import { GetPositionDtoDataRes } from '../../dto/position/get-position-dto-data-res';
@@ -16,6 +16,10 @@ import { PositionService } from '../../service/position.service';
 import { UpdateSocialMediaDtoReq } from '../../dto/social-media/update-social-media-dto-req';
 import { GetSocialMediaDtoDataRes } from '../../dto/social-media/get-social-media-dto-data-res';
 import { SocialMediaService } from '../../service/social-media.service';
+import { MenuItem } from 'primeng/api';
+import { UpdateUserDtoReq } from '../../dto/user/update-user-dto-req';
+import { UserService } from '../../service/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -37,6 +41,7 @@ export class ProfileComponent implements OnInit,OnDestroy {
   industries : GetIndustryDtoDataRes[] = []
   positions : GetPositionDtoDataRes[] = []
 
+  items: MenuItem[];
   getByUserIdSubs? : Subscription
   updateProfileSubs? : Subscription
   getCitySubs? : Subscription
@@ -46,18 +51,21 @@ export class ProfileComponent implements OnInit,OnDestroy {
   getByIdCitySubs? : Subscription
   profile : GetProfileDtoDataRes = new GetProfileDtoDataRes()
   update : UpdateProfileDtoReq = new UpdateProfileDtoReq()
+  user : UpdateUserDtoReq = new UpdateUserDtoReq()
   updateSosmed : UpdateSocialMediaDtoReq = new UpdateSocialMediaDtoReq()
   sosmed : GetSocialMediaDtoDataRes = new GetSocialMediaDtoDataRes()
+  activeItem: MenuItem
 
   constructor(private title:Title, private loginService:LoginService, private profileService:ProfileService,
               private cityService:CityService, private provinceService:ProvinceService,
               private industryService:IndustryService, private positionService:PositionService,
-              private sosmedService : SocialMediaService) {
-    title.setTitle('My Profile')
+              private sosmedService : SocialMediaService, private userServce : UserService,
+              private router : Router) {
+    this.title.setTitle('My Profile')
   }
 
   ngOnInit(): void {
-    this.getData()
+    this.getData()    
   }
 
   getData() : void {
@@ -75,8 +83,7 @@ export class ProfileComponent implements OnInit,OnDestroy {
       this.positions = result.data
     })
     this.getByUserIdSubs = this.profileService.getByUserId(this.loginService.getData().id).subscribe(result=>{
-      this.update = result.data
-      console.log(this.update)
+      this.update = result.data  
       if(this.update.positionId){
         this.positionService.getById(this.update.positionId).subscribe(result=>{
           this.positionName = result.data.positionName
@@ -118,6 +125,19 @@ export class ProfileComponent implements OnInit,OnDestroy {
         })
       }
     })
+  }
+
+  async onChangePassword() : Promise<void> {    
+    const userLogin = await firstValueFrom(this.userServce.getById(this.loginService.getData().id).pipe(map(result => result.data)))
+    this.user.id = userLogin.id
+    this.user.isActive = userLogin.isActive
+    this.user.roleId = userLogin.roleId
+    this.user.version = userLogin.version
+    const result = await firstValueFrom(this.userServce.update(this.user))
+    if (result) {
+      localStorage.clear()
+      this.router.navigateByUrl('/login')
+    }
   }
   
   ngOnDestroy(): void {
