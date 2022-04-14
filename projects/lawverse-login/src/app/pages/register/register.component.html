@@ -4,8 +4,8 @@
             <div class="login-img-overlay"></div>
             <div class="h-full w-full m-0 py-7 px-4 flex justify-content-center align-items-center login-img-overlay">
             </div>
-
         </div>
+        
         <div class="col-6 py-8 px-2">
             <div class="text-center mb-6">
                 <div class="text-900 text-3xl font-medium mb-3">Sign Up</div>
@@ -31,8 +31,8 @@
                 </div>
 
                 <button type="button" class="btn btn-primary w-100 p-3 text-xl"
-                 data-bs-toggle="modal" data-bs-target="#exampleModal" 
-                 [disabled]="isButtonValid(registerForm.form.invalid, isSame)">
+                    data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getVerifCode()"
+                    [disabled]="isButtonValid(registerForm.form.invalid, isSame)">
                     Sign Up
                 </button>
             </form>
@@ -43,7 +43,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">   
         <div class="modal-content bg-transparant">
-            <div class="modal-body">
+            <form class="modal-body" (ngSubmit)="onRegister(isCodeSame)">
                  <div class="card shadow-0 w-100 text-center px-6">
                      <div class="card-img"> <img class="img-fluid" style="max-width: 100px;"
                              src="../../../assets/img/lawverse-planet.png"> </div>
@@ -51,7 +51,8 @@
                          <h4>Verification Code</h4>
                      </div>
                      <div class="card-text">
-                         <input type="number" class="form-control py-2">
+                         <input type="text" id="code" name="code" [(ngModel)]="insertVerifCode" 
+                         class="form-control py-2" (ngModelChange)="checkIsCodeSame()" placeholder="Put your code here">
                      </div>
                      <div class="row mt-4">
                          <div class="col-md-6">
@@ -59,11 +60,11 @@
                                  data-bs-dismiss="modal">Close</button>
                          </div>
                          <div class="col-md-6">
-                             <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">Submit</button>
+                             <button type="submit" class="btn btn-primary w-100" data-bs-dismiss="modal" [disabled]="!isCodeSame">Submit</button>
                          </div>
                      </div>
                  </div>
-            </div>
+            </form>
         </div>        
     </div>
 </div>
