@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ConfigService } from '../../service/app.config.service';
 import { AppConfig } from '../../api/appconfig';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { IndustryService } from '../../service/industry.service';
@@ -43,10 +43,6 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  industrySubs? : Subscription
-  positionSubs? : Subscription
-  insertSubs? : Subscription
-
   industries : GetIndustryDtoDataRes[] = []
   positions : GetPositionDtoDataRes[] = []
   insertProfileDtoReq : InsertProfileDtoReq = new InsertProfileDtoReq()
@@ -62,19 +58,19 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
     this.subscription = this.configService.configUpdate$.subscribe(config => {
       this.config = config;
     });
-
-    this.industrySubs = this.industryService.getAll().subscribe(result=>{
-      if(result) this.industries = result.data
-    })
-
-    this.positionSubs = this.positionService.getAll().subscribe(result=>{
-      if(result) this.positions = result.data
-    })
   }
 
-  insert(valid:boolean) : void {
+  async getMasterData() {
+    const resultIndustry = await firstValueFrom(this.industryService.getAll())
+    this.industries = resultIndustry.data
+
+    const resultPosition = await firstValueFrom(this.positionService.getAll())
+    this.positions = resultPosition.data
+  }
+
+  async insert(valid:boolean) : Promise<void> {
     if(valid){
-      this.insertSubs = this.profileService.insert(this.insertProfileDtoReq).subscribe()
+      await firstValueFrom(this.profileService.insert(this.insertProfileDtoReq))
     }
   }
 
@@ -82,8 +78,5 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    this.industrySubs?.unsubscribe()
-    this.positionSubs?.unsubscribe()
-    this.insertSubs?.unsubscribe()
   }
 }
