@@ -2,6 +2,8 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AppMainComponent } from './app.main.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AuthGuard } from './guard/auth.guard';
+import { AccessGuard } from './guard/access.guard';
 @NgModule({
     imports: [
         RouterModule.forRoot([
@@ -39,35 +41,51 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
                     },              
                     {
                         path: 'category',
-                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/category/category.module').then(m => m.CategoryModule)
+                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/category/category.module').then(m => m.CategoryModule),
+                        canLoad: [AuthGuard],
+                        canActivate: [AccessGuard]
                     },
                     {
                         path: 'user',
-                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/user/user.module').then(m => m.UserModule)
+                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/user/user.module').then(m => m.UserModule),
+                        canLoad: [AuthGuard],
+                        canActivate: [AccessGuard]
                     },
                     {
                         path: 'industry',
-                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/industry/industry.module').then(m => m.IndustryModule)
+                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/industry/industry.module').then(m => m.IndustryModule),
+                        canLoad: [AuthGuard],
+                        canActivate: [AccessGuard]
                     },
                     {
                         path: 'position',
-                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/position/position.module').then(m => m.PositionModule)
+                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/position/position.module').then(m => m.PositionModule),
+                        canLoad: [AuthGuard],
+                        canActivate: [AccessGuard]
                     },
                     {
                         path: 'role',
-                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/role/role.module').then(m => m.RoleModule)
+                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/role/role.module').then(m => m.RoleModule),
+                        canLoad: [AuthGuard],
+                        canActivate: [AccessGuard]
                     },
                     {
                         path: 'transaction-status',
-                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/transaction-status/transaction-status.module').then(m => m.TransactionStatusModule)
+                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/transaction-status/transaction-status.module').then(m => m.TransactionStatusModule),
+                        canLoad: [AuthGuard],
+                        canActivate: [AccessGuard]
                     },
                     {
                         path: "activity",
-                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/activity/activity.module').then(m => m.ActivityModule)
+                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/activity/activity.module').then(m => m.ActivityModule),
+                        canLoad: [AuthGuard],
+                        canActivate: [AccessGuard]
                     },
                     {
                         path: "subscribe",
-                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/subscribe/subscribe.module').then(m => m.SubscribeModule)
+                        loadChildren: () => import('../../../lawverse-admin/src/app/pages/subscribe/subscribe.module').then(m => m.SubscribeModule),
+                        canLoad: [AuthGuard],
+                        canActivate: [AccessGuard]
                     }
 
                 ],
