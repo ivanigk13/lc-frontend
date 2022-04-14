@@ -45,7 +45,7 @@
                                     </td>
                                     <td scope="row">{{data.statusName}}</td>
                                     <td scope="row">
-                                        <p-button label="Approve" (onClick)="onApprove(data.orderId)">
+                                        <p-button label="Approve" [disabled]="data.statusName != 'Pending'" (onClick)="onApprove(data.orderId)">
                                         </p-button>
                                         <p-button label="Reject" styleClass="p-button-danger"
                                             (onClick)="onApprove(data.orderId)"></p-button>

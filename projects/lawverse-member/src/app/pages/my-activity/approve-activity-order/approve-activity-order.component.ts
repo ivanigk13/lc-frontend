@@ -18,6 +18,7 @@ export class ApproveActivityOrderComponent implements OnInit {
   orders$: Observable<GetParticipantDtoDataRes[]>
   activity: GetActivityDtoDataRes
   order: UpdateOrderDtoReq = new UpdateOrderDtoReq
+  isApproved: boolean
 
   constructor(private orderDetailService: OrderDetailService, private orderService: OrderService, private activatedRoute: ActivatedRoute,
     private router: Router, private activityService: ActivityService) { }
@@ -25,7 +26,6 @@ export class ApproveActivityOrderComponent implements OnInit {
   ngOnInit(): void {
     this.getOrder()
   }
-
 
   async getOrder(): Promise<void> {
     const id = await firstValueFrom(this.activatedRoute.params.pipe(map(result => result)))
@@ -42,10 +42,11 @@ export class ApproveActivityOrderComponent implements OnInit {
   async onApprove(id: string): Promise<void> {
     this.order = await firstValueFrom(this.orderService.getById(id).pipe(map(result => result.data)))
     console.log(this.order)
-    if (this.order) this.orderService.updateApprove(this.order)
+    if (this.order) {
+      const result = await firstValueFrom(this.orderService.updateApprove(this.order).pipe(map(result => result.data)))
+      if (result) this.getOrder()
+    }
   }
-
-
 }
 
 

@@ -5,6 +5,7 @@ import { ThreadRouter } from "./thread.router";
 import { ThreadListComponent } from './thread-list/thread-list.component';
 import { ComponentModule } from "src/app/components/component.module";
 import { ThreadSingleComponent } from './thread-single/thread-single.component';
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ThreadSingleComponent } from './thread-single/thread-single.component';
   imports: [
     ThreadRouter,
     BaseModule,
-    ComponentModule
+    ComponentModule,
+    InfiniteScrollModule
   ]
 
 })
