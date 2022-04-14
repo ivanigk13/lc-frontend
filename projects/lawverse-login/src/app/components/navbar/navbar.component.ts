@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { GetProfileDtoDataRes } from '../../dto/profile/get-profile-dto-data-res';
 import { LoginService } from '../../service/login.service';
 import { ProfileService } from '../../service/profile.service';
@@ -10,10 +10,9 @@ import { ProfileService } from '../../service/profile.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit , OnDestroy{
+export class NavbarComponent implements OnInit {
 
   profile: GetProfileDtoDataRes
-  profileSubs!: Subscription
 
   items = [
     { label: 'Activity', routerLink: '/activity/add' },
@@ -27,11 +26,12 @@ export class NavbarComponent implements OnInit , OnDestroy{
     this.getProfile()
   }
 
-  getProfile(): void {
-    let userId: string = this.loginService.getData().id
-    this.profileSubs = this.profileService.getByUserId(userId).subscribe(result => {
+  async getProfile(): Promise<void> {
+    const userId: string = this.loginService.getData().id
+    const result = await firstValueFrom(this.profileService.getByUserId(userId))
+    if(result){
       this.profile = result.data     
-    })
+    }
   }
 
   onClick(event): void {
@@ -41,11 +41,6 @@ export class NavbarComponent implements OnInit , OnDestroy{
   onLogout() {
     localStorage.clear()
     this.router.navigateByUrl('/login')
-  }
-
-
-  ngOnDestroy(): void {
-    this.profileSubs.unsubscribe()
   }
 
 }
