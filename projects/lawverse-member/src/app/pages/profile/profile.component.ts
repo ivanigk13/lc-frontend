@@ -27,7 +27,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile.component.scss']
 })
 
-export class ProfileComponent implements OnInit,OnDestroy {
+export class ProfileComponent implements OnInit {
 
   file? : File
   email! : string
@@ -43,13 +43,6 @@ export class ProfileComponent implements OnInit,OnDestroy {
   positions : GetPositionDtoDataRes[] = []  
 
   items: MenuItem[];
-  getByUserIdSubs? : Subscription
-  updateProfileSubs? : Subscription
-  getCitySubs? : Subscription
-  getProvinceSubs? : Subscription
-  getIndustrySubs? : Subscription
-  getPositionSubs? : Subscription
-  getByIdCitySubs? : Subscription
   city : string
   province : string
 
@@ -73,43 +66,26 @@ export class ProfileComponent implements OnInit,OnDestroy {
     this.getData()    
   }
 
-  getData() : void {
+  async getData() : Promise<void> {
     this.email = this.loginService.getData().email
-    this.getCitySubs = this.cityService.getAll().subscribe(result=>{
-      this.cities = result.data
-    })
-    this.getProvinceSubs = this.provinceService.getAll().subscribe(result=>{
-      this.provinces = result.data
-    })
-    this.getIndustrySubs = this.industryService.getAll().subscribe(result=>{
-      this.industries = result.data
-    })
-    this.getPositionSubs = this.positionService.getAll().subscribe(result=>{
-      this.positions = result.data
-    })
-    this.getByUserIdSubs = this.profileService.getByUserId(this.loginService.getData().id).subscribe(result=>{
-      this.update = result.data  
-      if(this.update.positionId){
-        this.positionService.getById(this.update.positionId).subscribe(result=>{
-          this.positionName = result.data.positionName
-        })
-      }
-      if(this.update.industryId){
-        this.industryService.getById(this.update.industryId).subscribe(result=>{
-          this.industryName = result.data.industryName
-        })
-      }
-      if(this.update.cityId){
-        this.getByIdCitySubs = this.cityService.getById(this.update.cityId).subscribe(result=>{
-          this.provinceId = result.data.provinceId
-        })
-      }
-      if(this.update.socialMediaId){
-        this.sosmedService.getById(this.update.socialMediaId).subscribe(result=>{
-          this.updateSosmed = result.data
-        })
-      }
-    })
+    this.cities = await firstValueFrom(this.cityService.getAll().pipe(map(result => result.data)))
+    this.provinces = await firstValueFrom(this.provinceService.getAll().pipe(map(result => result.data)))
+    this.industries = await firstValueFrom(this.industryService.getAll().pipe(map(result => result.data)))
+    this.positions = await firstValueFrom(this.positionService.getAll().pipe(map(result => result.data)))
+    this.update = await firstValueFrom(this.profileService.getByUserId(this.loginService.getData().id).pipe(map(result => result.data)))
+    
+    if(this.update.positionId){
+      this.positionName = await firstValueFrom(this.positionService.getById(this.update.positionId).pipe(map(result => result.data.positionName)))
+    }
+    if(this.update.industryId){
+      this.industryName = await firstValueFrom(this.industryService.getById(this.update.industryId).pipe(map(result => result.data.industryName)))
+    }
+    if(this.update.cityId){
+      this.provinceId = await firstValueFrom(this.cityService.getById(this.update.cityId).pipe(map(result => result.data.provinceId)))
+    }
+    if(this.update.socialMediaId){
+      this.updateSosmed = await firstValueFrom(this.sosmedService.getById(this.update.socialMediaId).pipe(map(result => result.data)))
+    }
   }
 
   async getProfile() : Promise<void>{
@@ -129,34 +105,25 @@ export class ProfileComponent implements OnInit,OnDestroy {
   }
 
   isPasswordSame() : void {
-    if(this.cPassword == this.user.password){
+    if(this.cPassword == this.user.password)
       this.isSame = true
-    } else {
+    else 
       this.isSame = false
+  }
+
+  async setProvince() : Promise<void> {
+    this.provinceId = await firstValueFrom(this.cityService.getById(this.update.cityId).pipe(map(result=>result.data.provinceId)))
+  }
+
+  async onUpdate(){
+    const result = await firstValueFrom(this.profileService.update(this.update, this.file))
+    if(result){
+      const resultSosmed = await firstValueFrom(this.sosmedService.update(this.updateSosmed))
+      if(resultSosmed) {
+        this.getData() 
+        this.getProfile()
+      } 
     }
-  }
-
-  edit() : void {
-    this.editProfile = !this.editProfile
-  }
-
-  setProvince() : void {
-    this.getByIdCitySubs = this.cityService.getById(this.update.cityId).subscribe(result=>{
-      this.provinceId = result.data.provinceId
-    })
-  }
-
-  onUpdate(){
-    this.updateProfileSubs = this.profileService.update(this.update, this.file).subscribe(result=>{
-      if(result){
-        this.sosmedService.update(this.updateSosmed).subscribe(result=>{
-          if(result) {
-            this.getData() 
-            this.getProfile()
-          } 
-        })
-      }
-    })
   }
 
   async onChangePassword() : Promise<void> {    
@@ -170,16 +137,6 @@ export class ProfileComponent implements OnInit,OnDestroy {
       localStorage.clear()
       this.router.navigateByUrl('/login')
     }
-  }
-  
-  ngOnDestroy(): void {
-    this.getByUserIdSubs?.unsubscribe()
-    this.updateProfileSubs?.unsubscribe()
-    this.getCitySubs?.unsubscribe()
-    this.getProvinceSubs?.unsubscribe()
-    this.getIndustrySubs?.unsubscribe()
-    this.getPositionSubs?.unsubscribe()
-    this.getByIdCitySubs?.unsubscribe()
   }
 
 }
