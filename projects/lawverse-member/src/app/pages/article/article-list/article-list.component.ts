@@ -16,6 +16,8 @@ export class ArticleListComponent implements OnInit{
   articles: GetArticleDtoDataRes[] = []
   events$: Observable<GetActivityDtoDataRes[]>
   courses$: Observable<GetActivityDtoDataRes[]>
+  initialPage : number = 0
+  maxPage : number = 5
 
   constructor(private articleService : ArticleService, private activityService : ActivityService, 
     private router : Router) { } 
@@ -27,15 +29,14 @@ export class ArticleListComponent implements OnInit{
   }
 
   async getAll() : Promise<void> {
-    this.articles = await firstValueFrom(this.articleService.getAll().pipe(map(result => result.data)))
+    this.articles = await firstValueFrom(this.articleService.getAll(this.initialPage, this.maxPage).pipe(map(result => result.data)))
   }
 
-  onScroll() : void {
-    this.addData()
-  }
-
-  addData(): void { 
-  }
+  async onScroll() : Promise<void> {
+    this.initialPage = this.initialPage+5
+    const result = await firstValueFrom(this.articleService.getAll(this.initialPage, this.maxPage).pipe(map(result => result.data)))
+    if (result) this.articles = [...this.articles, ...result]
+  } 
 
   getLastTwoEvent() : void {
     this.events$ = this.activityService.getLastTwoEvent().pipe(map(result => result.data))

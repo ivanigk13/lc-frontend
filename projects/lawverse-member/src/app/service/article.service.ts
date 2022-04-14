@@ -16,8 +16,12 @@ import { UpdateArticleDtoRes } from "../dto/article/update-article-dto-res";
 export class ArticleService {
     constructor(private http: HttpClient) { }
 
-    getAll(): Observable<GetAllArticleDtoRes> {
-        return this.http.get<GetAllArticleDtoRes>('http://localhost:8080/articles')
+    getAll(start? : number, max?: number): Observable<GetAllArticleDtoRes> {
+        if(start && max) {
+            return this.http.get<GetAllArticleDtoRes>(`http://localhost:8080/articles?start=${start}&max=${max}`)
+        } else {
+            return this.http.get<GetAllArticleDtoRes>(`http://localhost:8080/articles`)
+        }
     }
 
     getById(id: number): Observable<GetByIdArticleDtoRes> {

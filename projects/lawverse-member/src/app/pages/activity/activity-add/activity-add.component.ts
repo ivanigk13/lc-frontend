@@ -53,8 +53,7 @@ export class ActivityAddComponent implements OnInit {
   }
 
   changeFile(event: any) {
-    this.files.push(event.target.files[0])
-    console.log(this.files)
+    this.files.push(event.target.files[0])   
   }
 
 }

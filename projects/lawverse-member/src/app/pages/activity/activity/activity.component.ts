@@ -22,7 +22,6 @@ export class ActivityComponent implements OnInit, OnDestroy {
   getAll(): void {
     this.getAllSubs = this.activityService.getAll().subscribe(result => {
       this.activities = result.data
-      console.log(result)
     })
   }
 
