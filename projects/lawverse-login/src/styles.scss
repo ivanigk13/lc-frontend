@@ -31,6 +31,14 @@ body{
     background-color: #e3efff;
 }
 
+.bg-body{
+    background-color: #e3efff;
+}
+
+.p-tabview .p-tabview-panels {
+    background: #e3efff !important;
+}
+
 .c-details span {
     font-weight: 300;
     font-size: 13px;
@@ -265,7 +273,8 @@ body{
 }
 
 .profile-img{
-    max-width: 50%;
+    width: 250px;
+    max-height: 250px;
 }
 
 .activity-img{
