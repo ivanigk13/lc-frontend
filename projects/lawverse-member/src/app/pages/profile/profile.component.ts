@@ -105,7 +105,7 @@ export class ProfileComponent implements OnInit {
   }
 
   isPasswordSame() : void {
-    if(this.cPassword == this.user.password)
+    if(this.cPassword == this.user.password && this.cPassword.length>0)
       this.isSame = true
     else 
       this.isSame = false
