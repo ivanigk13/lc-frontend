@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom, map, Observable, Subscription } from 'rxjs';
-import { GetOrderDtoDataRes } from '../../../dto/order/get-order-dto-data-res';
+import { GetActivityDtoDataRes } from '../../../dto/activity/get-activity-dto-data-res';
+import { ActivityService } from '../../../service/activity.service';
+import { GetParticipantDtoDataRes } from '../../../dto/order-detail/get-participant-dto-data-res';
+import { OrderDetailService } from '../../../service/order-detail.service';
 import { OrderService } from '../../../service/order.service';
+import { UpdateOrderDtoReq } from '../../../dto/order/update-order-dto-req';
 
 @Component({
   selector: 'app-approve-activity-order',
@@ -10,31 +14,35 @@ import { OrderService } from '../../../service/order.service';
   styleUrls: ['./approve-activity-order.component.css']
 })
 export class ApproveActivityOrderComponent implements OnInit {
-  
-  orders$: Observable<GetOrderDtoDataRes[]>  
 
-  constructor(private orderService: OrderService, private activatedRoute: ActivatedRoute,
-    private router : Router) { }
+  orders$: Observable<GetParticipantDtoDataRes[]>
+  activity: GetActivityDtoDataRes
+  order: UpdateOrderDtoReq = new UpdateOrderDtoReq
+
+  constructor(private orderDetailService: OrderDetailService, private orderService: OrderService, private activatedRoute: ActivatedRoute,
+    private router: Router, private activityService: ActivityService) { }
 
   ngOnInit(): void {
-   this.getOrder()
+    this.getOrder()
   }
 
 
   async getOrder(): Promise<void> {
     const id = await firstValueFrom(this.activatedRoute.params.pipe(map(result => result)))
     if (id) {
-      this.orders$ = this.orderService.getPendingOrderByActivityId((id as any).id).pipe(map(result => result.data))      
+      this.orders$ = this.orderDetailService.getParticipantByActivityId((id as any).id).pipe(map(result => result.data))
+      this.activity = await firstValueFrom(this.activityService.getById((id as any).id).pipe(map(result => result.data)))
     }
   }
 
-  onBack() : void {
+  onBack(): void {
     this.router.navigateByUrl('/member/my-activity')
   }
 
   async onApprove(id: string): Promise<void> {
-     const result = await firstValueFrom(this.orderService.getById(id).pipe(map(result => result.data)))      
-      if(result) this.orderService.updateApprove(result)    
+    this.order = await firstValueFrom(this.orderService.getById(id).pipe(map(result => result.data)))
+    console.log(this.order)
+    if (this.order) this.orderService.updateApprove(this.order)
   }
 
 
