@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   roleCode: string
   loginDtoReq: LoginDtoReq = new LoginDtoReq()
+  isLoading: boolean = false
 
   constructor(public configService: ConfigService, private title: Title, private loginService: LoginService,
     private router: Router) {
@@ -51,6 +52,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   async onLogin(valid: boolean) {
     if (valid) {
+      this.isLoading = true
       const resultLogin = await firstValueFrom(this.loginService.login(this.loginDtoReq))
       this.loginService.saveData(resultLogin)
       this.roleCode = resultLogin.roleCode        
