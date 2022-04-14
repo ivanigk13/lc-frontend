@@ -37,7 +37,9 @@ import { AccessGuard } from './guard/access.guard';
                 children: [      
                     {
                         path: 'dashboard',
-                        component: DashboardComponent
+                        component: DashboardComponent,
+                        canLoad: [AuthGuard],
+                        canActivate: [AccessGuard]
                     },              
                     {
                         path: 'category',
