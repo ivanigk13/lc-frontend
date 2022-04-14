@@ -32,6 +32,7 @@ export class ProfileComponent implements OnInit,OnDestroy {
   file? : File
   email! : string
   editProfile : boolean = true
+  isSame : boolean = false
   positionName:string= ""
   industryName:string=""
   provinceId:string=""
@@ -49,12 +50,13 @@ export class ProfileComponent implements OnInit,OnDestroy {
   getIndustrySubs? : Subscription
   getPositionSubs? : Subscription
   getByIdCitySubs? : Subscription
+
   profile : GetProfileDtoDataRes = new GetProfileDtoDataRes()
   update : UpdateProfileDtoReq = new UpdateProfileDtoReq()
   user : UpdateUserDtoReq = new UpdateUserDtoReq()
   updateSosmed : UpdateSocialMediaDtoReq = new UpdateSocialMediaDtoReq()
-  sosmed : GetSocialMediaDtoDataRes = new GetSocialMediaDtoDataRes()
-  activeItem: MenuItem
+  sosmed : GetSocialMediaDtoDataRes = new GetSocialMediaDtoDataRes()  
+  cPassword : string
 
   constructor(private title:Title, private loginService:LoginService, private profileService:ProfileService,
               private cityService:CityService, private provinceService:ProvinceService,
@@ -105,6 +107,14 @@ export class ProfileComponent implements OnInit,OnDestroy {
         })
       }
     })
+  }
+
+  isPasswordSame() : void {
+    if(this.cPassword == this.user.password){
+      this.isSame = true
+    } else {
+      this.isSame = false
+    }
   }
 
   edit() : void {

@@ -171,7 +171,14 @@
                                     <div class="field col-12">
                                         <label htmlFor="password">New Password</label>
                                         <input pInputText id="password" name="password" [required]="true"
-                                            type="password" [(ngModel)]="user.password">
+                                            type="password" [(ngModel)]="user.password" 
+                                            (ngModelChange)="isPasswordSame()">
+                                    </div>
+                                    <div class="field col-12">
+                                        <label htmlFor="password">Confirm Password</label>
+                                        <input pInputText id="password" name="password" [required]="true"
+                                            type="password" [(ngModel)]="cPassword" 
+                                            (ngModelChange)="isPasswordSame()">
                                     </div>
                                 </div>
                                 <hr class="my-4">
@@ -185,7 +192,7 @@
                                                 </button>
                                             </div>
                                             <div class="col-6">
-                                                <button type="submit" class="btn btn-success w-100">
+                                                <button type="submit" class="btn btn-success w-100" [disabled]="!isSame">
                                                     Save
                                                 </button>
                                             </div>
