@@ -1,30 +1,29 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { InsertIndustryDtoReq } from 'src/app/dto/industry/insert-industry-dto-req';
-import { IndustryService } from 'src/app/service/industry.service';
+import { firstValueFrom } from 'rxjs';
+import { InsertIndustryDtoReq } from '../../../dto/industry/insert-industry-dto-req';
+import { IndustryService } from '../../../service/industry.service';
 
 @Component({
   selector: 'app-industry-add',
   templateUrl: './industry-add.component.html',
   styleUrls: ['./industry-add.component.scss']
 })
-export class IndustryAddComponent implements OnInit, OnDestroy {
+export class IndustryAddComponent implements OnInit {
 
   industry: InsertIndustryDtoReq = new InsertIndustryDtoReq()
-
-  industrySubs?: Subscription
 
   constructor(private router: Router, private industryService: IndustryService) { }
 
   ngOnInit(): void {
   }
 
-  onSubmit(valid: boolean): void {
+  async onSubmit(valid: boolean): Promise<void> {
     if (valid) {
-      this.industrySubs = this.industryService.insert(this.industry).subscribe(result => {
+      const result = await firstValueFrom(this.industryService.insert(this.industry)) 
+      if(result){
         this.router.navigateByUrl('/admin/industry/list')
-      })
+      }
     }
   }
 
@@ -32,7 +31,4 @@ export class IndustryAddComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/admin/industry/list')
   }
 
-  ngOnDestroy(): void {
-    this.industrySubs?.unsubscribe()
-  }
 }

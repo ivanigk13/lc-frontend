@@ -1,40 +1,34 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { GetPositionDtoDataRes } from 'src/app/dto/position/get-position-dto-data-res';
-import { InsertPositionDtoReq } from 'src/app/dto/position/insert-position-dto-req';
-import { PositionService } from 'src/app/service/position.service';
+import { firstValueFrom } from 'rxjs';
+import { InsertPositionDtoReq } from '../../../dto/position/insert-position-dto-req';
+import { PositionService } from '../../../service/position.service';
 
 @Component({
   selector: 'app-position-add',
   templateUrl: './position-add.component.html',
   styleUrls: ['./position-add.component.scss']
 })
-export class PositionAddComponent implements OnInit, OnDestroy {
+export class PositionAddComponent implements OnInit {
 
   position: InsertPositionDtoReq = new InsertPositionDtoReq()
-
-  positionSubs?: Subscription
 
   constructor(private router: Router, private positionService: PositionService) { }
 
   ngOnInit(): void {
   }
 
-  onSubmit(valid: boolean): void {
+  async onSubmit(valid: boolean): Promise<void> {
     if (valid) {
-      this.positionSubs = this.positionService.insert(this.position).subscribe(result => {
+      const result = await firstValueFrom(this.positionService.insert(this.position))
+      if(result){
         this.router.navigateByUrl('/admin/position/list')
-      })
+      }
     }
   }
 
   back(): void {
     this.router.navigateByUrl('/admin/position/list')
-  }
-
-  ngOnDestroy(): void {
-    this.positionSubs?.unsubscribe()
   }
 
 }

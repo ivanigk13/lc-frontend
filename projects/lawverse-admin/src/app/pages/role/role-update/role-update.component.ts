@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { GetRoleDtoDataRes } from 'src/app/dto/role/get-role-dto-data-res';
-import { UpdateRoleDtoReq } from 'src/app/dto/role/update-role-dto-req';
-import { RoleService } from 'src/app/service/role.service';
+import { firstValueFrom, Subscription } from 'rxjs';
+import { GetRoleDtoDataRes } from '../../../dto/role/get-role-dto-data-res';
+import { UpdateRoleDtoReq } from '../../../dto/role/update-role-dto-req';
+import { RoleService } from '../../../service/role.service';
 
 @Component({
   selector: 'app-role-update',
@@ -23,33 +23,30 @@ export class RoleUpdateComponent implements OnInit {
   constructor(private title: Title, private router: Router, private activatedRoute: ActivatedRoute, private roleService: RoleService) {
     this.title.setTitle('Lawverse: Update - Role')
   }
-  RoleService
+  
   ngOnInit(): void {
-    this.activatedRouteSubs = this.activatedRoute.params.subscribe(result => {
-      const id: string = (result as any).id
-      this.roleSubs = this.roleService.getById(id).subscribe(result => {
-        this.role = result.data
-      })
-    })
+    this.startInit()
   }
 
-  update(valid: boolean): void {
+  async startInit() {
+    const result = await firstValueFrom(this.activatedRoute.params)
+    const id: string = (result as any).id
+    const resultRole = await firstValueFrom(this.roleService.getById(id))
+    this.role = resultRole.data
+  }
+
+  async update(valid: boolean): Promise<void> {
     if (valid) {
       this.roleUpdate.roleName = this.role.roleName
-      this.updateRoleSubs = this.roleService.update(this.role).subscribe(result => {
+      const result = await firstValueFrom(this.roleService.update(this.role))
+      if(result) {
         this.router.navigateByUrl('/admin/role/list')
-      })
+      }
     }
   }
 
   back(): void {
     this.router.navigateByUrl('/admin/role/list')
-  }
-
-  ngOnDestroy(): void {
-    this.activatedRouteSubs?.unsubscribe()
-    this.roleSubs?.unsubscribe()
-    this.updateRoleSubs?.unsubscribe()
   }
 
 }

@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { InsertRoleDtoReq } from '../../../dto/role/insert-role-dto-req';
 import { RoleService } from '../../../service/role.service';
 
@@ -9,22 +9,21 @@ import { RoleService } from '../../../service/role.service';
   templateUrl: './role-add.component.html',
   styleUrls: ['./role-add.component.scss']
 })
-export class RoleAddComponent implements OnInit, OnDestroy {
+export class RoleAddComponent implements OnInit {
 
   role: InsertRoleDtoReq = new InsertRoleDtoReq()
-
-  roleSubs?: Subscription
 
   constructor(private router: Router, private roleService: RoleService) { }
 
   ngOnInit(): void {
   }
 
-  onSubmit(valid: boolean): void {
+  async onSubmit(valid: boolean): Promise<void> {
     if (valid) {
-      this.roleSubs = this.roleService.insert(this.role).subscribe(result => {
+      const result = await firstValueFrom(this.roleService.insert(this.role))
+      if(result) {
         this.router.navigateByUrl('/admin/role/list')
-      })
+      }
     }
   }
 
@@ -32,7 +31,4 @@ export class RoleAddComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/admin/role/list')
   }
 
-  ngOnDestroy(): void {
-    this.roleSubs?.unsubscribe()
-  }
 }
