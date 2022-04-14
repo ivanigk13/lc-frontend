@@ -48,6 +48,13 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Subscribe', icon: 'pi pi-fw pi-table', routerLink: ['/admin/subscribe'] },
                 ]
             },
+            {
+                label: 'Report',
+                items: [
+                    { label: 'Participant Activity', icon: 'pi pi-fw pi-table', routerLink: ['/admin/activity/list'] },
+                    { label: 'Income Activity', icon: 'pi pi-fw pi-table', routerLink: ['/admin/activity/list/income'] },
+                ]
+            },
         ];
     }
 
