@@ -38,7 +38,11 @@
                                     {{activity.categoryName}}
                                 </p>
                             </div>
-                            <div class="col-6 mt-1 mx-auto text-center">
+                            <div class="col-md-6 mt-3 mx-auto text-center">
+                                <button type="button" (click)="onUpdate(activity.id)"
+                                    class="btn btn-primary w-100">Update</button>
+                            </div>
+                            <div class="col-md-6 mt-3 mx-auto text-center">
                                 <button type="button" (click)="onClick(activity.id)"
                                     class="btn btn-success w-100">Participant</button>
                             </div>

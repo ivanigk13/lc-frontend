@@ -6,6 +6,7 @@ import { EventComponent } from './event/event.component';
 import { CourseComponent } from './course/course.component';
 import { BaseModule } from "src/app/base/base.module";
 import { ComponentModule } from "src/app/components/component.module";
+import { ActivityUpdateComponent } from './activity-update/activity-update.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { ComponentModule } from "src/app/components/component.module";
         ActivityAddComponent,
         ActivityComponent,
         EventComponent,
-        CourseComponent
+        CourseComponent,
+        ActivityUpdateComponent
     ],
     imports: [
         ComponentModule,

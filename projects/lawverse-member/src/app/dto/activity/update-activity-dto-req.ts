@@ -9,7 +9,6 @@ export class UpdateActivityDtoReq {
 	 timeEnd?: string 
 	 price?: number 
 	 location?: string 
-	 version!: number 
-	 isActive!: boolean 
+	 version!: number 	 
 } 
 

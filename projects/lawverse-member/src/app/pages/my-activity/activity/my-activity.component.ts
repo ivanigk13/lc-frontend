@@ -31,4 +31,8 @@ export class MyActivityComponent implements OnInit {
     this.router.navigateByUrl(`/member/my-activity/${id}`)
   }
 
+  onUpdate(id: string) : void {
+    this.router.navigateByUrl(`/member/activity/${id}`)
+  }
+
 }
