@@ -47,6 +47,15 @@ export class ApproveActivityOrderComponent implements OnInit {
       if (result) this.getOrder()
     }
   }
+
+  async onReject(id: string): Promise<void> {
+    this.order = await firstValueFrom(this.orderService.getById(id).pipe(map(result => result.data)))
+    console.log(this.order)
+    if (this.order) {
+      const result = await firstValueFrom(this.orderService.updateReject(this.order).pipe(map(result => result.data)))
+      if (result) this.getOrder()
+    }
+  }
 }
 
 

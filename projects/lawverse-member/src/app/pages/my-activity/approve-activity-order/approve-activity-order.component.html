@@ -8,9 +8,9 @@
             <p-button label="Back" (onClick)="onBack()" styleClass="p-button-secondary"></p-button>
         </div>
         <div class="col pb-0 mr-1 text-end">
-            <a type="button" class="btn btn-success"
+            <a type="button" class="btn btn-success mx-1"
                 href="http://localhost:8080/report/activity/{{activity.id}}">Download Participant Report</a>
-            <a type="button" class="btn btn-success"
+            <a type="button" class="btn btn-success mx-1"
                 href="http://localhost:8080/report/activity-income/{{activity.id}}">Download Income Report</a>
         </div>
     </div>
@@ -47,8 +47,9 @@
                                     <td scope="row">
                                         <p-button label="Approve" [disabled]="data.statusName != 'Pending'" (onClick)="onApprove(data.orderId)">
                                         </p-button>
-                                        <p-button label="Reject" styleClass="p-button-danger"
-                                            (onClick)="onApprove(data.orderId)"></p-button>
+                                        <p-button label="Reject" [disabled]="data.statusName != 'Pending'"
+                                            styleClass="p-button-danger ml-2"
+                                            (onClick)="onReject(data.orderId)"></p-button>
                                     </td>
                                 </tr>
                             </ng-template>

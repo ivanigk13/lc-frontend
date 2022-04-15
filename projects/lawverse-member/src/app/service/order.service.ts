@@ -32,6 +32,10 @@ export class OrderService {
         return this.http.put<UpdateOrderDtoRes>('http://localhost:8080/orders/approve',updateOrderDtoReq)
     }
 
+    updateReject(updateOrderDtoReq: UpdateOrderDtoReq): Observable<UpdateOrderDtoRes> {
+        return this.http.put<UpdateOrderDtoRes>('http://localhost:8080/orders/reject', updateOrderDtoReq)
+    }
+
     getById(id: string): Observable<GetByIdOrderDtoRes> {
         return this.http.get<GetByIdOrderDtoRes>(`http://localhost:8080/orders/${id}`)
     }
