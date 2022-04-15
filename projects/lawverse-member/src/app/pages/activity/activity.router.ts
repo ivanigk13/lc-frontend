@@ -18,17 +18,18 @@ const routes: Routes = [
         component: ActivityAddComponent
     },
     {
-        path: ':id',
-        component: ActivityUpdateComponent
-    },
-    {
         path: 'course',
         component: CourseComponent
     },
     {
         path: 'event',
         component: EventComponent
+    },
+    {
+        path: ':id',
+        component: ActivityUpdateComponent
     }
+   
 ]
 
 @NgModule({
