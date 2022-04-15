@@ -1,14 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { GetActivityDtoDataRes } from 'src/app/dto/activity/get-activity-dto-data-res';
-import { ActivityService } from 'src/app/service/activity.service';
+import { Component, OnInit } from '@angular/core';
+import { firstValueFrom, Subscription } from 'rxjs';
+import { GetActivityDtoDataRes } from '../../../dto/activity/get-activity-dto-data-res';
+import { ActivityService } from '../../../service/activity.service';
 
 @Component({
   selector: 'app-activity',
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.scss']
 })
-export class ActivityComponent implements OnInit, OnDestroy {
+export class ActivityComponent implements OnInit {
 
   activities: GetActivityDtoDataRes[] = []
   getAllSubs!: Subscription
@@ -19,15 +19,9 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.getAll()
   }
 
-  getAll(): void {
-    this.getAllSubs = this.activityService.getAll().subscribe(result => {
-      this.activities = result.data
-    })
+  async getAll(): Promise<void> {
+    const result = await firstValueFrom(this.activityService.getAll())
+    this.activities = result.data
   }
-
-  ngOnDestroy(): void {
-    this.getAllSubs.unsubscribe()
-  }
-
 
 }
