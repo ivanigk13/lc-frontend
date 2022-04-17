@@ -7,45 +7,49 @@
                         <h5>Order Activity Detail</h5>
                     </div>
                     <div class="col-12">
-                            <table class="w-100">
-                                <tr class="my-2">
-                                    <td>
-                                        <div class="d-flex mb-2">
-                                            <div class="flex-shrink-0">
-                                                <img src="http://localhost:8080/files/{{activity.fileId}}" alt=""
-                                                    width="100" class="img-fluid">
-                                            </div>
-                                            <div class="flex-lg-grow-1 ms-3">
-                                                <h4 class="mb-0">{{activity.activityName}}
-                                                </h4>
-                                                <p class="m-0">Type: {{activity.activityTypeName}}</p>
-                                                <p>Price : <b>{{activity.price}}</b></p>
-                                            </div>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="d-flex mb-2">
+                                        <div class="flex-shrink-0">
+                                            <img src="http://localhost:8080/files/{{activity.fileId}}" alt=""
+                                                width="100" class="img-fluid">
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr class="my-2">
-                                    <td>
-                                        <p>Transfer To</p>
-                                        <img src="../../../../assets/img/logo-bri.png" alt="bri-logo-img" height="20">
-                                        <p>BRI 6127368127368182</p>
-                                    </td>
-                                </tr>
-                                <tr class="my-2">
-                                    <td>
-                                        <h5>Payment Picture</h5>
-                                        <input type="file" (change)="change($event)" class="form-control p-inputtext">
-                                    </td>
-                                </tr>
-                                <tr class="my-2">
-                                    <td>
-                                        <button pButton type="submit" label="Submit" class="p-button-success"></button>
-                                    </td>
-                                </tr>
-                            </table>
+                                        <div class="flex-lg-grow-1 ms-3">
+                                            <h4 class="mb-0">{{activity.activityName}}
+                                            </h4>
+                                            <p class="m-0">Type: {{activity.activityTypeName}}</p>
+                                            <p>Price : <b>{{activity.price}}</b></p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Transfer {{activity.price}} To</p>
+                                    <img src="../../../../assets/img/logo-bri.png" alt="bri-logo-img" height="20">
+                                    <p>BRI 6127368127368182</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5>Payment Picture</h5>
+                                    <input type="file" (change)="change($event)" class="form-control p-inputtext">
+                                </td>
+                            </tr>                            
+                            <tr>
+                                <td>
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="md:col-6 ">
+                            <button pButton type="button" label="Back" (click)="onBack()" class="p-button-secondary mt-3 mr-2"></button>                            
+                            <button pButton type="submit" label="Submit" class="p-button-success mt-3"></button>
+                        </div>
                     </div>
                 </div>
-            
+
             </div>
         </form>
     </div>

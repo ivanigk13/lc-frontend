@@ -49,6 +49,10 @@ export class OrderSubscriptionComponent implements OnInit {
     }
   }
 
+  onBack() : void {
+    this.router.navigateByUrl('/member/order/subscribtion')
+  }
+
   change(event : any) : void {
     this.file = event.target.files[0]
   }

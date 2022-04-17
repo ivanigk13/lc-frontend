@@ -50,6 +50,11 @@ export class OrderActivityComponent implements OnInit {
     }
   }
 
+  onBack() : void {
+    if(this.activity.activityTypeName == 'Event') this.router.navigateByUrl('/member/activity/event')
+    else if (this.activity.activityTypeName == 'Course') this.router.navigateByUrl('/member/activity/course')
+  }
+
   change(event: any): void {
     this.file = event.target.files[0]
   }

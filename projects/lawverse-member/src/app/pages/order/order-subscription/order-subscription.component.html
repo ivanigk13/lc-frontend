@@ -8,12 +8,11 @@
                     </div>
                 </div>
                 <div class="p-fluid p-formgrid grid justify-content-start">
-                     <div class="field col-12 text-center">
-                         <p>Subcribtion : {{subscribe.duration}} Month</p>
-                         <p>Price : Rp {{subscribe.price}}</p>
+                     <div class="field col-12 text-start">
+                         <p>Subcribtion : {{subscribe.duration}} Month</p>                         
                      </div>
-                    <div class="field col-12 text-center">
-                        <label htmlFor="content">Transfer To</label>
+                    <div class="field col-12 text-start">
+                        <label htmlFor="content">Transfer Rp<b>{{subscribe.price}}</b> To</label>
                         <p><img src="../../../../assets/img/logo-bri.png" alt="bri-logo-img" height="20"> BRI 6127368127368182</p>    
                     </div>
 
@@ -22,7 +21,10 @@
                         <input type="file" (change)="change($event)" class="form-control p-inputtext">
                     </div>
 
-                    <div class="field col-3">
+                    <div class="field sm:col-6 md:col-4 lg:col-3">
+                        <button pButton type="button" label="Back" (click)="onBack()" class="p-button-secondary mr-2"></button>                        
+                    </div>
+                    <div class="field sm:col-6 md:col-4 lg:col-3">
                         <button pButton type="submit" label="Submit" class="p-button-success"></button>
                     </div>
 
