@@ -75,10 +75,10 @@
                             <div class="col-md-9">
                                 <span>
                                     <a *ngIf="isLike == false" (click)="onLike(isLike)"><i
-                                            class="fa-regular fa-heart"></i></a>
-                                    {{likeCounter}}
-                                     <a *ngIf="isLike == true">
-                                         <i class="fa-solid fa-heart"></i>
+                                            class="fa-regular fa-heart"></i> {{likeCounter}}</a>
+                                    
+                                     <a *ngIf="isLike == true" (click)="onDislike(thread.id)">
+                                         <i class="fa-solid fa-heart"></i> {{likeCounter}}
                                      </a>
                                 </span>
                                    

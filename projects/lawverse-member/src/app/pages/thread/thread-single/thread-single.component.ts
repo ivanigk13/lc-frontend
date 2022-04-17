@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { firstValueFrom, map } from 'rxjs';
+import { first, firstValueFrom, map } from 'rxjs';
 import { ThreadLikeService } from '../../../service/thread-like.service';
 import { GetThreadDetailDtoDataRes } from '../../../dto/thread-detail/get-thread-detail-dto-data-res';
 import { GetThreadDtoDataRes } from '../../../dto/thread/get-thread-dto-data-res';
@@ -162,8 +162,17 @@ export class ThreadSingleComponent implements OnInit {
     }
   }
 
-  async onDislike(id: string): Promise<void> {
-
+  async onDislike(threadId: string): Promise<void> {
+    const threadLikeId = await firstValueFrom(this.threadLikeService.getIdByThreadId(threadId, this.userId))
+    console.log(threadLikeId)
+    if(threadLikeId) {
+      const result = await firstValueFrom(this.threadLikeService.delete(threadLikeId.data.id))
+      if(result) {
+        this.likeCounter = null
+        this.isLike = false
+        this.getData()
+      }
+    }
   }
 
   async onBookmark(): Promise<void> {

@@ -8,6 +8,8 @@ import { GetThreadDtoDataRes } from '../../../dto/thread/get-thread-dto-data-res
 import { ThreadDetailService } from '../../../service/thread-detail.service';
 import { ThreadLikeService } from '../../../service/thread-like.service';
 import { ThreadService } from '../../../service/thread.service';
+import { LoginService } from '../../../service/login.service';
+import { RoleList } from '../../../constant/role-list';
 
 @Component({
   selector: 'app-thread',
@@ -23,9 +25,11 @@ export class ThreadListComponent implements OnInit {
   courses$: Observable<GetActivityDtoDataRes[]>
   initialPage: number = 0
   maxPage: number = 5
+  isPremium : boolean = false
 
   constructor(private title:Title, private router : Router, private threadService:ThreadService, private threadLikeService:ThreadLikeService,
-              private threadDetailService:ThreadDetailService, private activityService : ActivityService) {
+              private threadDetailService:ThreadDetailService, private activityService : ActivityService,
+              private loginService : LoginService) {
     this.title.setTitle('Thread List')
   }
 
@@ -38,6 +42,10 @@ export class ThreadListComponent implements OnInit {
   async getAllThread() : Promise<void> {
     this.threads = await firstValueFrom(this.threadService.getAll(this.initialPage, this.maxPage).pipe(map(result => result.data)))
     if(this.threads) {
+
+      const user = this.loginService.getData()
+      if (user.roleCode == RoleList.PREMIUM) this.isPremium = true
+
       for (let i = 0; i < this.threads.length; i++) {
         let like = await firstValueFrom(this.threadLikeService.getLikeCounterByThreadId(this.threads[i].id).pipe(map(result => result)))        
         if(like > 0) this.likeCounters.push(like)                

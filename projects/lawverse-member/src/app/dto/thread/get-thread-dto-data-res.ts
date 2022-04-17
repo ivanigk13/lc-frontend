@@ -9,5 +9,6 @@ export class GetThreadDtoDataRes {
 	 content!: string 
 	 version!: number 
 	 isActive!: boolean 
+	 isBookmark: boolean = false
 } 
 

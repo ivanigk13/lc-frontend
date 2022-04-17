@@ -48,9 +48,20 @@
                                 <div class="card-title">
                                     <h4 class=" -text">{{thread.title}}</h4>
                                 </div>
-                                <p class="card-text text-secondary  -text">
-                                    {{thread.content}}
+                                <p *ngIf="thread.threadTypeName == 'Premium' && isPremium"
+                                    class="card-text text-secondary">
+                                    {{thread.content.substr(0,300)}} ...
                                 </p>
+                                <p *ngIf="thread.threadTypeName != 'Premium'" class="card-text text-secondary">
+                                    {{thread.content.substr(0,300)}} ...
+                                </p>
+                                <div *ngIf="thread.threadTypeName == 'Premium' && !isPremium">
+                                    <p class="card-text text-secondary">
+                                        {{thread.content.substr(0,200)}}
+                                    </p>
+                                    <p class="text-center text-lock text-muted mt-3">Content is Locked</p>
+                                    <p class="text-center text-muted">You must subscribe to see premium content</p>                                    
+                                </div>
                             </div>
                             <div class="card-footer text-muted px-5">
                                 <div class="row justify-content-between">
