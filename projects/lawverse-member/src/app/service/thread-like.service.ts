@@ -19,8 +19,8 @@ export class ThreadLikeService {
         return this.http.get<GetByIdThreadLikeDtoRes>(`http://localhost:8080/thread-likes/${id}`)
     }
 
-    getIdByThreadId(threadId: string, userId: string): Observable<GetByIdThreadLikeDtoRes> {
-        return this.http.get<GetByIdThreadLikeDtoRes>(`http://localhost:8080/thread-likes/thread?threadId=${threadId}&userId=${userId}`)
+    getIdByThreadIdAndUser(threadId: string, userId: string): Observable<GetByIdThreadLikeDtoRes> {
+        return this.http.get<GetByIdThreadLikeDtoRes>(`http://localhost:8080/thread-likes?threadId=${threadId}&userId=${userId}`)
     }
 
     insert(insertThreadLikeDtoReq: InsertThreadLikeDtoReq): Observable<InsertThreadLikeDtoRes> {

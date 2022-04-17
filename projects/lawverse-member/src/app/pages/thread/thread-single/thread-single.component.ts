@@ -85,19 +85,19 @@ export class ThreadSingleComponent implements OnInit {
 
         this.userId = user.id
 
+        const like = await firstValueFrom(this.threadLikeService.getLikeCounterByThreadId(this.thread.id).pipe(map(result => result)))
+        if (like) this.likeCounter = like
+
         const result = await firstValueFrom(this.threadLikeService.isUserLikeByThreadId(this.thread.id, this.userId).pipe(map(result => result)))
         if (result == 1) {
           this.isLike = true
-        }
+        }        
 
         const bookmark = await firstValueFrom(this.threadBookmarkService.getThreadBookmarkByThreadId(this.thread.id))
         if (bookmark.data.id) {
           this.threadBookmarkId = bookmark.data.id
           this.isBookmark = true
-        }
-
-        const like = await firstValueFrom(this.threadLikeService.getLikeCounterByThreadId(this.thread.id).pipe(map(result => result)))
-        if (like) this.likeCounter = like
+        }        
 
         const totalComment = await firstValueFrom(this.threadDetailService.getCommentTotalByThreadId(this.thread.id).pipe(map(result => result)))
         if (totalComment) this.commentCounter = totalComment
@@ -163,7 +163,7 @@ export class ThreadSingleComponent implements OnInit {
   }
 
   async onDislike(threadId: string): Promise<void> {
-    const threadLikeId = await firstValueFrom(this.threadLikeService.getIdByThreadId(threadId, this.userId))
+    const threadLikeId = await firstValueFrom(this.threadLikeService.getIdByThreadIdAndUser(threadId, this.userId))
     console.log(threadLikeId)
     if(threadLikeId) {
       const result = await firstValueFrom(this.threadLikeService.delete(threadLikeId.data.id))
