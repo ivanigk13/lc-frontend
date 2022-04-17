@@ -30,10 +30,15 @@
                         <li><a class="dropdown-item" routerLink="/member/activity/new" >Add Activity</a></li>
                     </ul>
                 </li>
-                <li class="nav-item text-center p-1">
-                    <a class="nav-link navbar-text" routerLink="/member/thread" >
-                        Thread
-                    </a>                  
+                <li class="nav-item dropdown text-center p-1">
+                    <a class="nav-link dropdown-toggle navbar-text" id="navbarDropdownMenuLink" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Forum
+                    </a>
+                    <ul class="dropdown-menu p-1" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" routerLink="/member/thread">Thread</a></li>
+                        <li><a class="dropdown-item" routerLink="/member/bookmarked-thread">Bookmarked Thread</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item dropdown text-center p-1">
                     <a class="nav-link dropdown-toggle navbar-text"  id="navbarDropdownMenuLink" role="button"
@@ -60,8 +65,7 @@
                                      width="40" alt="profile-picture-img">
                           </a>
                           <ul class="dropdown-menu navbar-profile-dropdown p-1" aria-labelledby="navbarDropdownMenuLink">
-                              <li><a class="dropdown-item" routerLink="/member/profile">My Profile</a></li>
-                              <li><a class="dropdown-item" routerLink="/member/bookmarked-thread">Bookmarked Thread</a></li>                                                            
+                              <li><a class="dropdown-item" routerLink="/member/profile">My Profile</a></li>                              
                               <li><a class="dropdown-item" routerLink="/member/my-activity">My Activity</a></li>
                               <li><a class="dropdown-item text-danger" (click)="onLogout()">Log Out</a></li>
                           </ul>
