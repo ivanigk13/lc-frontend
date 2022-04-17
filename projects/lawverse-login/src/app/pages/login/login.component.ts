@@ -52,12 +52,18 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   async onLogin(valid: boolean) {
     if (valid) {
-      this.isLoading = true
+      
       const resultLogin = await firstValueFrom(this.loginService.login(this.loginDtoReq))
       this.loginService.saveData(resultLogin)
-      this.roleCode = resultLogin.roleCode        
-      if(this.roleCode == RoleList.ADMIN) this.router.navigateByUrl('/admin/dashboard')
-      else this.router.navigateByUrl('/member/thread')
+      this.roleCode = resultLogin.roleCode
+      if (this.roleCode == RoleList.ADMIN) {
+        this.isLoading = true
+        this.router.navigateByUrl('/admin/dashboard')
+      }
+      else if (this.roleCode == RoleList.MEMBER || this.roleCode == RoleList.PREMIUM) {
+        this.isLoading = true
+        this.router.navigateByUrl('/member/thread')
+      }
     }
   }
 
