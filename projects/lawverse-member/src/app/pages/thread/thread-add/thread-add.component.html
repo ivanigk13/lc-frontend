@@ -72,15 +72,15 @@
                         <h5>Picture</h5>
                         <input type="file" id="file" name="file" (change)="changeFile($event)" class="form-control">
                     </div>
-
+                        <div class="field col-3 text-center">
+                            <button type="button" routerLink="/member/thread" pButton label="Back"
+                                class="p-button-secondary"></button>
+                        </div>
                     <div class="field col-3 text-center">
-                        <button type="submit" pButton label="Submit" [loading]="isLoading" class="p-button-success"
+                        <button type="submit" pButton label="Submit" 
+                        [loading]="isLoading" class="p-button-success"
                             [disabled]="threadForm.form.invalid"></button>
-                    </div>
-                    <div class="field col-3 text-center">
-                        <button type="button" routerLink="/member/thread" pButton label="Back" class="p-button-danger"></button>
-                    </div>
-
+                    </div>                
                 </div>
             </div>
         </form>

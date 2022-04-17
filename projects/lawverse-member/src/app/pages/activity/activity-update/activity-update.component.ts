@@ -21,6 +21,7 @@ export class ActivityUpdateComponent implements OnInit {
   price: number
   updateActivityDtoReq: UpdateActivityDtoReq = new UpdateActivityDtoReq()
   activity : GetActivityDtoDataRes
+  isLoading : boolean = false
 
   constructor(private title: Title, private activityService: ActivityService, private router: Router,
     private activatedRoute : ActivatedRoute, private activityTypeService: ActivityTypeService) {
@@ -56,13 +57,20 @@ export class ActivityUpdateComponent implements OnInit {
 
   async update(valid: boolean): Promise<void> {
     if (valid) {
+      this.isLoading = true
       const result = await firstValueFrom(this.activityService.update(this.updateActivityDtoReq, this.files).pipe(map(result => result.data)))
-      if (result) this.router.navigateByUrl('/member/thread')
+      if (result) {        
+        this.router.navigateByUrl('/member/thread')
+      }
     }
   }
 
   changeFile(event: any) {
     this.files.push(event.target.files[0])
+  }
+
+  onBack() : void {
+    this.router.navigateByUrl('/member/my-activity')
   }
 
 

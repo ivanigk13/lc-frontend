@@ -63,16 +63,18 @@ export class ThreadAddComponent implements OnInit {
   }
 
   async insert(valid: boolean) {
-    if (valid) {
-      this.isLoading = true
+    if (valid) {   
+      this.isLoading = true   
       const result = await firstValueFrom(this.threadService.insert(this.insertThread, this.file).pipe(map(result => result.data)))
       if (result) {        
         if (this.selectedDrop == this.pollingCode) {
           this.insertPollingHeader.threadId = result.id
           this.insertPollingHeader.data = this.pollingNames
           const id = await firstValueFrom(this.pollingHeaderService.insert(this.insertPollingHeader).pipe(map(result => result.data)))
-          if (id) this.router.navigateByUrl('/member/thread')
-        } else {
+          if (id) {            
+            this.router.navigateByUrl('/member/thread')
+          }
+        } else {          
           this.router.navigateByUrl('/member/thread')
         }
       }

@@ -56,9 +56,13 @@
                         <input type="file" name="file2" id="file2" (change)="changeFile($event)" class="form-control"
                             [required]="true">
                     </div>
-                    <div class="field col-3 text-center">
+                    <div class="field col-3 sm:col-6 text-center">
+                        <button type="button" pButton label="Back" class="p-button-secondary"
+                            [disabled]="activityForm.form.invalid" (click)="onBack()"></button>
+                    </div>
+                    <div class="field col-3 sm:col-6 text-center">
                         <button type="submit" pButton label="Submit" class="p-button-success"
-                            [disabled]="activityForm.form.invalid"></button>
+                            [disabled]="activityForm.form.invalid" [loading]="isLoading"></button>
                     </div>
                 </div>
             </div>

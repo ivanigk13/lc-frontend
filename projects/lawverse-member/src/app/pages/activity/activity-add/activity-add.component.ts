@@ -21,6 +21,7 @@ export class ActivityAddComponent implements OnInit {
   activityTypes: GetActivityTypeDtoDataRes[] = []
   price : number
   insertActivityDtoReq: InsertActivityDtoReq = new InsertActivityDtoReq()
+  isLoading: boolean = false
 
   constructor(private title: Title, private activityService: ActivityService, private router: Router,
     private categoryService: CategoryService, private activityTypeService: ActivityTypeService) {
@@ -47,8 +48,11 @@ export class ActivityAddComponent implements OnInit {
 
   async insert(valid: boolean): Promise<void> {
     if (valid) {
+      this.isLoading = true
       const result = await firstValueFrom(this.activityService.insert(this.insertActivityDtoReq, this.files).pipe(map(result => result.data)))
-      if (result) this.router.navigateByUrl('/member/activity/event')
+      if (result) {        
+        this.router.navigateByUrl('/member/activity/event')
+      }
     }
   }
 
