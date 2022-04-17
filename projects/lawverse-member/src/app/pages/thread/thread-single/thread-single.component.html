@@ -87,10 +87,10 @@
                                 <span class="ml-3"> <a><i class="fa-regular fa-comment"></i></a>
                                     {{commentCounter}}</span>
                                 <span class="ml-3"> 
-                                    <a *ngIf="isBookmark == false" (click)="onBookmark(thread.id)">
+                                    <a *ngIf="!isBookmark" (click)="onBookmark(thread.id)">
                                         <i class="fa-regular fa-bookmark"></i>
                                     </a>
-                                    <a *ngIf="isBookmark == true" (click)="onUnBookmark()">
+                                    <a *ngIf="isBookmark" (click)="onUnBookmark()">
                                         <i class="fa-solid fa-bookmark"></i>
                                     </a>
                                 </span>

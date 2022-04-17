@@ -8,8 +8,6 @@ import { GetThreadDtoDataRes } from '../../../dto/thread/get-thread-dto-data-res
 import { ThreadDetailService } from '../../../service/thread-detail.service';
 import { ThreadLikeService } from '../../../service/thread-like.service';
 import { ThreadService } from '../../../service/thread.service';
-import { ThreadBookmarkService } from '../../../service/thread-bookmark-service';
-import { LoginService } from '../../../service/login.service';
 
 @Component({
   selector: 'app-thread',
@@ -19,25 +17,20 @@ import { LoginService } from '../../../service/login.service';
 export class ThreadListComponent implements OnInit {
 
   threads: GetThreadDtoDataRes[] = []
-  bookmarkedThreads: GetThreadDtoDataRes[] = []
   likeCounters : number[] = []
-  commentCounters : number[] = []  
-  bookmarkedLikeCounters: number[] = []
-  bookmarkedCommentCounters: number[] = []
+  commentCounters : number[] = []
   events$: Observable<GetActivityDtoDataRes[]>
   courses$: Observable<GetActivityDtoDataRes[]>
   initialPage: number = 0
-  maxPage: number = 5  
+  maxPage: number = 5
 
   constructor(private title:Title, private router : Router, private threadService:ThreadService, private threadLikeService:ThreadLikeService,
-              private threadDetailService:ThreadDetailService, private activityService : ActivityService, 
-              private threadBookmarkService : ThreadBookmarkService, private loginService : LoginService) {
+              private threadDetailService:ThreadDetailService, private activityService : ActivityService) {
     this.title.setTitle('Thread List')
   }
 
   ngOnInit(): void {
     this.getAllThread()
-    this.getBookmarkedThread()
     this.getLastTwoCourse()
     this.getLastTwoEvent()
   }
@@ -46,42 +39,34 @@ export class ThreadListComponent implements OnInit {
     this.threads = await firstValueFrom(this.threadService.getAll(this.initialPage, this.maxPage).pipe(map(result => result.data)))
     if(this.threads) {
       for (let i = 0; i < this.threads.length; i++) {
-        let like = await firstValueFrom(this.threadLikeService.getLikeCounterByThreadId(this.threads[i].id).pipe(map(result => result)))
-         if(like) this.likeCounters.push(like)        
-
-        let commentCounter = await firstValueFrom(this.threadDetailService.getCommentTotalByThreadId(this.threads[i].id).pipe(map(result => result)))
-        if(commentCounter) this.commentCounters.push(commentCounter)                   
+        let like = await firstValueFrom(this.threadLikeService.getLikeCounterByThreadId(this.threads[i].id).pipe(map(result => result)))        
+        if(like > 0) this.likeCounters.push(like)                
+        else if (like == 0) this.likeCounters.push(0)        
+        
+        let commentCounter = await firstValueFrom(this.threadDetailService.getCommentTotalByThreadId(this.threads[i].id).pipe(map(result => result)))        
+        if(commentCounter > 0) this.commentCounters.push(commentCounter)  
+        else if (commentCounter == 0) this.commentCounters.push(0)      
       }
     }
   }
-
-  async getBookmarkedThread(): Promise<void> {
-    const userId = this.loginService.getData().id
-    const bookmarkList = await firstValueFrom(this.threadBookmarkService.getThreadBookmarkByUserId(userId).pipe(map(result => result.data)))
-    if (bookmarkList) {
-      for (let i = 0; i < bookmarkList.length; i++) {
-        const thread = await firstValueFrom(this.threadService.getById(bookmarkList[i].threadId).pipe(map(result => result.data)))
-        console.log(thread)
-        if (thread) {
-          this.bookmarkedThreads.push(thread)
-          
-          let like = await firstValueFrom(this.threadLikeService.getLikeCounterByThreadId(thread.id).pipe(map(result => result)))
-          console.log(like)
-          if (like) this.bookmarkedLikeCounters.push(like)
-
-          let totalComment = await firstValueFrom(this.threadDetailService.getCommentTotalByThreadId(thread.id).pipe(map(result => result)))
-          console.log(totalComment)
-          if (totalComment) this.bookmarkedCommentCounters.push(totalComment)
-        }
-      }
-    }
-  }
-
 
   async onScroll() : Promise<void> {
     this.initialPage = this.initialPage + 5
     const result = await firstValueFrom(this.threadService.getAll(this.initialPage, this.maxPage).pipe(map(result => result.data)))
-    if(result) this.threads = [...this.threads, ...result]
+    this.likeCounters = []
+    this.commentCounters = []
+    if(result) {
+      this.threads = [...this.threads, ...result]    
+      for (let i = 0; i < this.threads.length; i++) {
+        let like = await firstValueFrom(this.threadLikeService.getLikeCounterByThreadId(this.threads[i].id).pipe(map(result => result)))        
+        if (like > 0) this.likeCounters.push(like)
+        else if (like == 0) this.likeCounters.push(0)
+
+        let commentCounter = await firstValueFrom(this.threadDetailService.getCommentTotalByThreadId(this.threads[i].id).pipe(map(result => result)))        
+        if (commentCounter > 0) this.commentCounters.push(commentCounter)
+        else if (commentCounter == 0) this.commentCounters.push(0)
+      }
+    }
   }
 
   getLastTwoEvent(): void {

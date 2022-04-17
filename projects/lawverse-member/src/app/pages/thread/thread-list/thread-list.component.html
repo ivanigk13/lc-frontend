@@ -18,113 +18,63 @@
                     <button class="btn btn-primary w-100 text-center" routerLink="/member/thread/new">Write a
                         thread</button>
                 </div>
-                <p-tabView>
-                    <p-tabPanel header="Thread">
-                        <div *ngIf="threads.length==0" class="col-12">
-                            No Thread Available
-                        </div>
-                        <div infinite-scroll (scrolled)="onScroll()">
-                            <div *ngIf="threads.length>0" class="col-md-12">
-                                <div *ngFor="let thread of threads;let i = index" class="card p-0">
-                                    <div class="card-body p-5">
-                                        <div class="row justify-content-between align-items-center mb-3">
-                                            <div class="col-md-12">
-                                                <img *ngIf="thread.fileId != null"
-                                                    src="http://localhost:8080/files/{{thread.fileId}}" class="w-100"
-                                                    alt="thread-img">
-                                                <div class="d-flex flex-nowrap align-items-center mt-3">
-                                                    <img *ngIf="thread.profilePictureId != null"
-                                                        src="http://localhost:8080/files/{{thread.profilePictureId}}"
-                                                        height="40" width="40" class="br-full " alt="profile-img">
-                                                    <img *ngIf="thread.profilePictureId == null"
-                                                        src=".../../../../../../assets/img/default-profile-picture.jpg"
-                                                        height="40" width="40" class="br-full " alt="profile-img">
-                                                    <p class="ml-3  my-1 thread-profile-text">
-                                                        {{thread.fullName}}</p><span
-                                                        [ngClass]="thread.threadTypeName == 'Regular' ? 'badge-thread bg-secondary text-white px-3 py-2 br-8 ml-auto' 
+                <div *ngIf="threads.length==0" class="col-12">
+                    No Thread Available
+                </div>
+                <div infinite-scroll (scrolled)="onScroll()">
+                    <div *ngIf="threads.length>0" class="col-md-12">
+                        <div *ngFor="let thread of threads;let i = index" class="card p-0">
+                            <div class="card-body p-5">
+                                <div class="row justify-content-between align-items-center mb-3">
+                                    <div class="col-md-12">
+                                        <img *ngIf="thread.fileId != null"
+                                            src="http://localhost:8080/files/{{thread.fileId}}" class="w-100"
+                                            alt="thread-img">
+                                        <div class="d-flex flex-nowrap align-items-center mt-3">
+                                            <img *ngIf="thread.profilePictureId != null"
+                                                src="http://localhost:8080/files/{{thread.profilePictureId}}"
+                                                height="40" width="40" class="br-full " alt="profile-img">
+                                            <img *ngIf="thread.profilePictureId == null"
+                                                src=".../../../../../../assets/img/default-profile-picture.jpg"
+                                                height="40" width="40" class="br-full " alt="profile-img">
+                                            <p class="ml-3  my-1 thread-profile-text">
+                                                {{thread.fullName}}</p><span
+                                                [ngClass]="thread.threadTypeName == 'Regular' ? 'badge-thread bg-secondary text-white px-3 py-2 br-8 ml-auto' 
                                         : thread.threadTypeName == 'Polling' ? 'badge-thread bg-primary text-white px-3 py-2 br-8 ml-auto' : 
                                         'badge-thread bg-warning text-white px-3 py-2 br-8 ml-auto'">{{thread.threadTypeName}}</span>
-                                                </div>
-                                            </div>
                                         </div>
-                                        <div class="card-title">
-                                            <h4 class=" -text">{{thread.title}}</h4>
-                                        </div>
-                                        <p class="card-text text-secondary  -text">
-                                            {{thread.content}}
-                                        </p>
                                     </div>
-                                    <div class="card-footer text-muted px-5">
-                                        <div class="row justify-content-between">
-                                            <div class="col-md-9">
-                                                <span><i class="fa-regular fa-heart"></i> {{likeCounters[i]}}</span>
-                                                <span class="ml-3"><i class="fa-regular fa-comment"></i>
-                                                    {{commentCounters[i]}}</span>
-                                                <span class="ml-3">
-                                                    <i class="fa-regular fa-bookmark"></i>                                                    
+                                </div>
+                                <div class="card-title">
+                                    <h4 class=" -text">{{thread.title}}</h4>
+                                </div>
+                                <p class="card-text text-secondary  -text">
+                                    {{thread.content}}
+                                </p>
+                            </div>
+                            <div class="card-footer text-muted px-5">
+                                <div class="row justify-content-between">
+                                    <div class="col-md-9">
+                                        <span *ngIf="likeCounters[i] > 0"><i class="fa-regular fa-heart"></i>
+                                            {{likeCounters[i]}}</span>
+                                            <span *ngIf="likeCounters[i] == 0"><i class="fa-regular fa-heart"></i>
                                                 </span>
-                                            </div>
-                                            <div class="col-md-3 text-end">
-                                                <a routerLink="/member/thread/{{thread.id}}">Read More -></a>
-                                            </div>
-                                        </div>
+                                        <span *ngIf="commentCounters[i] > 0" class="ml-3"><i
+                                                class="fa-regular fa-comment"></i>
+                                            {{commentCounters[i]}}</span>
+                                        <span *ngIf="commentCounters[i] == 0" class="ml-3"><i
+                                                class="fa-regular fa-comment"></i>
+                                            </span>
+                                        <span class="ml-3"><i class="fa-regular fa-bookmark"></i></span>
+                                    </div>
+                                    <div class="col-md-3 text-end">
+                                        <a routerLink="/member/thread/{{thread.id}}">Read More -></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </p-tabPanel>
-                    <p-tabPanel header="Bookmarked Thread">
-                        <div *ngIf="bookmarkedThreads.length==0" class="col-12">
-                            No Bookmarked Thread Yet
-                        </div>
-                        <div *ngIf="bookmarkedThreads.length>0" class="col-md-12">
-                            <div *ngFor="let thread of bookmarkedThreads;let j = index" class="card p-0">
-                                <div class="card-body p-5">
-                                    <div class="row justify-content-between align-items-center mb-3">
-                                        <div class="col-md-12">
-                                            <img *ngIf="thread.fileId != null"
-                                                src="http://localhost:8080/files/{{thread.fileId}}" class="w-100"
-                                                alt="thread-img">
-                                            <div class="d-flex flex-nowrap align-items-center">
-                                                <img *ngIf="thread.profilePictureId != null"
-                                                    src="http://localhost:8080/files/{{thread.profilePictureId}}"
-                                                    height="40" width="40" class="br-full " alt="profile-img">
-                                                <img *ngIf="thread.profilePictureId == null"
-                                                    src=".../../../../../../assets/img/default-profile-picture.jpg"
-                                                    height="40" width="40" class="br-full " alt="profile-img">
-                                                <p class="ml-3  my-1 thread-profile-text">
-                                                    {{thread.fullName}}</p><span
-                                                    [ngClass]="thread.threadTypeName == 'Regular' ? 'badge-thread bg-secondary text-white px-3 py-2 br-8 ml-auto' 
-                                        : thread.threadTypeName == 'Polling' ? 'badge-thread bg-primary text-white px-3 py-2 br-8 ml-auto' : 
-                                        'badge-thread bg-warning text-white px-3 py-2 br-8 ml-auto'">{{thread.threadTypeName}}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-title">
-                                        <h4 class=" -text">{{thread.title}}</h4>
-                                    </div>
-                                    <p class="card-text text-secondary  -text">
-                                        {{thread.content}}
-                                    </p>
-                                </div>
-                                <div class="card-footer text-muted px-5">
-                                    <div class="row justify-content-between">
-                                        <div class="col-md-9">
-                                            <span><i class="fa-regular fa-heart"></i>
-                                                {{bookmarkedLikeCounters[j]}}</span>
-                                            <span class="ml-3"><i class="fa-regular fa-comment"></i>
-                                                {{bookmarkedCommentCounters[j]}}</span>
-                                            <span class="ml-3"><i class="fa-regular fa-bookmark"></i></span>
-                                        </div>
-                                        <div class="col-md-3 text-end">
-                                            <a routerLink="/member/thread/{{thread.id}}">Read More -></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </p-tabPanel>
-                </p-tabView>                
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-4 col-sm-10">
